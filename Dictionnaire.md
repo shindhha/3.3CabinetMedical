@@ -35,4 +35,7 @@
 | Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String | null | null |
 | Administrateur_Password | Mot de passe de connexion a l'application de l'administrateur | String | null | null |
 | Cabinet | Information cabinet où tout se passe | Object | null | null |
-| Cabinet_Adresse | Adr
+| Cabinet_Adresse | Adresse du cabinet | String | null | null |
+| Cabinet_CodePostal | Code postal du cabinet | INT | null | null |
+| Cabinet_DateOuverture | Date a laquelle le cabinet a ouvert pour la première fois | DATE | null | null |
+| Cabinet_Medecins | Liste des médecins du cabinet | List | null | null |
