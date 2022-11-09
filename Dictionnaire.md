@@ -12,10 +12,27 @@
 | Ordonnance_Id | identifiant de l'ordonnance | INT | null | null |
 | Ordonnance_IdMedicament | identifiant des médicaments de l'ordonnance | INT | null | On peut avoir plusieur médicaments par ordonnance |
 | Patient | Patient étant venu au cabinet consulter | Object | null | null |
+| Patient_ID | identifiant du patient | INT | null | null |
 | Patient_Nom | nom du patient | String | null | null |
 | Patient_Prenom | prenom du patient | String | null | null |
 | Patient_DateNaissance | date de naissance du patient | DATE | null | null |
 | Patient_Adresse | Adresse du patient | String | null | null |
 | Patient_CodePostal | code postal du patient | INT | null | null |
 | Patient_NuméroDeSécu | numéro de sécurité sociale du patient | INT | null | null |
-| Patient_
+| Patient_IDMedecinRef | Identifiant du médecin référent du patient | INT | null | null |
+| Patient_NumTel | Numéro de téléphone du patient | INT | null | null |
+| Patient_Email | email du patient | String | de la forme %@%.% | null |
+| Medecin | Un médecin réalisant des consultations au cabinet | Object | null | null |
+| Medecin_ID | Identifiant dans la base de donnée du médecin | INT | null | null |
+| Medecin_Login | Identifiant de connexion a l'application du médecin | String | null | null |
+| Medecin_Password | Mot de passe de conenxion a l'application du médecin | String | null | null |
+| Medecin_Nom | Nom du médecin | String | null | null |
+| Medecin_Prenom | Prenom du médecin | String | null | null |
+| Medecin_NumTel | Numéro de téléphone du médecin | INT | null | null |
+| Medecin_Email | Email du médecin | String | de la forme %@%.% | null |
+| Medecin_NumRPPS | Identifiant national du médecin | INT | null | null |
+| Administrateur | Administrateur du cabinet , personne qui paramètre les informations du cabinet et des médecins | Object | null | null |
+| Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String | null | null |
+| Administrateur_Password | Mot de passe de connexion a l'application de l'administrateur | String | null | null |
+| Cabinet | Information cabinet où tout se passe | Object | null | null |
+| Cabinet_Adresse | Adr
