@@ -17,25 +17,26 @@
 | Patient_Prenom | prenom du patient | String | null | null |
 | Patient_DateNaissance | date de naissance du patient | DATE | null | null |
 | Patient_Adresse | Adresse du patient | String | null | null |
-| Patient_CodePostal | code postal du patient | INT | null | null |
+| Patient_CodePostal | code postal du patient | INT |  | Non vide , < 100000 |
 | Patient_NuméroDeSécu | numéro de sécurité sociale du patient | INT | null | null |
 | Patient_IDMedecinRef | Identifiant du médecin référent du patient | INT | null | null |
-| Patient_NumTel | Numéro de téléphone du patient | INT | null | null |
-| Patient_Email | email du patient | String | de la forme %@%.% | null |
+| Patient_NumTel | Numéro de téléphone du patient | INT |  | Numéro en retirant le premier chiffre (0) , Non vide |
+| Patient_Email | email du patient | String | | Forme : %@%.%  |
 | Medecin | Un médecin réalisant des consultations au cabinet | Object | null | null |
 | Medecin_ID | Identifiant dans la base de donnée du médecin | INT | null | null |
-| Medecin_Login | Identifiant de connexion a l'application du médecin | String | null | null |
-| Medecin_Password | Mot de passe de conenxion a l'application du médecin | String | null | null |
-| Medecin_Nom | Nom du médecin | String | null | null |
-| Medecin_Prenom | Prenom du médecin | String | null | null |
-| Medecin_NumTel | Numéro de téléphone du médecin | INT | null | null |
-| Medecin_Email | Email du médecin | String | de la forme %@%.% | null |
+| Medecin_Login | Identifiant de connexion a l'application du médecin | String | A entrer lors de la connexion à l'application| Forme : nom.prenom , sans accent |
+| Medecin_Password | Mot de passe de conenxion a l'application du médecin | String | A entrer lors de la connexion a l'application | 10 caractère minimum, 1 caractère spécial , lettre et chiffre , majuscule et minuscule |
+| Medecin_Nom | Nom du médecin | String |  | Sans accent , Non vide |
+| Medecin_Prenom | Prenom du médecin | String |  | Sans accent , Non vide |
+| Medecin_NumTel | Numéro de téléphone du médecin | INT |  | Numéro en retirant le premier chiffre (0) , Non vide |
+| Medecin_Email | Email du médecin | String |  | De la forme %@%.% , Non vide |
 | Medecin_NumRPPS | Identifiant national du médecin | INT | null | null |
-| Administrateur | Administrateur du cabinet , personne qui paramètre les informations du cabinet et des médecins | Object | null | null |
-| Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String | null | null |
-| Administrateur_Password | Mot de passe de connexion a l'application de l'administrateur | String | null | null |
-| Cabinet | Information cabinet où tout se passe | Object | null | null |
-| Cabinet_Adresse | Adresse du cabinet | String | null | null |
-| Cabinet_CodePostal | Code postal du cabinet | INT | null | null |
-| Cabinet_DateOuverture | Date a laquelle le cabinet a ouvert pour la première fois | DATE | null | null |
-| Cabinet_Medecins | Liste des médecins du cabinet | List | null | null |
+| Medecin_DateInscription | Date à laquelle le médecin a rejoint le cabinet | DATE |  | De la forme jj/mm/aaaa , Non vide |
+| Administrateur | Administrateur du cabinet , personne qui paramètre les informations du cabinet et des médecins | Object |  |  |
+| Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String |  | Forme : nom.prenom sans accent |
+| Administrateur_Password | Mot de passe de connexion a l'application de l'administrateur | String |  | 10 caractère minimum, 1 caractère spécial , lettre et chiffre , majuscule et minuscule |
+| Cabinet | Information cabinet où tout se passe | Object |  |  |
+| Cabinet_Adresse | Adresse du cabinet | String |  | Non vide |
+| Cabinet_CodePostal | Code postal du cabinet | INT |  | Non vide , < 100000 |
+| Cabinet_DateOuverture | Date a laquelle le cabinet a ouvert pour la première fois | DATE |  | De la forme jj/mm/aaaa , Non vide |
+| Cabinet_Medecins | Liste des médecins du cabinet | List |  |  |
