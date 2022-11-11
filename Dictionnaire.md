@@ -28,6 +28,8 @@
 | Medecin_Password | Mot de passe de conenxion a l'application du médecin | String | A entrer lors de la connexion a l'application | 10 caractère minimum, 1 caractère spécial , lettre et chiffre , majuscule et minuscule |
 | Medecin_Nom | Nom du médecin | String |  | Sans accent , Non vide |
 | Medecin_Prenom | Prenom du médecin | String |  | Sans accent , Non vide |
+| Medecin_Adresse | Adresse du médecin | String | | |
+| Medecin_dob | date de naissance | Date | | |
 | Medecin_NumTel | Numéro de téléphone du médecin | INT |  | Numéro en retirant le premier chiffre (0) , Non vide |
 | Medecin_Email | Email du médecin | String |  | De la forme %@%.% , Non vide |
 | Medecin_NumRPPS | Identifiant national du médecin | INT | null | null |
