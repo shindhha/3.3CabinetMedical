@@ -21,6 +21,7 @@
 | Patient_IDMedecinRef | Identifiant du médecin référent du patient | INT | Clé étrangère récuperer grace a la session du médecin créant le patient dans la base de données | cf "Medecin_ID" |
 | Patient_NumTel | Numéro de téléphone du patient | INT | Entrer par le médecin | Numéro en retirant le premier chiffre (0) , Non vide |
 | Patient_Email | email du patient | String | Entrer par le médecin | Forme : %@%.% , Non vide |
+| Patient_lieu_Naissance | lieu de naissance du patient | String | Forme : code postal ville | |
 | Medecin | Un médecin réalisant des consultations au cabinet | Object | null | null |
 | Medecin_ID | Identifiant dans la base de donnée du médecin égal au numéro RPPS | INT | Entrer par l'administrateur  | contrainte RPPS |
 | Medecin_Login | Identifiant de connexion a l'application du médecin | String | A entrer lors de la connexion à l'application | Forme : nom.prenom , sans accent |
