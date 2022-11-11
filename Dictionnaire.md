@@ -29,10 +29,14 @@
 | Medecin_Nom | Nom du médecin | String |  | Sans accent , Non vide |
 | Medecin_Prenom | Prenom du médecin | String |  | Sans accent , Non vide |
 | Medecin_Adresse | Adresse du médecin | String | | |
-| Medecin_dob | date de naissance | Date | | |
+| Medecin_dob | date de naissance | Date | | De la forme jj/mm/aaaa , Non vide |
+| Medecin_lieu_Naissance | lieu de naissance | String | | |
 | Medecin_NumTel | Numéro de téléphone du médecin | INT |  | Numéro en retirant le premier chiffre (0) , Non vide |
 | Medecin_Email | Email du médecin | String |  | De la forme %@%.% , Non vide |
 | Medecin_NumRPPS | Identifiant national du médecin | INT | null | null |
+| Medecin_lieu_act | lieu dans lequel il travail | List | | composé d'adresse |
+| Medecin_categorie | categorie dans laquelle il exerce | String | | |
+| Medecin_temps_exercement | nombre d'années depuis qu'il exerce | int | | <-
 | Medecin_DateInscription | Date à laquelle le médecin a rejoint le cabinet | DATE |  | De la forme jj/mm/aaaa , Non vide |
 | Administrateur | Administrateur du cabinet , personne qui paramètre les informations du cabinet et des médecins | Object |  |  |
 | Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String |  | Forme : nom.prenom sans accent |
