@@ -36,7 +36,7 @@
 | Medecin_NumRPPS | Identifiant national du médecin | INT | null | null |
 | Medecin_lieu_act | lieu dans lequel il travail | List | | composé d'adresse |
 | Medecin_categorie | categorie dans laquelle il exerce | String | | |
-| Medecin_temps_exercement | nombre d'années depuis qu'il exerce | int | | <-
+| Medecin_temps_exercement | nombre d'années depuis qu'il exerce | int | |
 | Medecin_DateInscription | Date à laquelle le médecin a rejoint le cabinet | DATE |  | De la forme jj/mm/aaaa , Non vide |
 | Administrateur | Administrateur du cabinet , personne qui paramètre les informations du cabinet et des médecins | Object |  |  |
 | Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String |  | Forme : nom.prenom sans accent |
