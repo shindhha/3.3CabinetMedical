@@ -23,8 +23,7 @@
 | Patient_Email | email du patient | String | Entrer par le médecin | Forme : %@%.% , Non vide |
 | Patient_lieu_Naissance | lieu de naissance du patient | String | Forme : code postal ville | |
 | Medecin | Un médecin réalisant des consultations au cabinet | Object | null | null |
-| Medecin_ID | Identifiant dans la base de donnée du médecin égal au numéro RPPS | INT | Entrer par l'administrateur  | contrainte RPPS |
-| Medecin_Login | Identifiant de connexion a l'application du médecin | String | A entrer lors de la connexion à l'application | Forme : nom.prenom , sans accent |
+| Medecin_ID | Identifiant dans la base de donnée du médecin égal au numéro RPPS , permet également de se connecter a l'application| INT | Entrer par l'administrateur  | contrainte RPPS |
 | Medecin_Password | Mot de passe de conenxion a l'application du médecin | String | A entrer lors de la connexion a l'application | 10 caractère minimum, 1 caractère spécial , lettre et chiffre , majuscule et minuscule |
 | Medecin_Nom | Nom du médecin | String | Entrer par l'administrateur | Non vide , pas de caractère spécial , pas d'espace , pas de chiffre |
 | Medecin_Prenom | Prenom du médecin | String | Entrer par l'administrateur | Non vide , pas de caractère spécial , pas d'espace , pas de chiffre |
