@@ -31,7 +31,6 @@
 | Medecin_dob | date de naissance | Date | Entrer par l'administrateur | Non vide , Forme : jj/mm/aaaa |
 | Medecin_NumTel | Numéro de téléphone du médecin | INT | Entrer par l'administrateur | Numéro en retirant le premier chiffre (0) , Non vide |
 | Medecin_Email | Email du médecin | String | Entrer par l'administrateur | De la forme %@%.% , Non vide |
-| Medecin_NumRPPS | Identifiant national du médecin | INT | Entrer par l'administrateur | Contrainte RPPS |
 | Medecin_DateInscription | Date à laquelle le médecin a rejoint le cabinet | DATE | Récuperer par le système a la date d'ajout dans la base de données | De la forme jj/mm/aaaa , Non vide |
 | Medecin_lieuActivite | lieu d'activité du médecin | String | null | null |
 | Medecin_TempExerc | Dure d'activité du médecin | INT | null | null |
