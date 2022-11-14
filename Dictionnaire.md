@@ -33,7 +33,7 @@
 | Medecin_Email | Email du médecin | String | Entrer par l'administrateur | De la forme %@%.% , Non vide |
 | Medecin_DateInscription | Date à laquelle le médecin a rejoint le cabinet | DATE | Récuperer par le système a la date d'ajout dans la base de données | De la forme jj/mm/aaaa , Non vide |
 | Medecin_lieuActivite | lieu d'activité du médecin | String | null | null |
-| Medecin_TempExerc | Dure d'activité du médecin | INT | null | null |
+| Medecin_DateDebutActivites | Date a laquelle le medecin a commencer a excercé | DATE | null | null |
 | Administrateur | Administrateur du cabinet , personne qui paramètre les informations du cabinet et des médecins | Object |  |  |
 | Administrateur_Login | Identifiant de connexion a l'application de l'administrateur | String |  | Forme : nom.prenom sans accent |
 | Administrateur_Password | Mot de passe de connexion a l'application de l'administrateur | String |  | 10 caractère minimum, 1 caractère spécial , lettre et chiffre , majuscule et minuscule |
