@@ -1,7 +1,7 @@
 | nom | Description | Type | Contraintes | Règle de composition |
 | -------------- | ------------ |--------|----------|------------|
 | VisiteMedicale | Visite entre un patient et un médecin | Object | null | null |
-| VisiteMedicale_ID | Identifiant de la visite | INT | Calculer automatiquement a la création d'une visite par le médecin | Non vide , > 0 , < 10000 , unique par visite  |
+| VisiteMedicale_ID | Identifiant de la visite | INT | Calculer automatiquement a la création d'une visite par le médecin | Non vide , 6 chiffre , unique par visite  |
 | VisiteMedicale_Motif | Motif de la visite | String | Entrez par le médecin lors de la création d'un visite | Non vide , nombre de caractère inférieur a 100 |
 | VisiteMedicale_IDMedein | Identifiant du medecin concerné | INT | Clé étrangère récupérer grace a la session courante | Même contrainte que "Medecin_ID" |
 | VisiteMedicale_IDPatient | identifiant du patient concerné | INT | Clé étrangère récupérer grace a la fiche courante ouverte par le médecin | Méme contrainte que "Patient_ID" |
