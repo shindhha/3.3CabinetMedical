@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
 body , html {
 	height: 100%;
 	width: 100%;
 	margin: 0px;
+
+}
+
+.row {
+	font-family: 'Inter', sans-serif;
 }
 
 .h-15 {
@@ -9,5 +15,36 @@ body , html {
 }
 
 .caseSize {
-	
+
+}
+
+.border-1 {
+	border-radius: 25px;
+	border-width: 0;
+}
+
+.border-2 {
+	border-radius: 90px;
+	border-width: 0;
+}
+
+.sizeIcon {
+	height: 50px;
+	width: 50px;
+}
+
+.green {
+	background-color: #37AC6D;
+}
+
+.blue {
+	background-color: #2589BA;
+}
+
+.text-green {
+	color: #37AC6D;
+}
+
+.text-white {
+	color: white;
 }
