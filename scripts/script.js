@@ -1,10 +1,24 @@
-function showMenu(classMenu) {
 
-	var menu = document.getElementsByClassName(classMenu);
 
-	if (menu[0].style.display == "block") {
-		menu[0].style.display = "none";
+function manageClass(idMenu,classToChange) {
+
+	var elem = document.getElementById(idMenu);
+
+	if (elem.classList.contains(classToChange)) {
+		elem.classList.remove(classToChange);
 	} else {
-		menu[0].style.display = "block";
+		elem.classList.add(classToChange);
+	}
+}
+
+window.onresize = resizeMenu;
+
+function resizeMenu() {
+	var menu = document.getElementById('menu');
+	if(window.innerWidth >= 768) {
+		menu.classList.remove('position-absolute');
+	}
+	if (window.innerWidth < 768) {
+		menu.classList.add('position-absolute');
 	}
 }

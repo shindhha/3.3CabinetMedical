@@ -14,9 +14,6 @@ body , html {
 	height: 15%;
 }
 
-.caseSize {
-
-}
 
 .border-1 {
 	border-radius: 25px;
@@ -28,10 +25,6 @@ body , html {
 	border-width: 0px;
 }
 
-.sizeIcon {
-	height: 50px;
-	width: 50px;
-}
 
 .green {
 	background-color: #37AC6D;
@@ -53,6 +46,3 @@ body , html {
 	cursor: pointer;
 }
 
-.menu {
-	z-index: 3;
-}
