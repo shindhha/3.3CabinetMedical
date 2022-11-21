@@ -25,6 +25,10 @@ body , html {
 	border-width: 0px;
 }
 
+.bottom-75 {
+	bottom: 75% !important;
+}
+
 
 .green {
 	background-color: #37AC6D;
@@ -42,7 +46,10 @@ body , html {
 	color: white;
 }
 
-.menu:hover {
-	cursor: pointer;
+input:focus {
+	outline: none;
 }
 
+.pointer:hover {
+	cursor: pointer;
+}
