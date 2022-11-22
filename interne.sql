@@ -1,14 +1,14 @@
-CREATE TABLE LieuActivites (
-	idLieuActivite INT(6) PRIMARY KEY,
-	labelLieuActivites VARCHAR(25)
-);
-CREATE TABLE LieuxActivites (
-	numRPPS INT(11) PRIMARY KEY,
-	idLieuActivite INT(6) PRIMARY KEY
-);
+DROP TABLE IF EXISTS ListeVisites;
+DROP TABLE IF EXISTS Patients;
+DROP TABLE IF EXISTS Medecins;
+DROP TABLE IF EXISTS Visites;
+DROP TABLE IF EXISTS Cabinet;
+DROP TABLE IF EXISTS Ordonnances;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE Patients (
-	numSecu INT(13) PRIMARY KEY,
-	idLieuNaissance INT(6),
+	numSecu CHAR(13) PRIMARY KEY,
+	LieuNaissance INT(6),
 	nom VARCHAR(25),
 	prenom VARCHAR(25),
 	dateNaissance DATE,
@@ -18,55 +18,57 @@ CREATE TABLE Patients (
 	numTel INT(9),
 	email VARCHAR(50)
 );
-CREATE TABLE LieuxNaissance (
-	idLieuNaissance INT(6) PRIMARY KEY,
-	labelLieuNaissance VARCHAR(25)
-);
+
 CREATE TABLE Medecins (
-	numRPPS INT(11) PRIMARY KEY,
-	motDePasse CHAR(60),
+
+	numRPPS CHAR(11) PRIMARY KEY,
 	nom VARCHAR(25),
 	prenom VARCHAR(25),
 	adresse VARCHAR(25),
-	dateNaissance DATE,
 	numTel INT(9),
 	email VARCHAR(100),
 	dateInscription DATE,
-	dateDebutActivites DATE
+	dateDebutActivites DATE,
+	activite VARCHAR(100),
+	codePostal INT(5),
+	ville VARCHAR(100),
+	lieuAct VARCHAR(100)	
 );
 CREATE TABLE Visites (
-	idVisite INT(6) PRIMARY KEY,
-	motifVisite CLOB,
+	idVisite INT(6),
+	motifVisite TEXT,
 	dateVisite DATE,
-	note CLOB,
-	idOrdonnance INT(6) PRIMARY KEY
-);
-CREATE TABLE ListeVisites (
-	numSecu INT(13) PRIMARY KEY,
-	numRPPS INT(11) PRIMARY KEY,
-	idVisite INT(6) PRIMARY KEY,
+	note TEXT,
+	PRIMARY KEY (idVisite)
 );
 
-CREATE TABLE Administrateurs (
-	login VARCHAR(25),
-	motDePasse CHAR(60)
+CREATE TABLE ListeVisites (
+	numSecu CHAR(13),
+	numRPPS CHAR(11),
+	idVisite INT(6),
+	PRIMARY KEY (numRPPS,numSecu,idVisite)
 );
+
 CREATE TABLE Cabinet (
 	adresse VARCHAR(25),
 	codePostal INT(5),
 	dateOuverture DATE
 );
 CREATE TABLE Ordonnances (
-	idOrdonnance INT(6) PRIMARY KEY,
-	cissCode INT(6) PRIMARY KEY
+	idOrdonnance INT(6),
+	codeCIS INT(8),
+	PRIMARY KEY (idOrdonnance,codeCIS)
 );
-ALTER TABLE Ordonnances ADD CONSTRAINT FK_Ordonnances_Medicaments FOREIGN KEY (cissCode) REFERENCES CIS_BDMP(cissCode);
-ALTER TABLE LieuxActivites ADD CONSTRAINT FK_LieuxActivites_Medecins FOREIGN KEY (numRPPS) REFERENCES Medecins(numRPPS);
-ALTER TABLE LieuxActivites ADD CONSTRAINT FK_LieuxActivites_LieuActivites FOREIGN KEY (idLieuActivite) REFERENCES LieuActivites(idLieuActivite);
-ALTER TABLE Patients ADD CONSTRAINT CK_Email_Patients CHECK (email LIKE %@%.%);
-ALTER TABLE Patients ADD CONSTRAINT FK_Patients_LieuxNaissance FOREIGN KEY (idLieuNaissance) REFERENCES LieuxNaissance(idLieuNaissance);
+CREATE TABLE users (
+	id INT(6),
+	login VARCHAR(11),
+	`password` CHAR(32)
+
+);
+ALTER TABLE Ordonnances ADD CONSTRAINT FK_Ordonnances_Medicaments FOREIGN KEY (codeCIS) REFERENCES CIS_BDPM(codeCIS);
+ALTER TABLE Patients ADD CONSTRAINT CK_Email_Patients CHECK (email LIKE '%@%.%');
 ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Patients FOREIGN KEY (numSecu) REFERENCES Patients(numSecu);
 ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Medecins FOREIGN KEY (numRPPS) REFERENCES Medecins(numRPPS);
-ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Visites FOREIGN KEY (idVisite) REFERENCES Visites(idVisite);
-ALTER TABLE Visites ADD CONSTRAINT FK_Visites_Ordonnances FOREIGN KEY (idOrdonnance) REFERENCES Ordonnances(idOrdonnance);
-ALTER TABLE Medecins ADD CONSTRAINT CK_Email_Medecins CHECK (email LIKE %@%.%);
+ALTER TABLE Visites ADD CONSTRAINT FK_Visites_Ordonnances FOREIGN KEY (idVisite) REFERENCES Ordonnances(idOrdonnance);
+ALTER TABLE Medecins ADD CONSTRAINT CK_Email_Medecins CHECK (email LIKE '%@%.%');
+ALTER TABLE users ADD CONSTRAINT FK_users_Medecins FOREIGN KEY (login) REFERENCES Medecins(numRPPS);
