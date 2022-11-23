@@ -35,32 +35,31 @@
 			<div class="col-md-11 h-75 text-center">
 				<!-- Bandeau outils -->	
 				
-				<nav class="row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="container-fluid green">
-						<span> Liste Patients </span>
-						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-						<div class="collapse navbar-collapse" id="navbarSupportedContent">
-							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-								<li class="nav-item dropdown">
-									<spawn class=" dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-										Filtres
-									</span>
-									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<li><a class="dropdown-item" href="#">Action</a></li>
-										<li><a class="dropdown-item" href="#">Another action</a></li>
-										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item" href="#">Something else here</a></li>
-									</ul>
-								</li>
-							</ul>
-							<form class="d-flex form-control me-2">
-								<input class="" type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined"> search </span>
-								
-							</form>
-						</div>
+				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
+					<div class="d-flex justify-content-between px-5 al  container-fluid green">
+						
+						<span class="h1"> Liste Patients </span>
+						<div class="d-flex">
+							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
+								<input type="search" placeholder="Mots clef" aria-label="Search">
+								<span class="material-symbols-outlined text-black"> search </span>
+
+							</div>
+
+
+							<div class="dropdown d-flex">
+								<span class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+									Filtre
+								</span>
+
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+									<li><a class="dropdown-item" href="#">Action</a></li>
+									<li><a class="dropdown-item" href="#">Another action</a></li>
+									<li><a class="dropdown-item" href="#">Something else here</a></li>
+								</ul>
+							</div>	
+						</div>				
+
 					</div>
 				</nav>
 
@@ -70,6 +69,7 @@
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
+
 
 							
 
