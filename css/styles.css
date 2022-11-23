@@ -46,10 +46,20 @@ body , html {
 	color: white;
 }
 
-input:focus {
-	outline: none;
-}
+
+
 
 .pointer:hover {
 	cursor: pointer;
 }
+
+
+
+input:focus {
+	outline: none;
+}
+
+input {
+	border: none;
+}
+
