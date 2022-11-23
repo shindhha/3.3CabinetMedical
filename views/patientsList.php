@@ -12,10 +12,6 @@
 	spl_autoload_extensions(".php");
 	spl_autoload_register();
 	use yasmf\HttpHelper;
-		$hostname = "sql.alphaline.ml";
-		$dbname = "SAE";
-		$user = "guillaume";
-		$password = "guillaume";
 	?>
 </head>
 
@@ -37,35 +33,45 @@
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">
-				<!-- Bandeau outils -->
-
-				<div class="row h-15 align-items-center green">
-					<div class="d-flex">
-						<img onclick="manageClass('menu','d-none')" class="d-md-none d-sm-block sizeIcon" src="res/menu.svg">
-						<span class="fs-1 d-md-block d-none"> Liste Patients </span>
+				<!-- Bandeau outils -->	
+				
+				<nav class="row h-15 navbar navbar-expand-lg navbar-light green">
+					<div class="container-fluid green">
+						<span> Liste Patients </span>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+								<li class="nav-item dropdown">
+									<spawn class=" dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Filtres
+									</span>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li><a class="dropdown-item" href="#">Action</a></li>
+										<li><a class="dropdown-item" href="#">Another action</a></li>
+										<li><hr class="dropdown-divider"></li>
+										<li><a class="dropdown-item" href="#">Something else here</a></li>
+									</ul>
+								</li>
+							</ul>
+							<form class="d-flex form-control me-2">
+								<input class="" type="search" placeholder="Mots clef" aria-label="Search">
+								<span class="material-symbols-outlined"> search </span>
+								
+							</form>
+						</div>
 					</div>
+				</nav>
 
-
-				</div>
 				<span class="fs-1 d-md-none d-sm-block text-green"> Page d'Accueil </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
-								<form class="d-flex flex-column gap-3">
-									<span class="fs-1"> Connexion a <u>MEDILOG</u> </span>
 
-
-									<div class="d-flex gap-3"><img src="res/iaccount.svg" class="sizeIcon"><input type="text" placeholder="Identifiant" class="border-0 border-1 w-75 ps-2 pt-2 pb-2"></div>
-
-									<div class="d-flex gap-3"><img src="res/ipassword.svg" class="sizeIcon"><input type="password" placeholder="Mot de passe" class="ps-2 border-0 border-1 w-75 pt-2 pb-2"></input></div>
-
-									<div><button class="border-0 w-50 border-1 text-green fs-3"><u> Valider </u></button></div>
-									<a class="fs-6 text-white"> Mot de passe oublié </a>
-								</form>
-							</div>
+							
 
 						</div>
 
@@ -76,7 +82,7 @@
 		</div>
 
 
-
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>
 </html>

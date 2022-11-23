@@ -46,3 +46,6 @@ body , html {
 	cursor: pointer;
 }
 
+div , a , span , nav {
+	color: white;
+}

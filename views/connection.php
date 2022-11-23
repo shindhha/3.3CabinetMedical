@@ -8,41 +8,14 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 	<script type="text/javascript" src="scripts/script.js"></script>
 	<title>MEDILOG</title>
+</head>
+<body onload="resizeMenu()">
 	<?php
 	spl_autoload_extensions(".php");
 	spl_autoload_register();
 	use yasmf\HttpHelper;
-
-
-		$hostname = "sql.alphaline.ml";
-		$dbname = "SAE";
-		$user = "guillaume";
-		$password = "guillaume";
-		$port = 3306;
-		$charset = "utf8";
-
-		$pdo = new PDO('mysql:host='.$hostname.';dbname='.$dbname.';charset=utf8', $user,$password);
-
-		$request = $pdo->prepare("SELECT * FROM user WHERE id = :id AND mdp = :password");
-		$connectionWellDone = false;
-
-		if (isset($_POST['id']) && isset($_POST['password'])) {
-			global $request;
-
-			$request->execute(array('id' => $_POST['id'], 'password' => $_POST['password']));
-			$num = $request->rowcount();
-			$connectionWellDone = ($num == 1);
-
-		}
-
-		if($connectionWellDone) {
-			header("Location: pages/patientsList.php");
-		}
-
 	?>
-</head>
-<body onload="resizeMenu()">
-	<input name="controller" type="text" value="connection">
+	<input name="controller" type="hidden" value="connection">
 	<div class="container-fluid h-100  text-white">
 		<div class="row h-100">
 			<!-- Menu -->
