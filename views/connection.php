@@ -24,12 +24,10 @@
 				<div class=" green align-items-center text-center border-1 ratio ratio-1x1">
 
 				</div>
-				<div class=" green align-items-center text-center border-1 ratio ratio-1x1">
-
+				<div class="green border-1 ratio ratio-1x1">
+					
 				</div>
-				<div class=" green align-items-center text-center border-1 ratio ratio-1x1">
-
-				</div>
+				
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">

@@ -21,14 +21,18 @@
 			<!-- Menu -->
 			<div id="menu" class="menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
 				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
-				<div class=" green align-items-center text-center border-1 ratio ratio-1x1">
+				<div class=" green border-1 ratio ratio-1x1">
 
 				</div>
-				<div class=" green align-items-center text-center border-1 ratio ratio-1x1">
-
+				<div class=" green border-1 ratio ratio-1x1">
+					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
+						medication
+					</span>
 				</div>
-				<div class=" green align-items-center text-center border-1 ratio ratio-1x1">
-
+				<div class=" green border-1 ratio ratio-1x1">
+					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+						groups
+					</span>
 				</div>
 			</div>
 			<!-- Main page -->
@@ -36,28 +40,83 @@
 				<!-- Bandeau outils -->	
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 al  container-fluid green">
+					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
 						<span class="h1"> Liste Patients </span>
-						<div class="d-flex">
+						<div class="d-flex align-items-center">
+							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
 								<input type="search" placeholder="Mots clef" aria-label="Search">
 								<span class="material-symbols-outlined text-black"> search </span>
 
 							</div>
 
-
-							<div class="dropdown d-flex">
-								<span class="btn text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+							<!-- Filtre -->
+							<div class="dropdown green">
+								<span class=" dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									Filtre
 								</span>
+								<div class="dropdown-menu dropdown-menu-end green text-white" aria-labelledby="dropdownMenuButton1">
+									<form class="d-flex flex-column green p-4">
+										<table class="text-white ">
+											<tr>
+												<td>
+													<label for="d">Surveillance Renforcée</label>
+													<input type="checkbox" name="d">
+												</td>
+												<td>
+													<label for="d">Surveillance Renforcée</label>
+													<input type="checkbox" name="d">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<select class="form-select text-green">
+														<option>Valeur SMR</option>
+													</select>
+												</td>
+												<td>
+													<select class="form-select text-green">
+														<option>Valeur ASMR</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<select class="form-select text-green">
+														<option>Forme Pharmacie</option>
+													</select>
+												</td>
+												<td>
+													<select class="form-select text-green">
+														<option>Voie d'administration</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<select class=" form-select text-green ">
+														<option>Taux Remboursement</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<label for="e">Prix min :</label>
+													<input type="number" name="e">
+												</td>
+												<td>
+													<label for="e">Prix Max :</label>
+													<input type="number" name="e">
+												</td>
+											</tr>
+										</table>
 
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-									<li><a class="dropdown-item" href="#">Action</a></li>
-									<li><a class="dropdown-item" href="#">Another action</a></li>
-									<li><a class="dropdown-item" href="#">Something else here</a></li>
-								</ul>
-							</div>	
+
+									</div>
+								</form>
+							</div>
+
 						</div>				
 
 					</div>
@@ -71,7 +130,7 @@
 						<div class="row justify-content-center">
 
 
-							
+
 
 						</div>
 
