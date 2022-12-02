@@ -55,7 +55,7 @@ class ConnectionController
       $view = new View("Sae3.3CabinetMedical/views/connection");
 
       if ($searchStmt) {
-        $view = new View("Sae3.3CabinetMedical/views/patientslist");
+        $view = new View("Sae3.3CabinetMedical/views/medicamentsList");
       }
 
         return $view;

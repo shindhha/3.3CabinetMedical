@@ -19,7 +19,7 @@
 	<div class="container-fluid h-100  text-white">
 		<div class="row h-100">
 			<!-- Menu -->
-			<div id="menu" class="menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
+			<div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
 				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
 				<div class=" green border-1 ratio ratio-1x1">
 
@@ -42,7 +42,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1"> Liste Patients </span>
+						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
@@ -53,20 +53,23 @@
 
 							<!-- Filtre -->
 							<div class="dropdown green">
-								<span class=" dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									Filtre
+								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+									Filtres
 								</span>
-								<div class="dropdown-menu dropdown-menu-end green text-white" aria-labelledby="dropdownMenuButton1">
+								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 									<form class="d-flex flex-column green p-4">
+
 										<table class="text-white ">
 											<tr>
 												<td>
-													<label for="d">Surveillance Renforcée</label>
 													<input type="checkbox" name="d">
+													<label for="d">Surveillance Renforcée</label>
+													
 												</td>
 												<td>
+													<input class=""type="checkbox" name="d">
 													<label for="d">Surveillance Renforcée</label>
-													<input type="checkbox" name="d">
+													
 												</td>
 											</tr>
 											<tr>
@@ -122,7 +125,7 @@
 					</div>
 				</nav>
 
-				<span class="fs-1 d-md-none d-sm-block text-green"> Page d'Accueil </span>
+				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->

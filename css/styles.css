@@ -67,3 +67,10 @@ input {
 	margin-left: 50px;
 }
 
+.p-0 {
+	padding: none;
+}
+
+.no-border {
+	border: none;
+}
