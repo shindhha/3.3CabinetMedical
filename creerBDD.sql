@@ -301,6 +301,7 @@ CREATE TABLE LibelleAsmr (
     libelleAsmr TEXT
 );
 ALTER TABLE LibelleAsmr ADD CONSTRAINT PK_LibelleAsmr PRIMARY KEY (idLibelleAsmr);
+ALTER TABLE LibelleAsmr MODIFY idLibelleAsmr INT(3) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table MotifEval -------------------------------------------- */
 CREATE TABLE MotifEval ( -- INFO : pas sur le schéma car limite de forme lucid chart :/
