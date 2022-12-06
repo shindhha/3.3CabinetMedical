@@ -176,6 +176,7 @@ CREATE TABLE RefDosage (
     labelRefDosage VARCHAR(100)
 );
 ALTER TABLE RefDosage ADD CONSTRAINT PK_RefDosage PRIMARY KEY (idRefDosage);
+ALTER TABLE RefDosage MODIFY idRefDosage INT(3) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table CIS_COMPO -------------------------------------------- */
 
@@ -285,10 +286,11 @@ CREATE TABLE LibelleSmr (
     libelleSmr VARCHAR(255)
 );
 ALTER TABLE LibelleSmr ADD CONSTRAINT PK_LibelleSmr PRIMARY KEY (idLibelleSMR);
+ALTER TABLE LibelleSmr MODIFY idLibelleSMR INT(3) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table HAS_LiensPageCT -------------------------------------------- */
 CREATE TABLE HAS_LiensPageCT (
-    codeHAS INT(4),
+    codeHAS VARCHAR(8),
     lienPage TEXT
 );
 ALTER TABLE HAS_LiensPageCT ADD CONSTRAINT PK_HAS_LiensPageCT PRIMARY KEY (codeHAS);
@@ -306,13 +308,22 @@ CREATE TABLE MotifEval ( -- INFO : pas sur le schéma car limite de forme lucid 
     libelleMotifEval VARCHAR(255)
 );
 ALTER TABLE MotifEval ADD CONSTRAINT PK_MotifEval PRIMARY KEY (idMotifEval);
+ALTER TABLE MotifEval MODIFY idMotifEval INT(3) AUTO_INCREMENT;
 
 
+/* -------------------------------------------- Creation de la table NiveauSMR -------------------------------------------- */
+-- TODO Ajouter sur le schéma
+CREATE TABLE NiveauSMR (
+    idNiveauSMR INT(2),
+    libelleNiveauSMR VARCHAR(255)
+);
+ALTER TABLE NiveauSMR ADD CONSTRAINT PK_NiveauSMR PRIMARY KEY (idNiveauSMR);
+ALTER TABLE NiveauSMR MODIFY idNiveauSMR INT(2) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table CIS_HAS_SMR -------------------------------------------- */
 CREATE TABLE CIS_HAS_SMR (
     codeCIS INT(6),
-    codeHAS INT(4),
+    codeHAS VARCHAR(8),
     idMotifEval INT(2),
     dateAvis DATE,
     niveauSMR INT(2),
@@ -322,11 +333,12 @@ ALTER TABLE CIS_HAS_SMR ADD CONSTRAINT FK_CIS_HAS_SMR_CIS_BDPM FOREIGN KEY (code
 ALTER TABLE CIS_HAS_SMR ADD CONSTRAINT FK_CIS_HAS_SMR_HAS_LiensPageCT FOREIGN KEY (codeHAS) REFERENCES HAS_LiensPageCT(codeHAS);
 ALTER TABLE CIS_HAS_SMR ADD CONSTRAINT FK_CIS_HAS_SMR_MotifEval FOREIGN KEY (idMotifEval) REFERENCES MotifEval(idMotifEval);
 ALTER TABLE CIS_HAS_SMR ADD CONSTRAINT FK_CIS_HAS_SMR_LibelleSmr FOREIGN KEY (idLibelleSmr) REFERENCES LibelleSmr(idLibelleSMR);
+ALTER TABLE CIS_HAS_SMR ADD CONSTRAINT FK_CIS_HAS_SMR_NiveauSMR FOREIGN KEY (niveauSMR) REFERENCES NiveauSMR(idNiveauSMR);
 
 /* -------------------------------------------- Creation de la table CIS_HAS_ASMR -------------------------------------------- */
 CREATE TABLE CIS_HAS_ASMR (
     codeCIS INT(6),
-    codeHAS INT(4),
+    codeHAS VARCHAR(8),
     idMotifEval INT(2),
     dateAvis DATE,
     valeurASMR VARCHAR(25),
