@@ -225,6 +225,7 @@ CREATE TABLE LabelCondition (
     labelCondition TEXT
 );
 ALTER TABLE LabelCondition ADD CONSTRAINT PK_Condition PRIMARY KEY (idCondition);
+ALTER TABLE LabelCondition MODIFY idCondition INT(3) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table CIS_CPD -------------------------------------------- */
 CREATE TABLE CIS_CPD (
