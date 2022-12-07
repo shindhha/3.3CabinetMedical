@@ -42,22 +42,26 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
-						<div class="d-flex align-items-center">
-							<!-- Barre de recherche -->
-							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
+						<span class="h1 d-md-block d-none"> Administrateur </span>
+						<span class="material-symbols-outlined">
+							download
+						</span>
+						<form action="index.php" method="POST" class="d-flex flex-column green p-4">
+							<div class="d-flex align-items-center">
+								<!-- Barre de recherche -->
+								<div class="d-flex me-2 py-2 px-3 bg-white border-1">
+									<input name="strSearch" type="search" placeholder="Mots clef" aria-label="Search">
+									<button type="submit"> <span class="material-symbols-outlined text-black"> search </span></button>
 
-							</div>
+								</div>
 
-							<!-- Filtre -->
-							<div class="dropdown green">
-								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									Filtres
-								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form class="d-flex flex-column green p-4">
+								<!-- Filtre -->
+								<div class="dropdown green">
+									<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+										Filtres
+									</span>
+									<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+										
 
 										<table class="text-white ">
 											<tr>
@@ -114,7 +118,7 @@
 												</td>
 											</tr>
 										</table>
-
+										<input type="hidden" name="controller" value="administrateur">
 
 									</div>
 								</form>
@@ -124,7 +128,7 @@
 
 					</div>
 				</nav>
-
+				
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
@@ -133,6 +137,7 @@
 						<div class="row justify-content-center">
 
 							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
+								<?php var_dump($strSearch) ?>
 							</div>
 
 
@@ -144,7 +149,7 @@
 
 		</div>
 
-
+		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>
