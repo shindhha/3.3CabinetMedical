@@ -245,6 +245,7 @@ CREATE TABLE Info_Texte (
     labelTexte TEXT
 );
 ALTER TABLE Info_Texte ADD CONSTRAINT PK_Info_Texte PRIMARY KEY (idTexte);
+ALTER TABLE Info_Texte MODIFY idTexte INT(3) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table CIS_INFO -------------------------------------------- */
 CREATE TABLE CIS_INFO (
