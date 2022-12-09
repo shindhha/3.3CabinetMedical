@@ -137,7 +137,6 @@
 						<div class="row justify-content-center">
 
 							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
-								<?php var_dump($strSearch) ?>
 							</div>
 
 

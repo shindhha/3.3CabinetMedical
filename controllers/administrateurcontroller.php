@@ -49,14 +49,9 @@ class AdministrateurController
   {
       $this->importservice = ImportService::getDefaultImportService();
   }
-    public function index($pdo) {
-      
+    public function index($pdo) {      
 
-      $param = HttpHelper::getParam('strSearch');
-      $strSearch = $this->importservice->formatDate($param);
       $view = new View("Sae3.3CabinetMedical/views/administrateur");
-      $view->setVar('strSearch',$strSearch);
-      
 
       return $view;
     }

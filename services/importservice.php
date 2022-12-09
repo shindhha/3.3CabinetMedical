@@ -4,13 +4,14 @@
 namespace services;
 
 use PDOException;
+use DateTime;
 
 /**
  *
  */
 class ImportService
 {
-  
+
   private static $defaultImportService;
   private static $path = "res";
 
@@ -23,32 +24,52 @@ class ImportService
   }
 
   public static function formatDate ($text) {
-    date_default_timezone_set("UTC");
+
     preg_match_all("#[0-9]{2}\/[0-9]{2}\/[0-9]{4}#",$text,$dates);
-    foreach ($dates as $date) {
-      $dateAfter = date('Y-m-d H:i:s' , strtotime($date));
-      preg_replace($date, $dateAfter, $text);
+    foreach ($dates[0] as $date) {
+      $format = DateTime::createFromFormat('d/m/Y',$date);
+      $dateAfter = $format->format("dmY");
+      $text = str_replace($date, $dateAfter, $text);
+      
     }
-    return $date;
+    return $text;
 
   }
 
+  public static function download ($name) {
+    $destination = "res/".$name;
+    $source = "https://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=".$name;
+    $ch = curl_init($source);
+    $fp = fopen($destination, "w");
+    curl_setopt($ch, CURLOPT_FILE, $fp);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_exec($ch);
+    if(curl_error($ch)) {
+      fwrite($fp, curl_error($ch));
+    }
+    curl_close($ch);
+    fclose($fp);
+  }
 
-  public static function imports ($pdo,$nbParam,$file,$sqlFunction) {
 
-    $content = fread($file, filesize($filePath));
+  public static function imports ($pdo,$nbParam,$fileName,$sqlFunction) {
+    $file = fopen($fileName, "r");
+    $content = fread($file, filesize($fileName));
     $lines = explode("\n", $content);
 
     $sql = "CALL " . $sqlFunction . " (";
 
-    for ($i=0; $i < $nbParam ; $i++) { 
-      $sql = $sql . "? ,";
+    for ($i=0; $i <= $nbParam ; $i++) { 
+      $sql = $sql . "?";
+      if ($i < $nbParam - 1) {
+        $sql = $sql . " ,";
+      }
     }
     $sql = $sql . ")";
     $stmt = $pdo->prepare($sql);
 
     foreach ($lines as $line) {
-      $line = formatDate($line);
+      $line = ImportService::formatDate($line);
       $args = explode("\t", $line);
       $stmt->execute($args);
     }
