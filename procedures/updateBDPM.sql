@@ -34,6 +34,8 @@ BEGIN
         UPDATE DesignationElemPharma Set designation = N_desElemPharma where idDesignation = idDes ;
     ELSE
         INSERT INTO DesignationElemPharma (designation) VALUES (N_desElemPharma);
+        SET idDes = LAST_INSERT_ID();
+        INSERT INTO CIS_BDPM (idDesignation) VALUES (idDes);
     END IF;
 
     /* Si idFormPharm existe Update la forme pharmaceutique du médicament sinon crée la forme pharmaceutique du médicament */
@@ -43,6 +45,8 @@ BEGIN
         UPDATE FormePharma Set formePharma = N_formePharma where idFormePharma = idFormPharm ;
     ELSE
         INSERT INTO FormePharma (formePharma) VALUES (N_formePharma);
+        SET idFormPharm = LAST_INSERT_ID();
+        INSERT INTO CIS_BDPM (idFormePharma) VALUES (idFormPharm);
     END IF;
 
     /* 
@@ -55,6 +59,8 @@ BEGIN
         UPDATE StatutAdAMM Set statutAdAMM = N_statutAdAMM where idStatutAdAMM = idStatAdAMM ;
     ELSE
         INSERT INTO StatutAdAMM (statutAdAMM) VALUES (N_statutAdAMM);
+        SET idStatAdAMM = LAST_INSERT_ID();
+        INSERT INTO CIS_BDPM (idStatutAdAMM) VALUES (idStatAdAMM);
     END IF;
 
     /* 
@@ -67,6 +73,8 @@ BEGIN
         UPDATE TypeProc Set typeProc = N_typeProc where idTypeProc = idType ;
     ELSE
         INSERT INTO TypeProc (typeProc) VALUES (N_typeProc);
+        SET idType = LAST_INSERT_ID();
+        INSERT INTO CIS_BDPM (idTypeProc) VALUES (idType);
     END IF;
 
     /* Détermination du booléen état commericlaisation */
@@ -104,6 +112,8 @@ BEGIN
         UPDATE AutorEurop Set autoEur = N_autoEur where idAutoEur = idType;
     ELSE
         INSERT INTO AutorEurop (autoEur) VALUES (N_autoEur);
+        SET idAuto = LAST_INSERT_ID();
+        INSERT INTO CIS_BDPM (idAutoEur) VALUES (idAuto);
     END IF;
 
     /* Update de l'etat commercial */
@@ -154,7 +164,7 @@ BEGIN
             -- On enregistre le nom du titulaire dans la BDD
             INSERT INTO ID_Label_Titulaire (labelTitulaire) VALUES (@titulaire);
             -- On définit le medicament comme étant administré par cette voie
-        INSERT INTO CIS_Titulaires (codeCIS, idTitulaire) VALUES (N_codeCIS, (SELECT idTitulaire FROM ID_Label_Titulaire WHERE labelTitulaire = @titulaire));
+            INSERT INTO CIS_Titulaires (codeCIS, idTitulaire) VALUES (N_codeCIS, (SELECT idTitulaire FROM ID_Label_Titulaire WHERE labelTitulaire = @titulaire));
         END IF;
     
         SET @i = @i + 1;
