@@ -137,6 +137,11 @@
 						<div class="row justify-content-center">
 
 							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
+								<form>
+									<input type="hidden" name="controller" value="administrateur">
+									<input type="hidden" name="action" value="import">
+									<input type="submit" value="Import">
+								</form>
 							</div>
 
 

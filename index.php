@@ -3,7 +3,7 @@
  * Sample without database connexion
  */
  $hostname = "sql.alphaline.ml";
- $dbname = "test";
+ $dbname = "SAE";
  $user = "guillaume";
  $password = "guillaume";
  $port = 3306;
@@ -12,6 +12,7 @@
 spl_autoload_extensions(".php");
 spl_autoload_register();
 date_default_timezone_set("UTC");
+set_time_limit(3600);
 use yasmf\Router;
 use yasmf\DataSource;
 

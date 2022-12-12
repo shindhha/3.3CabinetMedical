@@ -44,12 +44,35 @@ use yasmf\HttpHelper;
 class AdministrateurController
 {
   private $importservice;
-
+  private $files = [["CIS_bdpm.txt","importBDPM",12],
+                    ["CIS_CIP_bdpm.txt","importCIP",11],
+                    ["CIS_COMPO_bdpm.txt","importCOMPO",8],
+                    ["CIS_HAS_SMR_bdpm.txt","importSMR",6],
+                    ["CIS_HAS_ASMR_bdpm.txt","importASMR",6],
+                    ["CIS_HAS_LiensPageCT_bdpm.txt","importCT",2],
+                    ["CIS_GENER_bdpm.txt","importGENER",5],
+                    ["CIS_CPD_bdpm.txt","importCPD",2],
+                    ["CIS_InfoImportantes.txt","importINFO",4]]
   public function __construct()
   {
       $this->importservice = ImportService::getDefaultImportService();
   }
     public function index($pdo) {      
+
+      $view = new View("Sae3.3CabinetMedical/views/administrateur");
+      
+      return $view;
+    }
+
+    public function import($pdo)
+    {
+      foreach ($this->files as $file) {
+        $fileName = $file[0];
+        $sqlFunction = $file[1];
+        $nbParam = $file[2];
+        $this->importservice->download($fileName);
+        $this->importservice->imports($pdo,$nbParam,$fileName,$sqlFunction);
+      }
 
       $view = new View("Sae3.3CabinetMedical/views/administrateur");
 

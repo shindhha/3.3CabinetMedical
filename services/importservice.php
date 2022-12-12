@@ -9,8 +9,8 @@ use DateTime;
 /**
  *
  */
-class ImportService
-{
+class ImportService 
+{ 
 
   private static $defaultImportService;
   private static $path = "res";
@@ -28,7 +28,7 @@ class ImportService
     preg_match_all("#[0-9]{2}\/[0-9]{2}\/[0-9]{4}#",$text,$dates);
     foreach ($dates[0] as $date) {
       $format = DateTime::createFromFormat('d/m/Y',$date);
-      $dateAfter = $format->format("dmY");
+      $dateAfter = $format->format("Ymd");
       $text = str_replace($date, $dateAfter, $text);
       
     }
@@ -53,13 +53,13 @@ class ImportService
 
 
   public static function imports ($pdo,$nbParam,$fileName,$sqlFunction) {
-    $file = fopen($fileName, "r");
-    $content = fread($file, filesize($fileName));
+    $file = fopen("res/".$fileName, "r");
+    $content = fread($file, filesize("res/".$fileName));
     $lines = explode("\n", $content);
 
-    $sql = "CALL " . $sqlFunction . " (";
+    $sql = "SELECT " . $sqlFunction . " (";
 
-    for ($i=0; $i <= $nbParam ; $i++) { 
+    for ($i=0; $i < $nbParam ; $i++) { 
       $sql = $sql . "?";
       if ($i < $nbParam - 1) {
         $sql = $sql . " ,";
@@ -68,11 +68,12 @@ class ImportService
     $sql = $sql . ")";
     $stmt = $pdo->prepare($sql);
 
+
     foreach ($lines as $line) {
       $line = ImportService::formatDate($line);
+      $line = utf8_encode($line);
       $args = explode("\t", $line);
       $stmt->execute($args);
     }
-
   }
 }
