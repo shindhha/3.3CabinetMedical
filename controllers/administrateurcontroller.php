@@ -52,7 +52,7 @@ class AdministrateurController
                     ["CIS_HAS_LiensPageCT_bdpm.txt","importCT",2],
                     ["CIS_GENER_bdpm.txt","importGENER",5],
                     ["CIS_CPD_bdpm.txt","importCPD",2],
-                    ["CIS_InfoImportantes.txt","importINFO",4]]
+                    ["CIS_InfoImportantes.txt","importINFO",4]];
   public function __construct()
   {
       $this->importservice = ImportService::getDefaultImportService();

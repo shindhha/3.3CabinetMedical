@@ -49,13 +49,18 @@ class ConnectionController
       $this->LoginService = LoginService::getDefaultUsersService();
   }
     public function index($pdo) {
-      $login = HttpHelper::getParam('login');
+      $username = HttpHelper::getParam('login');
       $password = htmlspecialchars(HttpHelper::getParam('password'));
-      $searchStmt = $this->LoginService->findIfAdminExists($pdo, $login, $password) ;
+      $searchStmt = $this->LoginService->findIfAdminExists($pdo,$username,$password);
       $view = new View("Sae3.3CabinetMedical/views/connection");
 
       if ($searchStmt) {
-        $view = new View("Sae3.3CabinetMedical/views/administrateur");
+        if ($username == "admin") {
+          $view = new View("Sae3.3CabinetMedical/views/administrateur");
+        } else {
+          $view = new View("Sae3.3CabinetMedical/views/medicamentsList");
+        }
+        
       }
 
         return $view;
