@@ -44,6 +44,9 @@ BEGIN
     /* update de la valeur ASMR */
     UPDATE CIS_HAS_ASMR SET valeurASMR = N_ValeurASMR WHERE codeCIS = N_codeCIS;
 
+    /* update  codeHAS */
+    UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
+
 return RETURN_CODE;
 
 END//

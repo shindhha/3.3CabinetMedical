@@ -31,7 +31,7 @@ BEGIN
     SELECT idDesignation INTO idDes FROM CIS_BDPM WHERE CodeCIS = N_codeCIS;
 
     IF (idDes IS NOT NULL) THEN
-        UPDATE DesignationElemPharma Set designation = N_desElemPharma where idDesignation = idDes ;
+        UPDATE DesignationElemPharma Set designation = N_desElemPharma where idDesignation = idDes;
     ELSE
         INSERT INTO DesignationElemPharma (designation) VALUES (N_desElemPharma);
         SET idDes = LAST_INSERT_ID();
