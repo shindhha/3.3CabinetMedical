@@ -15,6 +15,7 @@ BEGIN
 
     DECLARE idLibelleAs INT;
     DECLARE idMotifEv INT;
+    DECLARE codeHASTest VARCHAR(8);
 
     SELECT idLibelleAsmr INTO idLibelleAs FROM CIS_HAS_ASMR WHERE codeCIS = N_codeCIS;
     /* Update du libelle si idLibelleAs non NULL sinon le crée */
@@ -44,8 +45,14 @@ BEGIN
     /* update de la valeur ASMR */
     UPDATE CIS_HAS_ASMR SET valeurASMR = N_ValeurASMR WHERE codeCIS = N_codeCIS;
 
-    /* update  codeHAS */
-    UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
+    /* update codeHAS */
+    SELECT codeHAS INTO codeHASTest FROM HAS_LiensPageCT WHERE codeHAS = N_codeHAS;
+    if (codeHASTest IS NOT NULL) THEN
+        UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
+    ELSE
+        INSERT INTO HAS_LiensPageCT (codeHAS, lienPage) VALUES (N_codeHAS, " ");
+        UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
+    END IF;
 
 return RETURN_CODE;
 
