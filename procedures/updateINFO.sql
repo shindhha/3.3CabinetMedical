@@ -19,8 +19,8 @@ BEGIN
         UPDATE Info_Texte SET labelTexte = N_texte WHERE idTexte = idText;
     ELSE
         INSERT INTO Info_Texte (labeltexte) VALUES (N_texte);
-
-        UPDATE CIS_INFO SET idTexte = (SELECT idTexte FROM Info_Texte WHERE labelTexte = N_texte) WHERE codeCIS = N_codeCIS;
+        SET idtex = LAST_INSERT_ID();
+        UPDATE CIS_INFO SET idTexte = idtex WHERE codeCIS = N_codeCIS;
     END IF;
 
     UPDATE CIS_INFO SET dateDebutInformation = N_dateDebut WHERE codeCIS = N_codeCIS;
