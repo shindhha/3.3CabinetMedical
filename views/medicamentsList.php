@@ -4,18 +4,20 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
+
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 	<script type="text/javascript" src="../scripts/script.js"></script>
 	<title>MEDILOG</title>
+	
+</head>
+
+<body onload="resizeMenu()">
 	<?php
 	spl_autoload_extensions(".php");
 	spl_autoload_register();
 	use yasmf\HttpHelper;
 	?>
-</head>
-
-<body onload="resizeMenu()">
 	<div class="container-fluid h-100  text-white">
 		<div class="row h-100">
 			<!-- Menu -->
@@ -132,7 +134,26 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
+							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
+								<table class="">
+									<tr>
+										<th>Valeur SMR</th>
+										<th>Valeur ASMR</th>
+										<th>Fhorme Pharmaceutique</th>
+										<th>Voie d'administration</th>
+										<th>Taux Remboursement</th>
+										<th>Prix</th>
+									</tr>
+									<?php while ($row = $formePharma->fetch()) {
+										echo "<tr>"
+											 ."<td>" . "</td>"
+											 ."<td>" . "</td>"
+											 ."<td>" . $row['formePharma'] . "</td>"
+											 ."<td>" .  "</td>"
+											 ."</tr>";
+									} ?>
+								</table>
+
 							</div>
 
 

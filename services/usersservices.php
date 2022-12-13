@@ -8,7 +8,7 @@ use PDOException;
 /**
  *
  */
-class LoginService
+class UsersServices
 {
   public function findIfAdminExists($pdo,$username,$password)
   {
@@ -21,13 +21,24 @@ class LoginService
     $nbRow = $request->rowcount();
     return $nbRow >= 1;
   }
+  public function getFormePharma($pdo)
+  {
+    $sql = "SELECT formePharma
+            FROM CIS_BDPM
+            JOIN FormePharma fp
+            ON fp.idFormePharma = CIS_BDPM.idFormePharma
+            ";
+
+    return $pdo->query($sql);
+  }
+
   private static $defaultUsersService ;
 
   public static function getDefaultUsersService()
   {
-      if (LoginService::$defaultUsersService == null) {
-          LoginService::$defaultUsersService = new LoginService();
+      if (UsersServices::$defaultUsersService == null) {
+          UsersServices::$defaultUsersService = new UsersServices();
       }
-      return LoginService::$defaultUsersService;
+      return UsersServices::$defaultUsersService;
   }
 }

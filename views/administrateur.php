@@ -136,10 +136,11 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
+							<div class="col-md-10 col-xl-6 col-sm-7 col-12 green border-2 p-5">
 								<form>
+									<?php var_dump($test); ?>
 									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="import">
+									<input type="hidden" name="action" value="d">
 									<input type="submit" value="Import">
 								</form>
 							</div>

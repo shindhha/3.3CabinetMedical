@@ -3,6 +3,7 @@ body , html {
 	height: 100%;
 	width: 100%;
 	margin: 0px;
+	overflow: hidden;
 
 }
 
@@ -73,4 +74,8 @@ input {
 
 .no-border {
 	border: none;
+}
+
+.h-50 {
+	max-height: 450px;
 }

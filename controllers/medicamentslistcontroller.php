@@ -41,10 +41,21 @@ use yasmf\View;
 
 class PatientsListController
 {
+	private $usersservices;
 
-    public function index($pdo) {
-        $view = new View("Sae3.3CabinetMedical/views/medicamentsList");
-        return $view;
-    }
+	public function __construct()
+	{
+		$this->usersservices = UsersServices::getDefaultUsersService();
+	}
+	public function index($pdo) {
+		$view = new View("Sae3.3CabinetMedical/views/medicamentsList");
+
+		$formePharma = $this->usersservices->getFormePharma($pdo);
+		$view->setVar("formePharma",$formePharma);
+
+		return $view;
+
+
+	}
 
 }

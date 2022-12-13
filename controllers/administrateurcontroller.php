@@ -45,7 +45,7 @@ class AdministrateurController
 {
   private $importservice;
   private $files = [["CIS_bdpm.txt","importBDPM",12],
-                    ["CIS_CIP_bdpm.txt","importCIP",11],
+                    ["CIS_CIP_bdpm.txt","importCIP",13],
                     ["CIS_COMPO_bdpm.txt","importCOMPO",8],
                     ["CIS_HAS_SMR_bdpm.txt","importSMR",6],
                     ["CIS_HAS_ASMR_bdpm.txt","importASMR",6],
@@ -71,11 +71,23 @@ class AdministrateurController
         $sqlFunction = $file[1];
         $nbParam = $file[2];
         $this->importservice->download($fileName);
-        $this->importservice->imports($pdo,$nbParam,$fileName,$sqlFunction);
+        $stmt = $this->importservice->constSQL($pdo,$nbParam,$sqlFunction);
+        $this->importservice->imports($stmt,$fileName);
       }
 
       $view = new View("Sae3.3CabinetMedical/views/administrateur");
 
+      return $view;
+    }
+
+    public function d($pdo)
+    {
+      $view = new View("Sae3.3CabinetMedical/views/administrateur");
+      $this->importservice->download("CIS_COMPO_bdpm.txt");
+      $stmt = $this->importservice->constSQL($pdo,12,"importBDPM");
+      $test = $this->importservice->imports($stmt,"CIS_bdpm.txt");
+       
+      $view->setVar("test",$test);
       return $view;
     }
 

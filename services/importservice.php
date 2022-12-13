@@ -13,7 +13,7 @@ class ImportService
 { 
 
   private static $defaultImportService;
-  private static $path = "res";
+  private static $path = "res/";
 
   public static function getDefaultImportService()
   {
@@ -23,7 +23,7 @@ class ImportService
     return ImportService::$defaultImportService;
   }
 
-  public static function formatDate ($text) {
+  public function formatDate ($text) {
 
     preg_match_all("#[0-9]{2}\/[0-9]{2}\/[0-9]{4}#",$text,$dates);
     foreach ($dates[0] as $date) {
@@ -36,8 +36,8 @@ class ImportService
 
   }
 
-  public static function download ($name) {
-    $destination = "res/".$name;
+  public function download ($name) {
+    $destination = ImportService::$path.$name;
     $source = "https://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=".$name;
     $ch = curl_init($source);
     $fp = fopen($destination, "w");
@@ -52,28 +52,41 @@ class ImportService
   }
 
 
-  public static function imports ($pdo,$nbParam,$fileName,$sqlFunction) {
-    $file = fopen("res/".$fileName, "r");
-    $content = fread($file, filesize("res/".$fileName));
-    $lines = explode("\n", $content);
-
+  public function constSQL($pdo,$nbParam,$sqlFunction)
+  {
     $sql = "SELECT " . $sqlFunction . " (";
 
-    for ($i=0; $i < $nbParam ; $i++) { 
-      $sql = $sql . "?";
-      if ($i < $nbParam - 1) {
-        $sql = $sql . " ,";
+      for ($i=0; $i < $nbParam ; $i++) { 
+        $sql = $sql . "?";
+        if ($i < $nbParam - 1) {
+          $sql = $sql . " ,";
+        }
+      }
+      $sql = $sql . ")";
+      $stmt = $pdo->prepare($sql);
+      return $stmt;
+    }
+
+    public function imports ($stmt,$fileName) {
+      $file = fopen(ImportService::$path.$fileName, "r");
+      $content = fread($file, filesize(ImportService::$path.$fileName));
+      $lines = explode("\n", $content);
+      foreach ($lines as $line) {
+        $line = ImportService::formatDate($line);
+        $line = utf8_encode($line);
+
+        $args = explode("\t", $line);
+        for ($i = 0 ; $i < count($args) ; $i++) {
+          $args[$i] = trim($args[$i]);
+        }
+        try {
+
+          
+          $stmt->execute($args);
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+        
       }
     }
-    $sql = $sql . ")";
-    $stmt = $pdo->prepare($sql);
-
-
-    foreach ($lines as $line) {
-      $line = ImportService::formatDate($line);
-      $line = utf8_encode($line);
-      $args = explode("\t", $line);
-      $stmt->execute($args);
-    }
   }
-}

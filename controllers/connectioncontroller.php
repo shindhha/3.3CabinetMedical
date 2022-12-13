@@ -20,7 +20,7 @@
 namespace controllers;
 
 use yasmf\View;
-use services\LoginService;
+use services\UsersServices;
 use yasmf\HttpHelper;
 /**
  * yasmf - Yet Another Simple MVC Framework (For PHP)
@@ -42,16 +42,16 @@ use yasmf\HttpHelper;
 
 class ConnectionController
 {
-  private $LoginService;
+  private $usersservices;
 
   public function __construct()
   {
-      $this->LoginService = LoginService::getDefaultUsersService();
+      $this->usersservices = UsersServices::getDefaultUsersService();
   }
     public function index($pdo) {
       $username = HttpHelper::getParam('login');
       $password = htmlspecialchars(HttpHelper::getParam('password'));
-      $searchStmt = $this->LoginService->findIfAdminExists($pdo,$username,$password);
+      $searchStmt = $this->usersservices->findIfAdminExists($pdo,$username,$password);
       $view = new View("Sae3.3CabinetMedical/views/connection");
 
       if ($searchStmt) {
@@ -59,6 +59,8 @@ class ConnectionController
           $view = new View("Sae3.3CabinetMedical/views/administrateur");
         } else {
           $view = new View("Sae3.3CabinetMedical/views/medicamentsList");
+          $formePharma = $this->usersservices->getFormePharma($pdo);
+          $view->setVar("formePharma",$formePharma);
         }
         
       }
