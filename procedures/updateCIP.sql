@@ -21,14 +21,14 @@ BEGIN
     DECLARE idEtatComm INT;
     DECLARE codeCISTaux INT;
 
-    SELECT idLibellePresentation INTO idLibellePres FROM CIS_CIP_BDPM WHERE CodeCIS = N_codeCIS;
-    /* Si idLibellePress non NULL alors update sinon crée le libéllé */
+    /* Si l'id du libellePresentation existe on update le lien sinon on crée le libelle et on fait le lien */
+    SELECT idLibellePresentation INTO idLibellePres FROM LibellePresentation WHERE libellePresentation = N_libellePresentation LIMIT 1;
     IF (idLibellePres IS NOT NULL) THEN
-        UPDATE LibellePresentation SET libellePresentation = N_libellePresentation WHERE idLibellePresentation = idLibellePres;
+        UPDATE CIS_CIP_BDPM SET idLibellePresentation = idLibellePres WHERE codeCIS = N_codeCIS;
     ELSE
         INSERT INTO LibellePresentation (libellePresentation) VALUES (N_libellePresentation);
         SET idLibellePres = LAST_INSERT_ID();
-        INSERT INTO CIS_CIP_BDPM (idLibellePresentation) VALUES (idLibellePres);
+        UPDATE CIS_CIP_BDPM SET idLibellePresentation = idLibellePres WHERE codeCIS = N_codeCIS;
     END IF;
 
     /* Conversion du texte statutAdmini en boolean */
@@ -41,14 +41,14 @@ BEGIN
     /* Update statutAdminiPresentation */
     UPDATE CIS_CIP_BDPM SET statutAdminiPresentation = @statutAdminiPresentation WHERE codeCIS = N_codeCIS;
 
-    SELECT idEtatCommercialisation INTO idEtatComm FROM CIS_CIP_BDPM WHERE CodeCIS = N_codeCIS;
-    /* Si idEtatComm non NULL alors update sinon crée le EtatCommercialisation */
+    /* Si idEtatComm non NULL alors update sinon on crée l'EtatCommercialisation et on fait le lien */
+    SELECT idEtatCommercialisation INTO idEtatComm FROM EtatCommercialisation WHERE labelEtatCommercialisation = N_labelEtatCommercialisation LIMIT 1;
     IF (idEtatComm IS NOT NULL) THEN
-        UPDATE EtatCommercialisation SET labelEtatCommercialisation = N_labelEtatCommercialisation WHERE idEtatCommercialisation = idEtatComm;
+        UPDATE CIS_CIP_BDPM SET idEtatCommercialisation = idEtatComm WHERE codeCIS = N_codeCIS;    
     ELSE
         INSERT INTO EtatCommercialisation (labelEtatCommercialisation) VALUES (N_labelEtatCommercialisation);
         SET idEtatComm = LAST_INSERT_ID();
-        INSERT INTO CIS_CIP_BDPM (idEtatCommercialisation) VALUES (idEtatComm);
+        UPDATE CIS_CIP_BDPM SET idEtatCommercialisation = idEtatComm WHERE codeCIS = N_codeCIS;
     END IF;
 
     /* Conversion du texte aggrément collectivités en booléen */
@@ -62,8 +62,8 @@ BEGIN
     UPDATE CIS_CIP_BDPM SET agrementCollectivites = @agrementCollectivite WHERE codeCIS = N_codeCIS;
 
     /* update du taux de remboursement
-       On vérifie si le taux n'est pas vide, retire le '%' et on l'insère */
-    SELECT codeCIS into codeCISTaux FROM TauxRemboursement WHERE codeCIS = N_codeCIS;
+       On vérifie si le taux n'est pas vide, retire le '%' et on l'update */
+    SELECT codeCIS into codeCISTaux FROM TauxRemboursement WHERE codeCIS = N_codeCIS LIMIT 1;
     IF (N_tauxRemboursement != '' AND codeCISTaux IS NOT NULL ) THEN
         SET @tauxRemboursement = REPLACE(N_tauxRemboursement, '%', '');
         SET @tauxRemboursement = CAST(@tauxRemboursement AS DECIMAL(5,2));
@@ -72,9 +72,6 @@ BEGIN
 
     /* UPDATE codeCIP13 */
     UPDATE CIS_CIP_BDPM SET codeCIP7 = N_codeCIP7 WHERE codeCIS = N_codeCIS;
-    
-    /* UPDATE codeCIP7 */
-    UPDATE CIS_CIP_BDPM SET codeCIP13 = N_codeCIP13 WHERE codeCIS = N_codeCIS;
     
     /* UPDATE prix */
     UPDATE CIS_CIP_BDPM SET prix = N_prix WHERE codeCIS = N_codeCIS;

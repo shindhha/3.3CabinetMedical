@@ -12,20 +12,18 @@ CREATE OR REPLACE FUNCTION updateGENER(
 BEGIN
 
     DECLARE RETURN_CODE INT DEFAULT 0;
-
     DECLARE grGener INT;
 
-    SELECT idGroupeGener INTO grGener FROM GroupeGener WHERE idGroupeGener = N_idGroupeGener;
-
+    /* Si l'id du groupeGener existe alors on update le lien sinon on le crée et on fait le lien */
+    SELECT idGroupeGener INTO grGener FROM GroupeGener WHERE idGroupeGener = N_idGroupeGener LIMIT 1;
     IF (grGener IS NOT NULL) THEN 
         UPDATE GroupeGener SET labelGroupeGener = N_libellegroupeGener WHERE idGroupeGener = N_idGroupeGener;
-    ELSE
-        INSERT INTO GroupeGener (idGroupeGener, labelGroupeGener) VALUES (N_idGroupeGener, N_libellegroupeGener);
-        UPDATE CIS_GENER SET idGroupeGener = N_idGroupeGener WHERE codeCIS = N_codeCIS;
     END IF;
 
+    /* On update le type générique */
     UPDATE CIS_GENER SET typeGenerique = N_typeGener WHERE codeCIS = N_codeCIS;
 
+    /* On update le numero de tri */
     UPDATE CIS_GENER SET numeroTri = N_noTri WHERE codeCIS = N_codeCIS;
 
 return RETURN_CODE;

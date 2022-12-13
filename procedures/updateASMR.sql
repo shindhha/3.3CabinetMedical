@@ -17,26 +17,26 @@ BEGIN
     DECLARE idMotifEv INT;
     DECLARE codeHASTest VARCHAR(8);
 
-    SELECT idLibelleAsmr INTO idLibelleAs FROM CIS_HAS_ASMR WHERE codeCIS = N_codeCIS;
-    /* Update du libelle si idLibelleAs non NULL sinon le crée */
+    /* Update du libelle si idLibelleAs non NULL */
+    SELECT idLibelleAsmr INTO idLibelleAs FROM LibelleAsmr WHERE libelleAsmr = N_LibelleASMR LIMIT 1;
     IF (idLibelleAs IS NOT NULL) THEN
-        UPDATE LibelleAsmr SET libelleAsmr = N_LibelleASMR WHERE idLibelleAsmr = idLibelleAs;
+        UPDATE CIS_HAS_ASMR SET idLibelleAsmr = idLibelleAs WHERE codeCIS = N_codeCIS;
     ELSE
-        /* Insertion du libelle */
+        /* Insertion du libelle et création du lien */
         INSERT INTO LibelleAsmr (libelleAsmr) VALUES (N_LibelleASMR);
         SET idLibelleAs = LAST_INSERT_ID();
-        INSERT INTO CIS_HAS_ASMR (idLibelleAsmr) VALUES (idLibelleAs);
+        UPDATE CIS_HAS_ASMR SET idLibelleAsmr = idLibelleAs WHERE codeCIS = N_codeCIS;
     END IF;
-
-    SELECT idMotifEval INTO idMotifEv FROM CIS_HAS_ASMR WHERE codeCIS = N_codeCIS;
+    
     /* Update du motif de l'évaluation dans ASMR si idMotifEval non NULL sinon le crée */
+    SELECT idMotifEval INTO idMotifEv FROM MotifEval WHERE libelleMotifEval = N_MotifEval LIMIT 1;
     IF (idMotifEv IS NOT NULL) THEN
-        UPDATE MotifEval SET libelleMotifEval = N_MotifEval WHERE idMotifEval = idMotifEv;
+        UPDATE CIS_HAS_ASMR SET idMotifEval = idMotifEv WHERE codeCIS = N_codeCIS;
     ELSE
-        /* Insertion du motif de l'évaluation */
+        /* Insertion du motif de l'évaluation et création du lien */
         INSERT INTO MotifEval (libelleMotifEval) VALUES (N_MotifEval);
         SET idMotifEv = LAST_INSERT_ID();
-        INSERT INTO CIS_HAS_ASMR (idMotivEval) VALUES (idMotifEv);
+        UPDATE CIS_HAS_ASMR SET idMotifEval = idMotifEv WHERE codeCIS = N_codeCIS;
     END IF;
 
     /* update de la date de l'avis de commission de la transparence */
@@ -46,7 +46,7 @@ BEGIN
     UPDATE CIS_HAS_ASMR SET valeurASMR = N_ValeurASMR WHERE codeCIS = N_codeCIS;
 
     /* update codeHAS */
-    SELECT codeHAS INTO codeHASTest FROM HAS_LiensPageCT WHERE codeHAS = N_codeHAS;
+    SELECT codeHAS INTO codeHASTest FROM HAS_LiensPageCT WHERE codeHAS = N_codeHAS LIMIT 1;
     if (codeHASTest IS NOT NULL) THEN
         UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
     ELSE
