@@ -3,11 +3,11 @@ DELIMITER //
 CREATE OR REPLACE FUNCTION importCIP(
                     N_codeCIS INT(6),
                     N_codeCIP7 INT(7),
-                    N_libellePresentation VARCHAR(100),
+                    N_libellePresentation TEXT,
                     N_statutAdminiPresentation TEXT,
-                    N_labelEtatCommercialisation VARCHAR(100),
+                    N_labelEtatCommercialisation TEXT,
                     N_dateCommercialisation DATE,
-                    N_codeCIP13 BIGINT(13) UNSIGNED,
+                    N_codeCIP13 BIGINT(13) UNSIGNED, -- Bypass de la limite de 2.147 Md pour un int normal
                     N_agrementCollectivite TEXT,
                     N_tauxRemboursement TEXT,
                     N_prix NUMERIC(6,2),

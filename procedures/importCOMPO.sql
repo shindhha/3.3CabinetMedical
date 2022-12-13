@@ -21,6 +21,11 @@ BEGIN
         SET variance = INSERT_CODE_SUBSTANCE(N_idSubstance, N_denomSubstance);
     END IF;
 
+    /* Insertion de la designation dans la bdd */
+    IF (SELECT COUNT(*) FROM DesignationElem WHERE labelElem = N_designationElem) = 0 THEN
+        INSERT INTO DesignationElem(labelElem) VALUES (N_designationElem);
+    END IF;
+
     /* Si la variance vaut -1 (valeur par défaut si pas d'insertion), on la récupère depuis la bd */
     IF variance = -1 THEN
         SELECT idSubstance INTO variance FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance;

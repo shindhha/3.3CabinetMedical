@@ -2,14 +2,14 @@
 
 CREATE TABLE DesignationElemPharma (
     idDesignation INT(3) AUTO_INCREMENT PRIMARY KEY,
-    designation VARCHAR(100)
+    designation TEXT
 );
 
 /* -------------------------------------------- Creation de la table des formes pharmaceutiques (FormePharma) -------------------------------------------- */
 
 CREATE TABLE FormePharma (
     idFormePharma INT(3),
-    formePharma VARCHAR(100)
+    formePharma TEXT
 );
 ALTER TABLE FormePharma ADD CONSTRAINT PK_FormePharma PRIMARY KEY (idFormePharma);
 ALTER TABLE FormePharma MODIFY idFormePharma INT(3) AUTO_INCREMENT;
@@ -27,7 +27,7 @@ ALTER TABLE StatutAdAMM MODIFY idStatutAdAMM INT(3) AUTO_INCREMENT;
 
 CREATE TABLE TypeProc (
     idTypeProc INT(3),
-    typeProc VARCHAR(255)
+    typeProc TEXT
 );
 ALTER TABLE TypeProc ADD CONSTRAINT PK_TypeProc PRIMARY KEY (idTypeProc);
 ALTER TABLE TypeProc MODIFY idTypeProc INT(3) AUTO_INCREMENT;
@@ -37,7 +37,7 @@ ALTER TABLE TypeProc MODIFY idTypeProc INT(3) AUTO_INCREMENT;
 
 CREATE TABLE AutorEurop (
     idAutoEur INT(3),
-    autoEur VARCHAR(255)
+    autoEur TEXT
 );
 ALTER TABLE AutorEurop ADD CONSTRAINT PK_AutorEurop PRIMARY KEY (idAutoEur);
 ALTER TABLE AutorEurop MODIFY idAutoEur INT(3) AUTO_INCREMENT;
@@ -85,7 +85,7 @@ ALTER TABLE TauxRemboursement ADD CONSTRAINT FK_TauxRemboursement_CIS_BDPM FOREI
 
 CREATE TABLE LibellePresentation (
     idLibellePresentation INT(3),
-    libellePresentation VARCHAR(100)
+    libellePresentation TEXT
 );
 ALTER TABLE LibellePresentation ADD CONSTRAINT PK_LibellePresentation PRIMARY KEY (idLibellePresentation);
 ALTER TABLE LibellePresentation MODIFY idLibellePresentation INT(3) AUTO_INCREMENT;
@@ -94,7 +94,7 @@ ALTER TABLE LibellePresentation MODIFY idLibellePresentation INT(3) AUTO_INCREME
 
 CREATE TABLE EtatCommercialisation (
     idEtatCommercialisation INT(3),
-    labelEtatCommercialisation VARCHAR(100)
+    labelEtatCommercialisation TEXT
 );
 ALTER TABLE EtatCommercialisation ADD CONSTRAINT PK_EtatCommercialisation PRIMARY KEY (idEtatCommercialisation);
 ALTER TABLE EtatCommercialisation MODIFY idEtatCommercialisation INT(3) AUTO_INCREMENT;
@@ -109,7 +109,7 @@ CREATE TABLE CIS_CIP_BDPM (
     statutAdminiPresentation BOOL,
     idEtatCommercialisation INT(1),
     dateCommrcialisation DATE,
-    codeCIP13 BIGINT(13) UNSIGNED,
+    codeCIP13 BIGINT(13) UNSIGNED, -- Bypass de la limite de 2.147 Md pour un int normal
     agrementCollectivites BOOL,
     prix NUMERIC(6,2),
     indicationRemboursement TEXT
@@ -152,6 +152,7 @@ CREATE TABLE DesignationElem (
     labelElem VARCHAR(100)
 );
 ALTER TABLE DesignationElem ADD CONSTRAINT PK_DesignationElem PRIMARY KEY (idElem);
+ALTER TABLE DesignationElem MODIFY idElem INT(3) AUTO_INCREMENT;
 
 /* -------------------------------------------- Creation de la table CodeSubstance -------------------------------------------- */
 CREATE TABLE CodeSubstance (
@@ -201,7 +202,7 @@ ALTER TABLE CIS_COMPO ADD CONSTRAINT FK_CIS_COMPO_Dosage FOREIGN KEY (idDosage) 
 /* -------------------------------------------- Creation de la table ID_Label_VoieAdministration -------------------------------------------- */
 CREATE TABLE ID_Label_VoieAdministration (
     idVoieAdministration INT(3),
-    labelVoieAdministration VARCHAR(255)
+    labelVoieAdministration TEXT
 );
 ALTER TABLE ID_Label_VoieAdministration ADD CONSTRAINT PK_ID_Label_VoieAdministration PRIMARY KEY (idVoieAdministration);
 ALTER TABLE ID_Label_VoieAdministration MODIFY idVoieAdministration INT(3) AUTO_INCREMENT;
@@ -265,7 +266,7 @@ ALTER TABLE CIS_INFO ADD CONSTRAINT FK_CIS_INFO_Info_Texte FOREIGN KEY (idTexte)
 /* -------------------------------------------- Creation de la table ID_Label_Titulaire -------------------------------------------- */
 CREATE TABLE ID_Label_Titulaire (
     idTitulaire INT(3),
-    labelTitulaire VARCHAR(255)
+    labelTitulaire TEXT
 );
 ALTER TABLE ID_Label_Titulaire ADD CONSTRAINT PK_ID_Label_Titulaire PRIMARY KEY (idTitulaire);
 ALTER TABLE ID_Label_Titulaire MODIFY idTitulaire INT(3) AUTO_INCREMENT;
