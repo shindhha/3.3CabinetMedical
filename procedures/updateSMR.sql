@@ -16,8 +16,8 @@ BEGIN
     DECLARE motif_id INT;
     DECLARE idNiveauS INT;
 
-    SELECT idLibelleSmr INTO libelle_id FROM LibelleSmr WHERE libelleSMR = N_LibelleSMR LIMIT 1;
-    
+    /* Si l'id du libelle SMR existe on update le lien sinon on crée le libelle et on update le lien */
+    SELECT idLibelleSmr INTO libelle_id FROM LibelleSmr WHERE libelleSMR = N_LibelleSMR LIMIT 1;    
     IF (libelle_id IS NOT NULL) THEN
         UPDATE CIS_HAS_SMR SET idLibelleSmr = libelle_id WHERE codeCIS = N_codeCIS;
     ELSE
@@ -29,12 +29,13 @@ BEGIN
     /* Si le lien n'existe pas, on le crée sinon on l'update */
     IF (SELECT COUNT(*) FROM HAS_LiensPageCT WHERE codeHAS = N_codeHAS) = 0 THEN
         SELECT importCT(N_codeHAS, "") INTO RETURN_CODE;
+        UPDATE CIS_HAS_SMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
     ELSE
         UPDATE CIS_HAS_SMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
     END IF;
 
+    /* Si l'id du motif existe on update le lien sinon on crée le le motivEval et on update le lien */
     SELECT idMotifEval INTO motif_id FROM MotifEval WHERE libelleMotifEval = N_MotifEval LIMIT 1;
-
     IF (motif_id IS NOT NULL) THEN
         UPDATE CIS_HAS_SMR SET idMotifEval = motif_id WHERE codeCIS = N_codeCIS;
     ELSE    
@@ -43,8 +44,8 @@ BEGIN
         UPDATE CIS_HAS_SMR SET idMotifEval = motif_id WHERE codeCIS = N_codeCIS;
     END IF;
 
+    /* Si l'id du niveau SMR existe on update le lien sinon on crée le libelle du niveauSMR et on update le lien */
     SELECT idNiveauSMR INTO idNiveauS FROM NiveauSMR WHERE libelleNiveauSMR = N_ValeurSMR;
-
     IF (idNiveauS IS NOT NULL) THEN
         UPDATE CIS_HAS_SMR SET niveauSMR = idNiveauS WHERE codeCIS = N_codeCIS;
     ELSE
@@ -53,6 +54,7 @@ BEGIN
         UPDATE CIS_HAS_SMR SET niveauSMR = idNiveauS WHERE codeCIS = N_codeCIS;
     END IF;
 
+    /* On update la date de l'avis */
     UPDATE CIS_HAS_SMR SET dateAvis = N_DateAvis WHERE codeCIS = N_codeCIS;
 
 return RETURN_CODE;
