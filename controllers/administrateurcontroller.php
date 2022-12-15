@@ -44,15 +44,15 @@ use yasmf\HttpHelper;
 class AdministrateurController
 {
   private $importservice;
-  private $files = [["CIS_bdpm.txt","importBDPM",12],
-                    ["CIS_CIP_bdpm.txt","importCIP",13],
-                    ["CIS_COMPO_bdpm.txt","importCOMPO",8],
-                    ["CIS_HAS_SMR_bdpm.txt","importSMR",6],
-                    ["CIS_HAS_ASMR_bdpm.txt","importASMR",6],
-                    ["CIS_HAS_LiensPageCT_bdpm.txt","importCT",2],
-                    ["CIS_GENER_bdpm.txt","importGENER",5],
-                    ["CIS_CPD_bdpm.txt","importCPD",2],
-                    ["CIS_InfoImportantes.txt","importINFO",4]];
+  private $files = [["CIS_bdpm.txt","procBDPM",12],
+                    ["CIS_CIP_bdpm.txt","procCIP",13],
+                    ["CIS_COMPO_bdpm.txt","procCOMPO",8],
+                    ["CIS_HAS_SMR_bdpm.txt","procSMR",6],
+                    ["CIS_HAS_ASMR_bdpm.txt","procASMR",6],
+                    ["CIS_HAS_LiensPageCT_bdpm.txt","procCT",2],
+                    ["CIS_GENER_bdpm.txt","procGENER",5],
+                    ["CIS_CPD_bdpm.txt","procCPD",2],
+                    ["CIS_InfoImportantes.txt","procINFO",4]];
   public function __construct()
   {
       $this->importservice = ImportService::getDefaultImportService();
@@ -83,9 +83,15 @@ class AdministrateurController
     public function d($pdo)
     {
       $view = new View("Sae3.3CabinetMedical/views/administrateur");
-      $this->importservice->download("CIS_COMPO_bdpm.txt");
-      $stmt = $this->importservice->constSQL($pdo,12,"importBDPM");
-      $test = $this->importservice->imports($stmt,"CIS_bdpm.txt");
+      
+      $stmt = $this->importservice->constSQL($pdo,12,"importCIP");
+
+      
+      $this->importservice->download("CIS_CIP_bdpm.txt");
+      $test = $this->importservice->imports($stmt,"CIS_CIP_bdpm.txt");
+      
+
+      
        
       $view->setVar("test",$test);
       return $view;

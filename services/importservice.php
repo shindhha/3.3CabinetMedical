@@ -79,8 +79,8 @@ class ImportService
         for ($i = 0 ; $i < count($args) ; $i++) {
           $args[$i] = trim($args[$i]);
         }
+        return [$stmt,$args];
         try {
-
           
           $stmt->execute($args);
         } catch (PDOException $e) {
