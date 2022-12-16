@@ -3,11 +3,11 @@
  * Sample without database connexion
  */
  $hostname = "sql.alphaline.ml";
- $dbname = "SAE";
+ $dbname = "SAE_TESTS";
  $user = "guillaume";
  $password = "guillaume";
  $port = 3306;
- $charset = "utf8";
+ $charset = "utf8mb4";
 
 spl_autoload_extensions(".php");
 spl_autoload_register();

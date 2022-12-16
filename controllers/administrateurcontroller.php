@@ -43,58 +43,73 @@ use yasmf\HttpHelper;
 
 class AdministrateurController
 {
-  private $importservice;
-  private $files = [["CIS_bdpm.txt","procBDPM",12],
-                    ["CIS_CIP_bdpm.txt","procCIP",13],
-                    ["CIS_COMPO_bdpm.txt","procCOMPO",8],
-                    ["CIS_HAS_SMR_bdpm.txt","procSMR",6],
-                    ["CIS_HAS_ASMR_bdpm.txt","procASMR",6],
-                    ["CIS_HAS_LiensPageCT_bdpm.txt","procCT",2],
-                    ["CIS_GENER_bdpm.txt","procGENER",5],
-                    ["CIS_CPD_bdpm.txt","procCPD",2],
-                    ["CIS_InfoImportantes.txt","procINFO",4]];
-  public function __construct()
-  {
-      $this->importservice = ImportService::getDefaultImportService();
-  }
-    public function index($pdo) {      
+	private $importservice;
+	private $files = [["CIS_bdpm.txt","BDPM",12,false,0,"BDPM"],
+					  ["CIS_CIP_bdpm.txt","CIP",13,false,0,"CIP_BDPM"],
+					  ["CIS_COMPO_bdpm.txt","COMPO",8,true,0,"COMPO"],
+					  ["CIS_HAS_SMR_bdpm.txt","SMR",6,false],
+					  ["CIS_HAS_ASMR_bdpm.txt","ASMR",6,false],
+					  ["CIS_HAS_LiensPageCT_bdpm.txt","CT",2,false],
+					  ["CIS_GENER_bdpm.txt","GENER",5,true,2,"GENER"],
+					  ["CIS_CPD_bdpm.txt","CPD",2,false],
+					  ["CIS_InfoImportantes.txt","INFO",4,false]];
+	public function __construct() {
+		$this->importservice = ImportService::getDefaultImportService();
+	}
 
-      $view = new View("Sae3.3CabinetMedical/views/administrateur");
-      
-      return $view;
-    }
+	public function index($pdo) {      
 
-    public function import($pdo)
-    {
-      foreach ($this->files as $file) {
-        $fileName = $file[0];
-        $sqlFunction = $file[1];
-        $nbParam = $file[2];
-        $this->importservice->download($fileName);
-        $stmt = $this->importservice->constSQL($pdo,$nbParam,$sqlFunction);
-        $this->importservice->imports($stmt,$fileName);
-      }
+		$view = new View("Sae3.3CabinetMedical/views/administrateur");
+	  
+		return $view;
+	}
 
-      $view = new View("Sae3.3CabinetMedical/views/administrateur");
+	public function importAll($pdo) {
+		
+		foreach ($this->files as $file) {
+			$fileName = $file[0];
+			$sqlFunction = $file[1];
+			$nbParam = $file[2];
+			$trimLine = $file[3];
+			$this->importservice->download($fileName);
+			$stmt = $this->importservice->constSQL($pdo,$nbParam,$sqlFunction);
+			$this->importservice->imports($stmt,$fileName,$trimLine);
+		}
 
-      return $view;
-    }
+		$view = new View("Sae3.3CabinetMedical/views/administrateur");
 
-    public function d($pdo)
-    {
-      $view = new View("Sae3.3CabinetMedical/views/administrateur");
-      
-      $stmt = $this->importservice->constSQL($pdo,12,"importCIP");
+		return $view;
+	}
 
-      
-      $this->importservice->download("CIS_CIP_bdpm.txt");
-      $test = $this->importservice->imports($stmt,"CIS_CIP_bdpm.txt");
-      
+	public function tryToImport($pdo) {
 
-      
-       
-      $view->setVar("test",$test);
-      return $view;
-    }
+		$view = new View("Sae3.3CabinetMedical/views/administrateur");
+		(int) $file = HttpHelper::getParam('file');
+		$filep = $this->files[$file][0];
+		$function = $this->files[$file][1];
+		$nbParam = $this->files[$file][2];
+		$trimLine = $this->files[$file][3];
+		$iCis = $this->files[$file][4];
+		$bd = $this->files[$file][5];
+		
+		
+		try {
+			
+			
+			$this->importservice->download($filep);
+			$importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
+			$updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
+			
+			$test = $this->importservice->exportToBD($pdo,$importStmt,$updateStmt,$filep,$trimLine,$iCis,$bd);
+			
+		} catch (PDOException $e) {
+			throw new PDOException($e->getMessage(), $e->getCode());
+			
+		}
+
+		
+
+		return $view;
+	}
 
 }

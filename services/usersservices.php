@@ -14,7 +14,7 @@ class UsersServices
   {
     $sql = "SELECT *
          FROM users
-         WHERE login = :username AND motDePasse = MD5(:password)";
+         WHERE login = :username AND `password` = MD5(:password)";
 
     $request = $pdo->prepare($sql);
     $request->execute(['username' => $username , 'password' => $password]);
