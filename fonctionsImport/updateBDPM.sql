@@ -125,17 +125,19 @@ BEGIN
        Splitté par le caractère ";" */
     SET @voieAdm = NB_OCCURENCES(N_voieAdministration, ';') + 1;
     SET @i = 1;
+    /* Supprime les liens */
+    DELETE FROM CIS_VoieAdministration WHERE codeCIS = N_codeCIS;
     WHILE @i <= @voieAdm DO
         SET @voie = SPLIT_EXPLODE(N_voieAdministration, ';', @i);
         SELECT idVoieAdministration INTO idVoieA FROM ID_Label_VoieAdministration WHERE labelVoieAdministration = @voie LIMIT 1;
         -- On update le lien avec le label de la voie d'administration si idVoieA existe sinon on le crée et on fait le lien
         IF (idVoieA IS NOT NULL) THEN
-            UPDATE CIS_VoieAdministration SET idVoieAdministration = idVoieA WHERE codeCIS = N_codeCIS;
+            INSERT INTO CIS_VoieAdministration (codeCIS, idVoieAdministration) VALUES (N_codeCIS, idVoieA);
         ELSE
             -- On enregistre le nom de la voie dans la BDD et on fait le lien
             INSERT INTO ID_Label_VoieAdministration (labelVoieAdministration) VALUES (@voie);
             SELECT idVoieAdministration INTO idVoieA FROM ID_Label_VoieAdministration WHERE labelVoieAdministration = @voie LIMIT 1;
-            UPDATE CIS_VoieAdministration SET idVoieAdministration = idVoieA WHERE codeCIS = N_codeCIS;
+            INSERT INTO CIS_VoieAdministration (codeCIS, idVoieAdministration) VALUES (N_codeCIS, idVoieA);
         END IF;
 
         SET @i = @i + 1;
