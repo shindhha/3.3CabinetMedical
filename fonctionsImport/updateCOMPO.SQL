@@ -1,6 +1,7 @@
+DROP FUNCTION IF EXISTS updateCOMPO;
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateCOMPO(
+CREATE FUNCTION updateCOMPO(
                     N_codeCIS INT(6),
                     N_designationElem TEXT,
                     N_idSubstance INT(6),

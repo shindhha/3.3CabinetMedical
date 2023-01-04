@@ -1,16 +1,17 @@
+DROP FUNCTION IF EXISTS updateBDPM;
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateBDPM(
+CREATE FUNCTION updateBDPM(
                     N_codeCIS INT(6),
-                    N_desElemPharma VARCHAR(100),   -- V
-                    N_formePharma VARCHAR(100),     -- V
+                    N_desElemPharma TEXT,   -- V
+                    N_formePharma TEXT,     -- V
                     N_voieAdministration TEXT,      -- V
                     N_statutAdAMM VARCHAR(25),      -- V
-                    N_typeProc VARCHAR(255),        -- V
+                    N_typeProc TEXT,        -- V
                     N_etatCommercialisation TEXT,   -- V
                     N_dateAAM DATE,                 -- V
                     N_statutBDM TEXT,               -- V
-                    N_autoEur VARCHAR(255),         -- V
+                    N_autoEur TEXT,         -- V
                     N_titulaires TEXT,              -- V
                     N_surveillanceRenforcee TEXT)   -- V
     RETURNS INT DETERMINISTIC

@@ -11,6 +11,8 @@ CREATE OR REPLACE PROCEDURE procCIP(
                     N_agrementCollectivite TEXT,
                     N_tauxRemboursement TEXT,
                     N_prix NUMERIC(6,2),
+                    Unknown1 VARCHAR(255),  -- Variables permattant d'importer la ligne directement après l'explode
+                    Unknown2 VARCHAR(255),  -- sans avoir a retirer des valeurs (ici les prix en doubles dans le fichier csv)
                     N_indicationRemboursement TEXT)
 
 BEGIN

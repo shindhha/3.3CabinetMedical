@@ -1,6 +1,7 @@
+DROP FUNCTION IF EXISTS importCIP;
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importCIP(
+CREATE FUNCTION importCIP(
                     N_codeCIS INT(6),
                     N_codeCIP7 INT(7),
                     N_libellePresentation TEXT,
@@ -11,10 +12,11 @@ CREATE OR REPLACE FUNCTION importCIP(
                     N_agrementCollectivite TEXT,
                     N_tauxRemboursement TEXT,
                     N_prix NUMERIC(6,2),
+                    Unknown1 VARCHAR(250),
+                    Unknown2 VARCHAR(250),
                     N_indicationRemboursement TEXT)
     RETURNS INT DETERMINISTIC
 BEGIN
-
     DECLARE RETURN_CODE INT DEFAULT 0;
 
     /* Creation du libellé dans la bdd */

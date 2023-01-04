@@ -1,0 +1,5 @@
+*.txt
+test/vendor/*
+test/services/*
+composer.json
+composer.lock

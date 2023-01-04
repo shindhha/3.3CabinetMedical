@@ -1,6 +1,7 @@
+DROP FUNCTION IF EXISTS importCOMPO;
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importCOMPO(
+CREATE FUNCTION importCOMPO(
                     N_codeCIS INT(6),
                     N_designationElem TEXT,
                     N_idSubstance INT(6),
