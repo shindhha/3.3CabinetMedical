@@ -1,5 +1,7 @@
+DROP FUNCTION IF EXISTS updateCIP;
 DELIMITER //
 
+<<<<<<< HEAD
 DROP FUNCTION IF EXISTS updateCIP//
 CREATE FUNCTION updateCIP(
                             N_codeCIS INT(6),
@@ -13,9 +15,24 @@ CREATE FUNCTION updateCIP(
                             N_tauxRemboursement TEXT,
                             N_prix NUMERIC(6,2),
                             N_indicationRemboursement TEXT)
+=======
+CREATE FUNCTION updateCIP(
+                        N_codeCIS INT(6),
+                        N_codeCIP7 INT(7),
+                        N_libellePresentation TEXT,
+                        N_statutAdminiPresentation TEXT,
+                        N_labelEtatCommercialisation TEXT,
+                        N_dateCommercialisation DATE,
+                        N_codeCIP13 BIGINT(13) UNSIGNED,
+                        N_agrementCollectivite TEXT,
+                        N_tauxRemboursement TEXT,
+                        N_prix NUMERIC(6,2),
+                        Unknown1 VARCHAR(250),
+                        Unknown2 VARCHAR(250),
+                        N_indicationRemboursement TEXT)
+>>>>>>> 5fb3a739a9b31b87293b7f4bc05451222811cf35
     RETURNS INT DETERMINISTIC
 BEGIN
-
     DECLARE RETURN_CODE INT DEFAULT 0;
 
     DECLARE idLibellePres INT;
