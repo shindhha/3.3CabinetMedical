@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateCPD(
+DROP FUNCTION IF EXISTS updateCPD//
+CREATE FUNCTION updateCPD(
                     N_codeCIS INT(11),
                     N_condition TEXT)
 

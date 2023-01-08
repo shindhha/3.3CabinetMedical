@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateINFO(
+DROP FUNCTION IF EXISTS updateINFO//
+CREATE FUNCTION updateINFO(
                     N_codeCIS INT(11),
                     N_dateDebut DATE,
                     N_dateFin DATE,

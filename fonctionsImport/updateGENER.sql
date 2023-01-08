@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateGENER(
+DROP FUNCTION IF EXISTS updateGENER//
+CREATE FUNCTION updateGENER(
                     N_idGroupeGener INT,
                     N_libellegroupeGener TEXT,
                     N_codeCis INT(11),

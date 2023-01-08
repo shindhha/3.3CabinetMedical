@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importCPD(
+DROP FUNCTION IF EXISTS importCPD//
+CREATE FUNCTION importCPD(
                     N_codeCIS INT(11),
                     N_condition TEXT)
 

@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateASMR(
+DROP FUNCTION IF EXISTS updateASMR//
+CREATE FUNCTION updateASMR(
                             N_codeCIS INT(11),
                             N_codeHAS TEXT,
                             N_MotifEval TEXT,

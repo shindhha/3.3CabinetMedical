@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importGENER(
+DROP FUNCTION IF EXISTS importGENER//
+CREATE FUNCTION importGENER(
                     N_idGroupeGener INT,
                     N_libellegroupeGener TEXT,
                     N_codeCis INT(11),

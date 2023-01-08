@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importCIP(
+DROP FUNCTION IF EXISTS importCIP//
+CREATE FUNCTION importCIP(
                     N_codeCIS INT(6),
                     N_codeCIP7 INT(7),
                     N_libellePresentation TEXT,

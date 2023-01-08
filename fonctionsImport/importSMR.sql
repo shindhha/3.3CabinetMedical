@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importSMR(
+DROP FUNCTION IF EXISTS importSMR//
+CREATE FUNCTION importSMR(
                     N_codeCIS INT(11),
                     N_codeHAS TEXT,
                     N_MotifEval TEXT,

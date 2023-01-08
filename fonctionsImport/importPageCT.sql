@@ -1,8 +1,9 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importCT(
+DROP FUNCTION IF EXISTS importCT//
+CREATE FUNCTION importCT(
                     N_codeHAS VARCHAR(8),
-                    N_lienPage TEXT) RETURNS INT
+                    N_lienPage TEXT) RETURNS INT DETERMINISTIC
 BEGIN
     -- INFO : il faut inpérativement exécuter l'import des liens avant l'import
     --        de SMR et ASMR pour que les liens ne soient pas vides.

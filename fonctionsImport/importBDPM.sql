@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importBDPM(
+DROP FUNCTION IF EXISTS importBDPM//
+CREATE FUNCTION importBDPM(
                     N_codeCIS INT(6),
                     N_desElemPharma TEXT,   -- V
                     N_formePharma TEXT,     -- V

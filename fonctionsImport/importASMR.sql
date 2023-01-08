@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importASMR(
+DROP FUNCTION IF EXISTS importASMR//
+CREATE FUNCTION importASMR(
                     N_codeCIS INT(6),
                     N_codeHAS TEXT,
                     N_MotifEval TEXT,

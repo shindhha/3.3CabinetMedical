@@ -1,8 +1,9 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateCT(
+DROP FUNCTION IF EXISTS updateCT//
+CREATE FUNCTION updateCT(
                     N_codeHAS VARCHAR(8),
-                    N_lienPage TEXT) RETURNS INT
+                    N_lienPage TEXT) RETURNS INT DETERMINISTIC
 BEGIN
     -- INFO : il faut inpérativement exécuter l'update des liens avant l'update
     --        de SMR et ASMR pour que les liens ne soient pas vides.

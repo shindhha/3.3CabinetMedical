@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateCIP(
+DROP FUNCTION IF EXISTS updateCIP//
+CREATE FUNCTION updateCIP(
                             N_codeCIS INT(6),
                             N_codeCIP7 INT(7),
                             N_libellePresentation VARCHAR(100),

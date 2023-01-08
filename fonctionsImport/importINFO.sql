@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION importINFO(
+DROP FUNCTION IF EXISTS importINFO//
+CREATE FUNCTION importINFO(
                     N_codeCIS INT(11),
                     N_dateDebut DATE,
                     N_dateFin DATE,

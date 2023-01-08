@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateSMR(
+DROP FUNCTION IF EXISTS updateSMR//
+CREATE FUNCTION updateSMR(
                     N_codeCIS INT(11),
                     N_codeHAS TEXT,
                     N_MotifEval TEXT,

@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION updateBDPM(
+DROP FUNCTION IF EXISTS updateBDPM//
+CREATE FUNCTION updateBDPM(
                     N_codeCIS INT(6),
                     N_desElemPharma VARCHAR(100),   -- V
                     N_formePharma VARCHAR(100),     -- V
