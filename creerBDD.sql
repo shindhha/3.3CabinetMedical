@@ -276,7 +276,7 @@ CREATE TABLE CIS_Titulaires (
     codeCIS INT(6),
     idTitulaire INT(3)
 );
-ALTER TABLE CIS_Titulaires ADD CONSTRAINT PK_CIS_Titulaires PRIMARY KEY (codeCIS);
+ALTER TABLE CIS_Titulaires ADD CONSTRAINT PK_CIS_Titulaires PRIMARY KEY (codeCIS, idTitulaire);
 ALTER TABLE CIS_Titulaires ADD CONSTRAINT FK_CIS_Titulaires_CIS_BDPM FOREIGN KEY (codeCIS) REFERENCES CIS_BDPM(codeCIS);
 ALTER TABLE CIS_Titulaires ADD CONSTRAINT FK_CIS_Titulaires_ID_Label_Titulaire FOREIGN KEY (idTitulaire) REFERENCES ID_Label_Titulaire(idTitulaire);
 

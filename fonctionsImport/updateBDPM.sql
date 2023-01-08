@@ -3,7 +3,7 @@ DELIMITER //
 DROP FUNCTION IF EXISTS updateBDPM//
 CREATE FUNCTION updateBDPM(
                     N_codeCIS INT(6),
-                    N_desElemPharma VARCHAR(100),   -- V
+                    N_desElemPharma TEXT,   -- V
                     N_formePharma VARCHAR(100),     -- V
                     N_voieAdministration TEXT,      -- V
                     N_statutAdAMM VARCHAR(25),      -- V
@@ -131,7 +131,7 @@ BEGIN
     WHILE @i <= @voieAdm DO
         SET @voie = SPLIT_EXPLODE(N_voieAdministration, ';', @i);
         SELECT idVoieAdministration INTO idVoieA FROM ID_Label_VoieAdministration WHERE labelVoieAdministration = @voie LIMIT 1;
-        -- On update le lien avec le label de la voie d'administration si idVoieA existe sinon on le crée et on fait le lien
+        -- On recrée le lien dans la table si la voie d'administration existe
         IF (idVoieA IS NOT NULL) THEN
             INSERT INTO CIS_VoieAdministration (codeCIS, idVoieAdministration) VALUES (N_codeCIS, idVoieA);
         ELSE
@@ -147,17 +147,19 @@ BEGIN
     /* Update dans BDD de titulaires, séparé dans de très rares cas par ';' */
     SET @i = 1;
     SET @nb_titulaires = NB_OCCURENCES(N_titulaires, ';') + 1;
+    DELETE FROM CIS_Titulaires WHERE codeCIS = N_codeCIS;
     WHILE @i <= @nb_titulaires DO
         SET @titulaire = SPLIT_EXPLODE(N_titulaires, ';', @i);
         SELECT idTitulaire INTO idTit FROM ID_Label_Titulaire WHERE labelTitulaire = @titulaire LIMIT 1;
+        -- On recrée le lien dans la table si le(s) titulaire(s) existe
         IF (idTit IS NOT NULL) THEN
             -- On update le label de la voie d'administration si idTit existe
-            UPDATE CIS_Titulaires SET idTitulaire = idTit WHERE codeCIS = N_codeCIS;
+            INSERT INTO CIS_Titulaires (codeCIS, idTitulaire) VALUES (N_codeCIS, idTit);
         ELSE
             -- On enregistre le nom du titulaire dans la BDD et on fait le lien
             INSERT INTO ID_Label_Titulaire (labelTitulaire) VALUES (@titulaire);
             SELECT idTitulaire INTO idTit FROM ID_Label_Titulaire WHERE labelTitulaire = @titulaire LIMIT 1;
-            UPDATE CIS_Titulaires SET idTitulaire = idTit WHERE codeCIS = N_codeCIS;
+            INSERT INTO CIS_Titulaires (codeCIS, idTitulaire) VALUES (N_codeCIS, idTit);
         END IF;
     
         SET @i = @i + 1;
