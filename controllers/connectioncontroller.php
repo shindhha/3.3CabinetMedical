@@ -59,6 +59,7 @@ class ConnectionController
           header("Location: index.php?controller=administrateur");
         } else {
           header("Location: index.php?controller=medicamentslist");
+          $_SESSION['id'] = $username;
         }
         
       }

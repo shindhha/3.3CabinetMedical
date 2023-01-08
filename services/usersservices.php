@@ -21,6 +21,32 @@ class UsersServices
     $nbRow = $request->rowcount();
     return $nbRow >= 1;
   }
+  public function getVisites($pdo,$numSecu)
+  {
+    $sql = "SELECT motifVisite,dateVisite,note
+            FROM visites
+            JOIN listevisites
+            ON listevisites.idVisite = visites.idVisite";
+  }
+
+  public function getListPatients($pdo,$medecinRef,$numSecu = "%")
+  {
+    $sql = "SELECT patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email
+            FROM patientsmedecins
+            JOIN patients
+            ON patientsmedecins.numSecu = patients.numSecu
+            WHERE numRPPS = :numRPPS
+            AND patients.numSecu LIKE :numSecu";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam('numRPPS',$medecinRef);
+    $stmt->bindParam('numSecu',$numSecu);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+
+  }
   public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1, $designation = "%")
   {
     $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,designation,surveillanceRenforcee

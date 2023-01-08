@@ -41,7 +41,7 @@ use yasmf\HttpHelper;
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class PatientsListController
+class PatientController
 {
     private $usersservices;
     public function __construct()
@@ -49,10 +49,13 @@ class PatientsListController
       $this->usersservices = UsersServices::getDefaultUsersService();
   }
     public function index($pdo) {
-        $view = new View("Sae3.3CabinetMedical/views/patientslist");
+        $view = new View("Sae3.3CabinetMedical/views/patient");
 
-        $patients = $this->usersservices->getListPatients($pdo,$_SESSION['id']);
-        $view->setVar("patients",$patients);
+        $numSecu = HttpHelper::getParam("numSecu");
+
+        $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$numSecu);
+
+        $view->setVar("patient",$patient);
         return $view;
     }
 

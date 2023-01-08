@@ -46,7 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Patients </span>
+						<span class="h1 d-md-block d-none"> Fiche Patient </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
@@ -76,6 +76,41 @@
 
 					</div>
 				</nav>
+				<!-- Bandeau Patient -->
+				<div class="blue row">
+					<div class="d-flex justify-content-between">
+						<span></span>
+						<div><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></div>
+						<div>dqs</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="d-flex flex-row justify-content-between text-green">
+						
+						<div class="d-flex flex-column">
+							<h1>Informations</h1>
+							<span>Adresse</span>
+							<span>n°Telephone</span>
+							<span>email</span>
+							<span>Medecin Traitant</span>
+							<span>Numéro de sécurité sociale</span>
+							<span>Date de naissance</span>
+							<span>Lieu de naissance</span>
+						</div>
+
+						<div class="d-flex flex-column">
+							<h1>Notes</h1>
+							<form>
+								<textarea id="story" name="story"
+          rows="5" cols="33">
+It was a dark and stormy night...
+</textarea>
+							</form>
+							
+						</div>
+					</div>
+				</div>
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
@@ -87,20 +122,12 @@
 							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
 								<table class="">
 									<tr>
-										<th>numSecu</th>
-										<th>Lieu Naissance</th>
-										<th>nom</th>
-										<th>prenom</th>
-										<th>dateNaissance</th>
-										<th>adresse</th>
-										<th>codePostal</th>
-										<th>medecinRef</th>
-										<th>numTel</th>
-										<th>email</th>
-										<th></th>
+										<th>Date</th>
+										<th>Motif</th>
+										<th>Ordonnance</th>
 									</tr>
 									<?php 
-									foreach ($patients as $row) {
+									foreach ($patient as $row) {
 									echo "<tr>"
 											 ."<td>" . $row['numSecu'] . "</td>"
 											 ."<td>" . $row['LieuNaissance'] . "</td>"
