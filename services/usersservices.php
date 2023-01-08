@@ -24,19 +24,19 @@ class UsersServices
   public function getVisites($pdo,$numSecu)
   {
     $sql = "SELECT motifVisite,dateVisite,note
-            FROM visites
-            JOIN listevisites
-            ON listevisites.idVisite = visites.idVisite";
+            FROM Visites
+            JOIN ListeVisites
+            ON ListeVisites.idVisite = Visites.idVisite";
   }
 
   public function getListPatients($pdo,$medecinRef,$numSecu = "%")
   {
-    $sql = "SELECT patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email
-            FROM patientsmedecins
-            JOIN patients
-            ON patientsmedecins.numSecu = patients.numSecu
+    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email
+            FROM PatientsMedecins
+            JOIN Patients
+            ON PatientsMedecins.numSecu = Patients.numSecu
             WHERE numRPPS = :numRPPS
-            AND patients.numSecu LIKE :numSecu";
+            AND Patients.numSecu LIKE :numSecu";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam('numRPPS',$medecinRef);
