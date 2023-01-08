@@ -111,7 +111,7 @@ CREATE TABLE CIS_CIP_BDPM (
     dateCommrcialisation DATE,
     codeCIP13 BIGINT(13) UNSIGNED, -- Bypass de la limite de 2.147 Md pour un int normal
     agrementCollectivites BOOL,
-    prix NUMERIC(6,2),
+    prix NUMERIC(8,2),
     indicationRemboursement TEXT
 );
 ALTER TABLE CIS_CIP_BDPM ADD CONSTRAINT PK_CIS_CIP PRIMARY KEY (codeCIP13);

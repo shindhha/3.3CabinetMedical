@@ -1,21 +1,7 @@
 DROP FUNCTION IF EXISTS updateCIP;
 DELIMITER //
 
-<<<<<<< HEAD
 DROP FUNCTION IF EXISTS updateCIP//
-CREATE FUNCTION updateCIP(
-                            N_codeCIS INT(6),
-                            N_codeCIP7 INT(7),
-                            N_libellePresentation VARCHAR(100),
-                            N_statutAdminiPresentation TEXT,
-                            N_labelEtatCommercialisation VARCHAR(100),
-                            N_dateCommercialisation DATE,
-                            N_codeCIP13 BIGINT(13) UNSIGNED,
-                            N_agrementCollectivite TEXT,
-                            N_tauxRemboursement TEXT,
-                            N_prix NUMERIC(6,2),
-                            N_indicationRemboursement TEXT)
-=======
 CREATE FUNCTION updateCIP(
                         N_codeCIS INT(6),
                         N_codeCIP7 INT(7),
@@ -26,11 +12,10 @@ CREATE FUNCTION updateCIP(
                         N_codeCIP13 BIGINT(13) UNSIGNED,
                         N_agrementCollectivite TEXT,
                         N_tauxRemboursement TEXT,
-                        N_prix NUMERIC(6,2),
+                        N_prix1 VARCHAR(10),
                         Unknown1 VARCHAR(250),
                         Unknown2 VARCHAR(250),
                         N_indicationRemboursement TEXT)
->>>>>>> 5fb3a739a9b31b87293b7f4bc05451222811cf35
     RETURNS INT DETERMINISTIC
 BEGIN
     DECLARE RETURN_CODE INT DEFAULT 0;
@@ -38,6 +23,13 @@ BEGIN
     DECLARE idLibellePres INT;
     DECLARE idEtatComm INT;
     DECLARE codeCISTaux INT;
+    DECLARE N_prix DECIMAL(8,2);
+
+    IF N_prix1 = "" THEN
+        SET N_prix = 0.00;
+    ELSE
+        SET N_prix = CAST(N_prix1 AS DECIMAL(8,2));
+    END IF;
 
     /* Si l'id du libellePresentation existe on update le lien sinon on crée le libelle et on fait le lien */
     SELECT idLibellePresentation INTO idLibellePres FROM LibellePresentation WHERE libellePresentation = N_libellePresentation LIMIT 1;
@@ -88,7 +80,7 @@ BEGIN
         UPDATE TauxRemboursement SET tauxRemboursement = @tauxRemboursement WHERE codeCIS = N_codeCIS;
     END IF;
 
-    /* UPDATE codeCIP13 */
+    /* UPDATE codeCIP7 */
     UPDATE CIS_CIP_BDPM SET codeCIP7 = N_codeCIP7 WHERE codeCIS = N_codeCIS;
     
     /* UPDATE prix */
@@ -98,7 +90,7 @@ BEGIN
     UPDATE CIS_CIP_BDPM SET dateCommrcialisation = N_dateCommercialisation WHERE codeCIS = N_codeCIS;
 
     /* UPDATE indication Remboursement */
-    UPDATE CIS_CIP_BDPM SET indicationRemboursement = N_indicationRemboursement;
+    UPDATE CIS_CIP_BDPM SET indicationRemboursement = N_indicationRemboursement WHERE codeCIS = N_codeCIS;
 
 
 return RETURN_CODE;

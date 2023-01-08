@@ -12,13 +12,20 @@ CREATE FUNCTION importCIP(
                     N_codeCIP13 BIGINT(13) UNSIGNED, -- Bypass de la limite de 2.147 Md pour un int normal
                     N_agrementCollectivite TEXT,
                     N_tauxRemboursement TEXT,
-                    N_prix NUMERIC(6,2),
+                    N_prix1 VARCHAR(10),
                     Unknown1 VARCHAR(250),
                     Unknown2 VARCHAR(250),
                     N_indicationRemboursement TEXT)
     RETURNS INT DETERMINISTIC
 BEGIN
     DECLARE RETURN_CODE INT DEFAULT 0;
+    DECLARE N_prix DECIMAL(8,2);
+
+    IF N_prix1 = "" THEN
+        SET N_prix = 0.00;
+    ELSE
+        SET N_prix = CAST(N_prix1 AS DECIMAL(8,2));
+    END IF;
 
     /* Creation du libellé dans la bdd */
     IF (SELECT COUNT(*) FROM LibellePresentation WHERE libellePresentation = N_libellePresentation) = 0 THEN
