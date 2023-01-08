@@ -21,13 +21,47 @@ class UsersServices
     $nbRow = $request->rowcount();
     return $nbRow >= 1;
   }
-  public function getFormePharma($pdo)
+  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1, $designation = "%")
   {
-    $sql = "SELECT formePharma
-            FROM CIS_BDPM
-            JOIN FormePharma fp
-            ON fp.idFormePharma = CIS_BDPM.idFormePharma
+    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,designation,surveillanceRenforcee
+            FROM listMedic
+            WHERE formePharma LIKE :formePharma
+            AND labelVoieAdministration LIKE :labelVoieAdministration
+            AND designation LIKE :designation
+            AND prix > :prixMin AND prix < :prixMax
+            
             ";
+    $param = array('formePharma' => $formePharma,
+                   'labelVoieAdministration' => $labelVoieAdministration,
+                   'prixMin' => $prixMin,
+                   'prixMax' => $prixMax,
+                   'designation' => $designation,);
+
+    if ($etatCommercialisation != -1) {
+      $sql = $sql . " AND etatCommercialisation = :etatCommercialisation";
+      $param['etatCommercialisation'] = $etatCommercialisation;
+    }
+
+    if ($tauxRemboursement != "") {
+      $sql = $sql . " AND tauxRemboursement = :tauxRemboursement";
+      $param['tauxRemboursement'] = $tauxRemboursement;
+    }
+
+    if ($surveillanceRenforcee != -1) {
+      $sql = $sql . " AND surveillanceRenforcee = :surveillanceRenforcee";
+      $param['surveillanceRenforcee'] = $surveillanceRenforcee;
+    }
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($param);
+
+    return $stmt->fetchAll();
+  }
+
+  public function getparams($pdo,$param,$table)
+  {
+    $sql = "SELECT DISTINCT(" . $param .")"
+           . " FROM " . $table;
 
     return $pdo->query($sql);
   }

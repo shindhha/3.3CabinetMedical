@@ -43,7 +43,7 @@ class PatientsListController
 {
 
     public function index($pdo) {
-        $view = new View("Sae3.3CabinetMedical/views/medicamentsList");
+        $view = new View("Sae3.3CabinetMedical/views/patientslist");
         return $view;
     }
 

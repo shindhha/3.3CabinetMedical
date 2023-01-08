@@ -20,7 +20,7 @@
 namespace controllers;
 
 use yasmf\View;
-use services\LoginService;
+use services\usersServices;
 use services\ImportService;
 use yasmf\HttpHelper;
 /**
@@ -96,7 +96,7 @@ class AdministrateurController
 		try {
 			
 			
-			$this->importservice->download($filep);
+
 			$importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
 			$updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
 			

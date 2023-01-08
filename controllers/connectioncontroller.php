@@ -56,11 +56,9 @@ class ConnectionController
 
       if ($searchStmt) {
         if ($username == "admin") {
-          $view = new View("Sae3.3CabinetMedical/views/administrateur");
+          header("Location: index.php?controller=administrateur");
         } else {
-          $view = new View("Sae3.3CabinetMedical/views/medicamentsList");
-          $formePharma = $this->usersservices->getFormePharma($pdo);
-          $view->setVar("formePharma",$formePharma);
+          header("Location: index.php?controller=medicamentslist");
         }
         
       }

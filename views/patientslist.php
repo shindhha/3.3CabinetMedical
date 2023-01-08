@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -31,6 +31,7 @@
 					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
 						medication
 					</span>
+
 				</a>
 				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
 					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
@@ -45,7 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
+						<span class="h1 d-md-block d-none"> Liste Patients </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
@@ -66,17 +67,17 @@
 											<tr>
 												<td>
 													<select name="pEtat" class="form-select text-green">
-														<option value="-1"<?php if ($pEtat == -1) echo "selected='selected'"; ?>>Etat Commercialisation</option>
-														<option value="1" <?php if ($pEtat == 1) echo "selected='selected'"; ?>>Commercialisé</option>
-														<option value="0" <?php if ($pEtat == 0) echo "selected='selected'"; ?>>Non Commercialisé</option>
+														<option value="-1">Etat Commercialisation</option>
+														<option value="1">Commercialisé</option>
+														<option value="0">Non Commercialisé</option>
 													</select>
 													
 												</td>
 												<td>
 													<select name="pSurveillance" class="form-select text-green">
-														<option value="-1"<?php if ($pSurveillance == -1) echo "selected='selected'"; ?>>Surveillance Renforcée</option>
-														<option value="1" <?php if ($pSurveillance == 1) echo "selected='selected'"; ?>>Oui</option>
-														<option value="0" <?php if ($pSurveillance == 0) echo "selected='selected'"; ?>>Non</option>
+														<option value="-1">Surveillance Renforcée</option>
+														<option value="1">Oui</option>
+														<option value="0">Non</option>
 													</select>
 													
 												</td>
@@ -97,25 +98,13 @@
 												<td>
 													<select name="pformePharma" class="form-select text-green">
 														<option value="%">Forme Pharmacie</option>
-														<?php
-														while ($row = $formePharmas->fetch()) {
-															echo "<option";
-															if ($pformePharma == $row['formePharma']) echo " selected='selected'";
-															echo ">" . $row['formePharma'] . "</option>";
-														}
-														?>
+														
 													</select>
 												</td>
 												<td>
 													<select name="pVoieAdmi" class="form-select text-green">
 														<option value="%">Voie d'administration</option>
-														<?php
-														while ($row = $voieAd->fetch()) {
-															echo "<option";
-															if ($pVoieAdmi == $row['labelVoieAdministration']) echo " selected='selected'";
-															echo ">" . $row['labelVoieAdministration'] . "</option>";
-														}
-														?>
+														
 													</select>
 												</td>
 											</tr>
@@ -123,26 +112,18 @@
 												<td>
 													<select name="pTauxRem" class=" form-select text-green ">
 														<option value="">Taux Remboursement</option>
-														<?php
-
-														while ($row = $tauxRemboursements->fetch()) {
-
-															echo "<option";
-															if ($pTauxRem == $row['tauxRemboursement']) echo " selected='selected'";
-															echo ">" . $row['tauxRemboursement'] . "</option>";
-														}
-														?>
+														
 													</select>
 												</td>
 											</tr>
 											<tr>
 												<td>
 													<label for="pPrixMin">Prix min :</label>
-													<input type="number" name="pPrixMin" value="<?php echo $pPrixMin; ?>">
+													<input type="number" name="pPrixMin" >
 												</td>
 												<td>
 													<label for="pPrixMax">Prix Max :</label>
-													<input type="number" name="pPrixMax" value="<?php echo $pPrixMax; ?>">
+													<input type="number" name="pPrixMax" value="1000">
 												</td>
 											</tr>
 										</table>
@@ -157,7 +138,7 @@
 					</div>
 				</nav>
 
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
+				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
@@ -166,53 +147,9 @@
 
 							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
 								<table class="">
-									<tr>
-										<th>codeCIS</th>
-										<th>Valeur SMR</th>
-										<th>Valeur ASMR</th>
-										<th>Forme Pharmaceutique</th>
-										<th>Voie d'administration</th>
-										<th>Taux Remboursement</th>
-										<th>Prix</th>
-										<th>Désignation </th>
-										<th>Etat Commercialisation </th>
-										<th>Surveillance Renforcé</th>
-										<th>Designation Principe Actif </th>
-									</tr>
+									
 
-									<?php
-									var_dump($d);
-									$surveillance = "";
-									$commercialiser = "";
-
-										foreach ($drugs as $row) {
-											if ($row['etatCommercialisation']) {
-												$commercialiser = "Commercialiser";
-											} else {
-												$commercialiser = "Non Commercialiser";
-											}
-
-											if ($row['surveillanceRenforcee']) {
-												$surveillance = "OUI";
-											} else {
-												$surveillance = "NON";
-											}
-
-										echo "<tr>"
-											 ."<td>" . $row['codeCIS'] . "</td>"
-											 ."<td>" . "</td>"
-											 ."<td>" . "</td>"
-											 ."<td>" . $row['formePharma'] . "</td>"
-											 ."<td>" . $row['labelVoieAdministration'] . "</td>"
-											 ."<td>" . $row['tauxRemboursement'] . "</td>"
-											 ."<td>" . $row['prix'] . "</td>"
-											 ."<td>" . $row['designation'] . "</td>"
-											 ."<td>" . $commercialiser . "</td>"
-											 ."<td>" . $surveillance . "</td>"
-											 ."<td>" .  "</td>"
-											 ."</tr>";
-										} 
-									?>
+									
 								</table>
 
 							</div>

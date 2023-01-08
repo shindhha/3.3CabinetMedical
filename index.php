@@ -2,10 +2,10 @@
 /*
  * Sample without database connexion
  */
- $hostname = "sql.alphaline.ml";
+ $hostname = "localhost";
  $dbname = "SAE_TESTS";
- $user = "guillaume";
- $password = "guillaume";
+ $user = "root";
+ $password = "root";
  $port = 3306;
  $charset = "utf8mb4";
 
