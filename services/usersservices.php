@@ -106,6 +106,26 @@ class UsersServices
 
   }
 
+
+  public function insertVisite($pdo,$numSecu,$motifVisite,$dateVisite,$Description,$Conclusion)
+  {
+    $sql1 = "INSERT INTO Visites (motifVisite,dateVisite,Description,Conclusion)
+            VALUES (:motifVisite,:dateVisite,:Description,:Conclusion)";
+
+    $sql2 = "INSERT INTO ListeVisites (numSecu,idVisite) VALUES (:numSecu,LAST_INSERT_ID())";
+
+    $stmt = $pdo->prepare($sql1);
+    $stmt->execute(array('motifVisite' => $motifVisite,
+                   'dateVisite' => $dateVisite,
+                   'Description' => $Description,
+                   'Conclusion' => $Conclusion));
+    $stmt = $pdo->prepare($sql2);
+
+    $stmt->execute(array('numSecu' => $numSecu,
+                         ));
+
+  }
+
   public function getOrdonnances($pdo,$idVisite)
   {
     $sql = "SELECT codeCIS
@@ -118,16 +138,18 @@ class UsersServices
     return $stmt->fetchAll();
   }
 
-  public function getVisites($pdo,$numSecu)
+  public function getVisites($pdo,$numSecu,$idVisite = "%")
   {
-    $sql = "SELECT motifVisite,dateVisite,note,Visites.idVisite
+    $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
             FROM Visites
             JOIN ListeVisites
             ON ListeVisites.idVisite = Visites.idVisite
-            WHERE numSecu = :numSecu";
+            WHERE numSecu = :numSecu
+            AND Visites.idVisite LIKE :idVisite";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam("numSecu",$numSecu);
+    $stmt->bindParam("idVisite",$idVisite);
     $stmt->execute();
 
     return $stmt->fetchAll();

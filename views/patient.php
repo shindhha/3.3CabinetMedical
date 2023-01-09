@@ -58,12 +58,12 @@
 						<div>
 							<?php 
 							if ($patient[0]['sexe']) {
-								echo "<i class='material-symbols-outlined font-40' >
-										woman
-									</i>";
-							} else {
-								echo "<span class='material-symbols-outlined'>
+								echo "<span class='material-symbols-outlined font-40' >
 										man
+									</span>";
+							} else {
+								echo "<span class='material-symbols-outlined font-40'>
+										woman
 									</span>";
 							}
 							?>
@@ -128,19 +128,20 @@
 						<div class="row justify-content-center">
 
 							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
+
 								<div class="text-dark text-start h2">Liste des visites</div>
 								<table class="table table-striped lightGreen border-top border-dark">
 									<tr>
 										<th>Date</th>
 										<th>Motif</th>
-										<th>note</th>
+										<th>Description</th>
 									</tr>
 									<?php
 									foreach ($visites as $row) {
 									echo "<tr>"
 											 ."<td>" . $row['motifVisite'] . "</td>"
 											 ."<td>" . $row['dateVisite'] . "</td>"
-											 ."<td>" . $row['note'] . "</td>"
+											 ."<td>" . $row['Description'] . "</td>"
 									?>
 									<td>
 										
@@ -180,7 +181,8 @@
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="action" value="modifPatient">
+							<input type="hidden" name="modif" value="Ajouter">
+							<input type="hidden" name="action" value="addVisite">
 							<input type="hidden" name="controller" value="patientslist">
 							<input type="submit" class="green no-border text-white" value="Ajouter une visite">
 						</form>

@@ -46,7 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Fiche Patient </span>
+						<span class="h1 d-md-block d-none"> Visite n° </span>
 						<div class="d-flex align-items-center">	
 
 						</div>				
@@ -58,80 +58,53 @@
 				<div class="blue row">
 					<div class="d-flex justify-content-between">
 						<span></span>
-						<div class="d-flex flex-row"> 
-							<div>Nom :<input class="form-control" type="text" name="nom" value="<?php if (isset($patient)) echo $patient[0]['nom']; ?>"> </div>
-							<div>Prenom :<input class="form-control" type="text" name="prenom" value="<?php if (isset($patient)) echo $patient[0]['prenom']; ?>"> </div>
-						</div>
-						<div>
-							<select name="sexe">
-								<option value="1">Homme</option>
-								<option value="0">Femme</option>
-							</select>
-						</div>
+						
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="d-flex flex-row justify-content-between text-green">
+				<div class="row text-dark">
+					
 						
 						<div class="d-flex flex-column justify-content-start ">
-							<h1>Informations</h1>
+							<div class="d-flex flex-row justify-content-between">
+								<div class="d-flex flex-row"> 
+								<span>Motif</span> <input class="form-control" type="text" name="Motif" value="<?php if (isset($patient)) echo $patient[0]['adresse']; ?>"> 
+								</div>
+								<div class="d-flex flex-row">
+									<span>Date</span><input class="form-control" type="date" name="Date" value="<?php if (isset($patient)) echo $patient[0]['numTel']; ?>">
+								</div>
+							</div>
 
-							<div class="d-flex flex-row"> 
-								<span>Adresse</span> <input class="form-control" type="text" name="adresse" value="<?php if (isset($patient)) echo $patient[0]['adresse']; ?>"> 
-							</div>
-							<div class="d-flex flex-row">
-								<span>n°Telephone</span><input class="form-control" type="text" name="numTel" value="<?php if (isset($patient)) echo $patient[0]['numTel']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>email</span><input class="form-control" type="text" name="email" value="<?php if (isset($patient)) echo $patient[0]['email']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<select name="medecinRef" class="form-select">
-									<option>Medecin Traitant</option>
-									<?php 
-									while ($row = $medecins->fetch()) {
-										echo "<option value='". $row['numRPPS']."'";
-										if (isset($patient[0]['medecinRef']) && $patient[0]['medecinRef'] == $row['numRPPS']) {
-											echo "selected='selected'";
-										}
-
-										echo ">" . $row['nom'] . " " . $row['prenom'] . "</option>";
-									}
-									?>
-									
-								</select>
-							</div>
-							<div class="d-flex flex-row">
-								<span>Numéro de sécurité sociale</span><input class="form-control" type="text" name="numSecu" value="<?php if (isset($patient)) echo $patient[0]['numSecu']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>Date de naissance</span><input class="form-control" type="date" name="dateNaissance" value="<?php if (isset($patient)) echo $patient[0]['dateNaissance']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>Lieu de naissance</span><input class="form-control" type="text" name="LieuNaissance" value="<?php if (isset($patient)) echo $patient[0]['LieuNaissance']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>Code Postal</span><input class="form-control" type="number" name="codePostal" value="<?php if (isset($patient)) echo $patient[0]['codePostal']; ?>">
-							</div>
-						</div>
-
-						<div class="d-flex flex-column">
-							<h1>Notes</h1>
 							
-								<textarea  name="notes" rows="5" cols="33">
-									<?php if (isset($patient)) echo $patient[0]['notes']; ?>
+							<div class="d-flex flex-column text-start">
+								<span>Description</span>
+
+								<textarea name="Description">
+									<?php if (isset($patient)) echo $patient[0]['email']; ?>
 								</textarea>
+
+							</div>
+							
+							<div class="d-flex flex-column text-start	">
+
+
+								<span>Conclusion</span>
+								<textarea name="Conclusion">
+									<?php if (isset($patient)) echo $patient[0]['numSecu']; ?>
+								</textarea>
+							</div>
+							
 							
 							
 						</div>
-					</div>
+					
 				</div>
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
+					
 					<div class="container ">
 						<div class="row justify-content-center">
 
@@ -143,7 +116,7 @@
 								<div class="d-flex me-2 py-2 px-3 border-1 green">
 						
 									<input type="hidden" name="modif" value="<?php echo $modif; ?>">
-									<input type="hidden" name="action" value="fichePatient">
+									<input type="hidden" name="action" value="visite">
 									<input type="hidden" name="controller" value="patientslist">
 									<input type="submit" class="green no-border text-white" value="Valider">
 						

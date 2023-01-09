@@ -88,17 +88,21 @@
 				<div class="row">
 					<div class="d-flex flex-row justify-content-between text-green">
 						
-						<span>Motif : <?php  ?></span>
-						<span>Date :  <?php ?></span>
+						<span>Motif : <?php echo $visite[0]['motifVisite'] ; ?></span>
+						<span>Date :  <?php echo $visite[0]['dateVisite']?></span>
 
 						
 					</div>
 					<div class="d-flex flex-column justify-content-between text-green">
 						
 						Description
-						<textarea></textarea>
+						<textarea>
+							<?php echo $visite[0]['Description'] ?>
+						</textarea>
 						Conclusion
-						<textarea></textarea>
+						<textarea>
+							<?php echo $visite[0]['Conclusion'] ?>
+						</textarea>
 					</div>
 					<div class="d-flex flex-row justify-content-between text-green">
 						
