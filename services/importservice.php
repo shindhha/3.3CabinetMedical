@@ -97,16 +97,25 @@ class ImportService
 		return $args;
 	}
 
-	public function exportToBD ($pdo,$importStmt,$updateStmt,$fileName,$trimLine,$iCis,$table) {
+	public function exportToBD ($pdo,$importStmt,$updateStmt,$param) {
+		$trimLine = $param[3];
+		$iCis = $param[4];
+		$table = $param[5];
+		$prefixe = $param[6];
+		$fileName = $param[0];
 		$compteur = 0;
-		$table = "CIS_" . $table;
+		$table = $prefixe . $table;
 		$file = fopen(ImportService::$path.$fileName, "r");
 		$content = fread($file, filesize(ImportService::$path.$fileName));
 		$lines = explode("\n", $content);
 		foreach ($lines as $line) {
 			$args = $this->FormatLine($line,$trimLine);
 			$calledFunction = "";
-			$d = $this->CISExists($pdo,$args[$iCis],$table);
+			if ($fileName == "HAS_LiensPageCT_bdpm.txt"){
+				$d = $this->CTExists($pdo,$args[$iCis],$table);
+			}else{
+				$d = $this->CISExists($pdo,$args[$iCis],$table);
+			}
 			try {
 				$pdo->beginTransaction();
 
@@ -128,7 +137,7 @@ class ImportService
 				
 			} catch (PDOException $e) {
 				$pdo->rollback();
-				$this->insertError($pdo,$calledFunction ,$e->getCode(),$e->getMessage());
+				$this->insertError($pdo,$calledFunction . " Line " . $args[$iCis]  ,$e->getCode(),$e->getMessage());
 				
 				
 				
@@ -144,6 +153,14 @@ class ImportService
 	{
 		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE codeCis = :codeCIS");
 		$stmt->bindParam("codeCIS",$numCIS);
+		$stmt->execute();
+		return $stmt->rowcount() > 0;
+	}
+
+	public function CTExists($pdo,$numCT,$table)
+	{
+		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE codeHAS = :codeHAS");
+		$stmt->bindParam("codeHAS",$numCT);
 		$stmt->execute();
 		return $stmt->rowcount() > 0;
 	}

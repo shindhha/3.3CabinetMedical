@@ -44,15 +44,16 @@ use yasmf\HttpHelper;
 class AdministrateurController
 {
 	private $importservice;
-	private $files = [["CIS_bdpm.txt","BDPM",12,false,0,"BDPM"],
-					  ["CIS_CIP_bdpm.txt","CIP",13,false,0,"CIP_BDPM"],
-					  ["CIS_COMPO_bdpm.txt","COMPO",8,true,0,"COMPO"],
-					  ["CIS_HAS_SMR_bdpm.txt","SMR",6,false],
-					  ["CIS_HAS_ASMR_bdpm.txt","ASMR",6,false],
-					  ["CIS_HAS_LiensPageCT_bdpm.txt","CT",2,false],
-					  ["CIS_GENER_bdpm.txt","GENER",5,true,2,"GENER"],
-					  ["CIS_CPD_bdpm.txt","CPD",2,false],
-					  ["CIS_InfoImportantes.txt","INFO",4,false]];
+	private $files = [["CIS_bdpm.txt","BDPM",12,false,0,"BDPM","CIS_"],
+					  ["CIS_CIP_bdpm.txt","CIP",13,false,0,"CIP_BDPM","CIS_"],
+					  ["CIS_COMPO_bdpm.txt","COMPO",8,true,0,"COMPO","CIS_"],
+					  ["CIS_HAS_SMR_bdpm.txt","SMR",6,false,0,"HAS_SMR","CIS_"],
+					  ["CIS_HAS_ASMR_bdpm.txt","ASMR",6,false,0,"HAS_ASMR","CIS_"],
+					  ["HAS_LiensPageCT_bdpm.txt","CT",2,false,0,"HAS_LiensPageCT",""],
+					  ["CIS_GENER_bdpm.txt","GENER",5,true,2,"GENER","CIS_"],
+					  ["CIS_CPD_bdpm.txt","CPD",2,false,0,"CPD","CIS_"],
+					  ["CIS_InfoImportantes_bdpm.txt","INFO",4,false,0,"INFO","CIS_"]];
+
 	public function __construct() {
 		$this->importservice = ImportService::getDefaultImportService();
 	}
@@ -91,6 +92,7 @@ class AdministrateurController
 		$trimLine = $this->files[$file][3];
 		$iCis = $this->files[$file][4];
 		$bd = $this->files[$file][5];
+		$prefixe = $this->files[$file][6];
 		
 		
 		try {
@@ -100,7 +102,7 @@ class AdministrateurController
 			$importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
 			$updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
 			
-			$test = $this->importservice->exportToBD($pdo,$importStmt,$updateStmt,$filep,$trimLine,$iCis,$bd);
+			$test = $this->importservice->exportToBD($pdo,$importStmt,$updateStmt,$this->files[$file]);
 			
 		} catch (PDOException $e) {
 			throw new PDOException($e->getMessage(), $e->getCode());
