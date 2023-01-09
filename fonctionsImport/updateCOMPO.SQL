@@ -26,15 +26,12 @@ BEGIN
        sinon on crée la substance et on fait le lien en commencant par la variance puis l'idSubstance */
     SELECT varianceNom INTO variance FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance LIMIT 1;
     SELECT idSubstance INTO idSub FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance LIMIT 1;
-    IF (idSub IS NOT NULL) AND (variance IS NOT NULL) THEN
-        UPDATE CIS_COMPO SET idCodeSubstance = idSub WHERE codeCIS = N_codeCIS;
-        UPDATE CIS_COMPO SET varianceNomSubstance = variance WHERE codeCIS = N_codeCIS;
+    IF (idSub IS NOT NULL AND variance IS NOT NULL) THEN
+        UPDATE CIS_COMPO SET idCodeSubstance = idSub, varianceNomSubstance = variance WHERE codeCIS = N_codeCIS;
     ELSE
-        INSERT INTO ErreursImportation (nomProcedure, messageErreur) VALUES ('updateCOMPO', 'je suis bien passé ici'); 
         SET variance = INSERT_CODE_SUBSTANCE(N_idSubstance, N_denomSubstance);
         SELECT idSubstance INTO idSub FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance LIMIT 1;
-        UPDATE CIS_COMPO SET varianceNomSubstance = variance WHERE codeCIS = N_codeCIS;
-        UPDATE CIS_COMPO SET idCodeSubstance = idSub WHERE codeCIS = N_codeCIS;
+        UPDATE CIS_COMPO SET idCodeSubstance = idSub, varianceNomSubstance = variance WHERE codeCIS = N_codeCIS;
     END IF;
 
     /* Si idDosage existe alors on update le lien sinon on crée le labelDosage et on fait le lien */

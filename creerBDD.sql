@@ -158,7 +158,7 @@ ALTER TABLE DesignationElem MODIFY idElem INT(3) AUTO_INCREMENT;
 CREATE TABLE CodeSubstance (
     idSubstance INT(3),
     varianceNom INT(2),
-    codeSubstance VARCHAR(100)
+    codeSubstance TEXT
 );
 ALTER TABLE CodeSubstance ADD CONSTRAINT PK_CodeSubstance PRIMARY KEY (idSubstance, varianceNom);
 

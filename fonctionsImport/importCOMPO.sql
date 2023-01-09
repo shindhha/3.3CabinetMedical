@@ -16,11 +16,13 @@ CREATE FUNCTION importCOMPO(
 BEGIN
 
     DECLARE RETURN_CODE INT DEFAULT 0;
-    DECLARE variance INT DEFAULT -1;
+    DECLARE variance INT;
 
     /* Création de la substance dans la bd (Utilisation d'une fn custom) */
     IF (SELECT COUNT(*) FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance) = 0 THEN
         SET variance = INSERT_CODE_SUBSTANCE(N_idSubstance, N_denomSubstance);
+    ELSE
+        SELECT varianceNom INTO variance FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance;
     END IF;
 
     /* Insertion de la designation dans la bdd */
@@ -28,10 +30,11 @@ BEGIN
         INSERT INTO DesignationElem(labelElem) VALUES (N_designationElem);
     END IF;
 
-    /* Si la variance vaut -1 (valeur par défaut si pas d'insertion), on la récupère depuis la bd */
+    /* Si la variance vaut -1 (valeur par défaut si pas d'insertion), on la récupère depuis la bd
     IF variance = -1 THEN
-        SELECT idSubstance INTO variance FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance;
+        SELECT varianceNom INTO variance FROM CodeSubstance WHERE idSubstance = N_idSubstance AND codeSubstance = N_denomSubstance;
     END IF;
+    */
 
     /* Insertion du dosage dans la bd */
     IF (SELECT COUNT(*) FROM RefDosage WHERE labelRefDosage = N_refDosage) = 0 THEN
@@ -60,7 +63,7 @@ BEGIN
                           natureCompo,
                           noLiaison)
     VALUES (N_codeCIS,
-            (SELECT idDesignationElemPharma FROM CodeSubstance WHERE codeSubstance = N_designationElem LIMIT 1),
+            (SELECT idDesignationElemPharma FROM DesignationElem WHERE labelElem = N_designationElem LIMIT 1),
             N_idSubstance,
             variance,
             (SELECT Dosage.idDosage FROM Dosage WHERE Dosage.idDosage = N_dosage),
