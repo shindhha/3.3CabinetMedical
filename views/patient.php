@@ -61,7 +61,7 @@
 									Filtres
 								</span>
 								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
+									<form action="index.php" method="POST" class="d-flex flex-column green p-4">
 										<input type="hidden" name="controller" value="medicamentslist">
 										<table class="text-white ">
 											
