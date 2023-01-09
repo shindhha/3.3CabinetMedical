@@ -22,6 +22,7 @@ namespace controllers;
 use yasmf\View;
 use services\usersServices;
 use services\ImportService;
+use services\AdminService;
 use yasmf\HttpHelper;
 /**
  * yasmf - Yet Another Simple MVC Framework (For PHP)
@@ -56,6 +57,7 @@ class AdministrateurController
 
 	public function __construct() {
 		$this->importservice = ImportService::getDefaultImportService();
+        $this->adminservice = AdminService::getDefaultAdminService();
 	}
 
 	public function index($pdo) {      
@@ -113,5 +115,81 @@ class AdministrateurController
 
 		return $view;
 	}
+
+    public function listMedecins($pdo) {
+
+        $view = new View("Sae3.3CabinetMedical/views/medecinslist");
+        $view->setVar("medecinsList", $this->adminservice->getMedecinsList($pdo));
+        return $view;
+    }
+
+    public function editMedecin($pdo)
+    {
+        $view = new View("Sae3.3CabinetMedical/views/editmedecin");
+        $view->setVar("medecin", $this->adminservice->getMedecin($pdo, HttpHelper::getParam('numRPPS')));
+        return $view;
+    }
+
+    public function newMedecin($pdo) {
+        $view = new View("Sae3.3CabinetMedical/views/editmedecin");
+        $view->setVar("medecin", $this->adminservice->getNewMedecin());
+        $view->setVar("newMedecin", true);
+        return $view;
+    }
+
+    public function updateMedecin($pdo) {
+
+        try {
+            $this->adminservice->updateMedecin($pdo, HttpHelper::getParam('numRPPS'),
+                HttpHelper::getParam('nom'),
+                HttpHelper::getParam('prenom'),
+                HttpHelper::getParam('adresse'),
+                HttpHelper::getParam('codePostal'),
+                HttpHelper::getParam('ville'),
+                HttpHelper::getParam('numTel'),
+                HttpHelper::getParam('email'),
+                HttpHelper::getParam('activite'),
+                HttpHelper::getParam('dateDebutActivite')
+            );
+        } catch (\PDOException $e) {
+            $erreur = $e;
+        }
+
+        $view = $this->listMedecins($pdo);
+        if (isset($erreur)) {
+            $view->setVar('erreurUpdate', true);
+        }
+
+
+        return $view;
+
+    }
+
+
+    public function createMedecin($pdo) {
+        try {
+            $this->adminservice->createMedecin($pdo, HttpHelper::getParam('numRPPS'),
+                HttpHelper::getParam('nom'),
+                HttpHelper::getParam('prenom'),
+                HttpHelper::getParam('adresse'),
+                HttpHelper::getParam('codePostal'),
+                HttpHelper::getParam('ville'),
+                HttpHelper::getParam('numTel'),
+                HttpHelper::getParam('email'),
+                HttpHelper::getParam('activite'),
+                HttpHelper::getParam('dateDebutActivite')
+            );
+        } catch (\PDOException $e) {
+            $erreur = $e;
+        }
+
+        $view = $this->listMedecins($pdo);
+        if (isset($erreur)) {
+            $view->setVar('erreurInsert', $erreur);
+        }
+
+        return $view;
+
+    }
 
 }

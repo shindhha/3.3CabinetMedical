@@ -97,4 +97,12 @@ input:focus {
 	max-height: 450px;
 }
 
-input
+
+.enable-flex {
+	display: flex;
+}
+
+.input-grow {
+	flex-grow: 1;
+	text-align: center;
+}

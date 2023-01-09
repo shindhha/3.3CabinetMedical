@@ -24,16 +24,16 @@
 				<div class=" green border-1 ratio ratio-1x1">
 
 				</div>
-				<div class=" green border-1 ratio ratio-1x1">
+                <a href="index.php?controller=administrateur" class="green border-1 ratio ratio-1x1">
 					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
-						medication
+						settings
 					</span>
-				</div>
-				<div class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
-						groups
-					</span>
-				</div>
+                </a>
+                <a href="index.php?controller=administrateur&action=listMedecins" class="green border-1 ratio ratio-1x1">
+                    <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+                        groups
+                    </span>
+                </a>
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">
@@ -41,92 +41,8 @@
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
-						
 						<span class="h1 d-md-block d-none"> Administrateur </span>
-						<span class="material-symbols-outlined">
-							download
-						</span>
-						<form action="index.php" method="POST" class="d-flex flex-column green p-4">
-							<div class="d-flex align-items-center">
-								<!-- Barre de recherche -->
-								<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-									<input name="strSearch" type="search" placeholder="Mots clef" aria-label="Search">
-									<button type="submit"> <span class="material-symbols-outlined text-black"> search </span></button>
-
-								</div>
-
-								<!-- Filtre -->
-								<div class="dropdown green">
-									<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-										Filtres
-									</span>
-									<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-										
-
-										<table class="text-white ">
-											<tr>
-												<td>
-													<input type="checkbox" name="d">
-													<label for="d">Surveillance Renforcée</label>
-													
-												</td>
-												<td>
-													<input class=""type="checkbox" name="d">
-													<label for="d">Surveillance Renforcée</label>
-													
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select class="form-select text-green">
-														<option>Valeur SMR</option>
-													</select>
-												</td>
-												<td>
-													<select class="form-select text-green">
-														<option>Valeur ASMR</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select class="form-select text-green">
-														<option>Forme Pharmacie</option>
-													</select>
-												</td>
-												<td>
-													<select class="form-select text-green">
-														<option>Voie d'administration</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select class=" form-select text-green ">
-														<option>Taux Remboursement</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="e">Prix min :</label>
-													<input type="number" name="e">
-												</td>
-												<td>
-													<label for="e">Prix Max :</label>
-													<input type="number" name="e">
-												</td>
-											</tr>
-										</table>
-										<input type="hidden" name="controller" value="administrateur">
-
-									</div>
-								</form>
-							</div>
-
-						</div>				
-
-					</div>
+                    </div>
 				</nav>
 				
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
