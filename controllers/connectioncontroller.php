@@ -58,7 +58,8 @@ class ConnectionController
         if ($username == "admin") {
           header("Location: index.php?controller=administrateur");
         } else {
-          header("Location: index.php?controller=medicamentslist");
+          header("Location: index.php?controller=patientslist");
+          $_SESSION['id'] = $username;
         }
         
       }

@@ -49,7 +49,7 @@
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input type="search" placeholder="Mots clef" aria-label="Search">
+								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
 								<span class="material-symbols-outlined text-black"> search </span>
 
 							</div>
@@ -159,13 +159,16 @@
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
 				<!-- content -->
+				<div class=" d-flex text-green justify-content-start">
+					<?php echo count($drugs) ?> resultats
+				</div>
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
-								<table class="">
+							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+								<table class="table table-striped lightGreen">
 									<tr>
 										<th>codeCIS</th>
 										<th>Valeur SMR</th>
@@ -181,7 +184,6 @@
 									</tr>
 
 									<?php
-									var_dump($d);
 									$surveillance = "";
 									$commercialiser = "";
 

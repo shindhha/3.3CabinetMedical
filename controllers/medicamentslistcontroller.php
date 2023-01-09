@@ -62,9 +62,9 @@ class medicamentslistController
         $d = [$pformePharma,$pVoieAdmi,$pTauxRem,$pPrixMin,$pPrixMax,$pEtat,$pSurveillance];
         
         $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance);
-        $formePharmas = $this->usersservices->getparams($pdo,"formePharma","formepharma");
-        $voieAdministration = $this->usersservices->getparams($pdo,"labelVoieAdministration","id_label_voieadministration");
-        $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","tauxremboursement");
+        $formePharmas = $this->usersservices->getparams($pdo,"formePharma","FormePharma");
+        $voieAdministration = $this->usersservices->getparams($pdo,"labelVoieAdministration","ID_Label_VoieAdministration");
+        $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","TauxRemboursement");
         $view->setVar("pformePharma",$pformePharma);
         $view->setVar("pVoieAdmi",$pVoieAdmi);
         $view->setVar("pTauxRem",$pTauxRem);

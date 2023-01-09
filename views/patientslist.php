@@ -44,14 +44,14 @@
 				<!-- Bandeau outils -->	
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 container-fluid green">
+					<div class=" d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Patients </span>
+						<span class=" h1 d-md-block d-none"> Liste Patients </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
+								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
+								<span class="material-symbols-outlined text-black "> search </span>
 
 							</div>
 
@@ -64,68 +64,7 @@
 									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
 										<input type="hidden" name="controller" value="medicamentslist">
 										<table class="text-white ">
-											<tr>
-												<td>
-													<select name="pEtat" class="form-select text-green">
-														<option value="-1">Etat Commercialisation</option>
-														<option value="1">Commercialisé</option>
-														<option value="0">Non Commercialisé</option>
-													</select>
-													
-												</td>
-												<td>
-													<select name="pSurveillance" class="form-select text-green">
-														<option value="-1">Surveillance Renforcée</option>
-														<option value="1">Oui</option>
-														<option value="0">Non</option>
-													</select>
-													
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select class="form-select text-green">
-														<option>Valeur SMR</option>
-													</select>
-												</td>
-												<td>
-													<select class="form-select text-green">
-														<option>Valeur ASMR</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select name="pformePharma" class="form-select text-green">
-														<option value="%">Forme Pharmacie</option>
-														
-													</select>
-												</td>
-												<td>
-													<select name="pVoieAdmi" class="form-select text-green">
-														<option value="%">Voie d'administration</option>
-														
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select name="pTauxRem" class=" form-select text-green ">
-														<option value="">Taux Remboursement</option>
-														
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="pPrixMin">Prix min :</label>
-													<input type="number" name="pPrixMin" >
-												</td>
-												<td>
-													<label for="pPrixMax">Prix Max :</label>
-													<input type="number" name="pPrixMax" value="1000">
-												</td>
-											</tr>
+											
 										</table>
 
 										<input type="submit" value="Rechercher" >
@@ -140,15 +79,79 @@
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
+				<div class=" d-flex text-green justify-content-start">
+					<?php echo count($patients) ?> resultats
+				</div>
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
-								<table class="">
+							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+								<table class="table table-striped lightGreen">
+									<tr>
+										<th>numSecu</th>
+										<th>Lieu Naissance</th>
+										<th>nom</th>
+										<th>prenom</th>
+										<th>dateNaissance</th>
+										<th>adresse</th>
+										<th>codePostal</th>
+										<th>medecinRef</th>
+										<th>numTel</th>
+										<th>email</th>
+										<th></th>
+									</tr>
+									<?php 
+									foreach ($patients as $row) {
+									echo "<tr>"
+											 ."<td>" . $row['numSecu'] . "</td>"
+											 ."<td>" . $row['LieuNaissance'] . "</td>"
+											 ."<td>" . $row['nom'] . "</td>"
+											 ."<td>" . $row['prenom'] . "</td>"
+											 ."<td>" . $row['dateNaissance'] . "</td>"
+											 ."<td>" . $row['adresse'] . "</td>"
+											 ."<td>" . $row['codePostal'] . "</td>"
+											 ."<td>" . $row['medecinRef'] . "</td>"
+											 ."<td>" . $row['numTel'] . "</td>"
+											 ."<td>" . $row['email'] ."</td>"
+									?>
+									<td>
+										
 									
+									<div class="dropdown green">
+										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+									
+											more_horiz
 
+										</span>
+										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+											<form action="index.php" action="POST" class="d-flex flex-column green">
+												
+												<table class="text-white ">
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="fichePatient">
+														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+														<tr><input type="submit" value="Afficher"> </tr>
+													</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="deletePatient">
+														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+														<tr><input type="submit" value="Supprimer"> </tr>
+													</form>
+												</table>
+
+											
+										</div>
+									</div>
+
+									</td>
+									<?php
+											echo "</tr>";
+										}
+									?>
 									
 								</table>
 
@@ -157,6 +160,16 @@
 
 						</div>
 
+					</div>
+				</div>
+				<div class="d-flex flex-row justify-content-end">
+					<div class="d-flex me-2 py-2 px-3 border-1 green">
+						<form>
+							<input type="hidden" name="modif" value="Ajouter">
+							<input type="hidden" name="action" value="modifPatient">
+							<input type="hidden" name="controller" value="patientslist">
+							<input type="submit" class="green no-border text-white" value="Ajouter un patient">
+						</form>
 					</div>
 				</div>
 			</div>

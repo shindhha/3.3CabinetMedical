@@ -1,4 +1,5 @@
 <?php
+session_start();
 /*
  * Sample without database connexion
  */
