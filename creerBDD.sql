@@ -127,7 +127,7 @@ ALTER TABLE CIS_CIP_BDPM ADD CONSTRAINT FK_CIS_BDPM_EtatCommercialisation FOREIG
 
 CREATE TABLE GroupeGener (
     idGroupeGener INT(4),
-    labelGroupeGener VARCHAR(255)
+    labelGroupeGener TEXT
 );
 ALTER TABLE GroupeGener ADD CONSTRAINT PK_GroupeGener PRIMARY KEY (idGroupeGener);
 
