@@ -4,7 +4,7 @@ session_start();
  * Sample without database connexion
  */
  $hostname = "localhost";
- $dbname = "sae";
+ $dbname = "sae_tests";
  $user = "root";
  $password = "root";
  $port = 3306;

@@ -52,6 +52,9 @@ class PatientsListController
         $view = new View("Sae3.3CabinetMedical/views/patientslist");
 
         $patients = $this->usersservices->getListPatients($pdo,$_SESSION['id']);
+
+
+
         $view->setVar("patients",$patients);
         return $view;
     }
@@ -59,23 +62,37 @@ class PatientsListController
     public function fichePatient($pdo)
     {
       $view = new View("Sae3.3CabinetMedical/views/patient");
-      $action = HttpHelper::getParam("Valider");
-      if ($action != null) {
-        $nom = HttpHelper::getParam("nom");
-        $prenom = HttpHelper::getParam("prenom");
-        $adresse = HttpHelper::getParam("adresse");
-        $numTel = HttpHelper::getParam("numTel");
-        $email = HttpHelper::getParam("email");
-        $medecinRef = HttpHelper::getParam("medecinRef");
-        $numSecu = HttpHelper::getParam("numSecu");
-        $dateNaissance = HttpHelper::getParam("dateNaissance");
-        $LieuNaissance = HttpHelper::getParam("LieuNaissance");
-        $notes = HttpHelper::getParam("notes");
-        $codePostal = HttpHelper::getParam("codePostal");
-        $this->usersservices->insertPatient($pdo,$_SESSION['id'],$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email);
+      $modif = HttpHelper::getParam("modif");
+      $nom = HttpHelper::getParam("nom");
+      $prenom = HttpHelper::getParam("prenom");
+      $adresse = HttpHelper::getParam("adresse");
+      $numTel = HttpHelper::getParam("numTel");
+      $email = HttpHelper::getParam("email");
+      $medecinRef = HttpHelper::getParam("medecinRef");
+      $numSecu = HttpHelper::getParam("numSecu");
+      $dateNaissance = HttpHelper::getParam("dateNaissance");
+      $LieuNaissance = HttpHelper::getParam("LieuNaissance");
+      $notes = HttpHelper::getParam("notes");
+      $codePostal = HttpHelper::getParam("codePostal");
+      $sexe = (int) HttpHelper::getParam("sexe");
+
+
+      try {
+        if ($modif == "Ajouter") {
+        
+          $this->usersservices->insertPatient($pdo,$_SESSION['id'],$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+        }
+
+        if ($modif == "Modifier") {
+          $this->usersservices->updatePatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+        }
+      } catch (Exception $e) {
+        
       }
 
-      $numSecu = HttpHelper::getParam("numSecu");
+      
+
+
       $_SESSION['patient'] = $numSecu;
       $visites = $this->usersservices->getVisites($pdo,$numSecu);
       $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$numSecu);
@@ -86,13 +103,36 @@ class PatientsListController
       return $view;
     }
 
+
     public function modifPatient($pdo)
     {
       $view = new View("Sae3.3CabinetMedical/views/modifPatient");
 
+      $modif = HttpHelper::getParam("modif");
+      $medecins = $this->usersservices->getMedecins($pdo);
+      if ($modif == "Modifier") {
+        $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$_SESSION['patient']);
+        $view->setVar("patient",$patient);
+      }
+
+      
+
+      $view->setVar("medecins",$medecins);      
+      $view->setVar("modif",$modif);
+      
 
 
 
+      return $view;
+    }
+
+    public function deletePatient($pdo)
+    {
+      $view = new View("Sae3.3CabinetMedical/views/patientslist");
+      $numSecu = HttpHelper::getParam("numSecu");
+      $this->usersservices->deletePatient($pdo,$numSecu);
+      $patients = $this->usersservices->getListPatients($pdo,$_SESSION['id']);
+      $view->setVar("patients",$patients);
       return $view;
     }
 
@@ -100,10 +140,10 @@ class PatientsListController
     {
       $view = new View("Sae3.3CabinetMedical/views/visite");
       $_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
-      $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$_SESSION['patient']);
+      $patients = $this->usersservices->getListPatients($pdo,$_SESSION['id']);
       $drugs = $this->usersservices->getOrdonnances($pdo,$_SESSION['idVisite']);
       $view->setVar("drugs",$drugs);
-      $view->setVar("patient",$patient);
+      $view->setVar("patients",$patients);
       return $view;
     }
 

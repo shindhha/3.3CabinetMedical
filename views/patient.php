@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 	<script type="text/javascript" src="../scripts/script.js"></script>
 	<title>MEDILOG</title>
 	
@@ -28,7 +28,7 @@
 				</div>
 				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
 
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
+					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined font-40">
 						medication
 					</span>
 
@@ -46,33 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Fiche Patient </span>
-						<div class="d-flex align-items-center">
-							<!-- Barre de recherche -->
-							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
-
-							</div>
-
-							<!-- Filtre -->
-							<div class="dropdown green">
-								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									Filtres
-								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
-										<input type="hidden" name="controller" value="medicamentslist">
-										<table class="text-white ">
-											
-										</table>
-
-										<input type="submit" value="Rechercher" >
-									</div>
-								</form>
-							</div>
-
-						</div>				
+						<span class="h1 d-md-block d-none"> Fiche Patient </span>		
 
 					</div>
 				</nav>
@@ -80,13 +54,26 @@
 				<div class="blue row">
 					<div class="d-flex justify-content-between">
 						<span></span>
-						<div><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></div>
-						<div>dqs</div>
+						<h1><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></h1>
+						<div>
+							<?php 
+							if ($patient[0]['sexe']) {
+								echo "<i class='material-symbols-outlined font-40' >
+										woman
+									</i>";
+							} else {
+								echo "<span class='material-symbols-outlined'>
+										man
+									</span>";
+							}
+							?>
+							
+						</div>
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="d-flex flex-row justify-content-between text-green">
+					<div class="d-flex flex-row px-5 justify-content-between text-green">
 						<div class="d-flex flex-column justify-content-start">
 							<h1>Informations</h1>
 							<span>Adresse :<?php echo $patient[0]['adresse'] ?></span> 
@@ -101,11 +88,9 @@
 
 						<div class="d-flex flex-column">
 							<h1>Notes</h1>
-							<form>
-								<textarea id="story" name="story" rows="5" cols="33">
-
-								</textarea>
-							</form>
+							<div>
+								<?php echo $patient[0]['notes'] ?>
+							</div>
 							
 						</div>
 					</div>
@@ -113,19 +98,20 @@
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
-				<div class="row h-100 align-items-center text-center">
+				<h1 class="text-green">Liste des visites</h1>
+				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
-								<table class="">
+							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 success border-2 p-5">
+								<table class="table table-striped lightGreen">
 									<tr>
 										<th>Date</th>
 										<th>Motif</th>
 										<th>note</th>
 									</tr>
-									<?php 
+									<?php
 									foreach ($visites as $row) {
 									echo "<tr>"
 											 ."<td>" . $row['motifVisite'] . "</td>"
@@ -165,6 +151,23 @@
 
 						</div>
 
+					</div>
+				</div>
+				<div class="d-flex flex-row justify-content-end">
+					<div class="d-flex me-2 py-2 px-3 border-1 green">
+						<form>
+							<input type="hidden" name="action" value="modifPatient">
+							<input type="hidden" name="controller" value="patientslist">
+							<input type="submit" class="green no-border text-white" value="Ajouter une visite">
+						</form>
+					</div>
+					<div class="d-flex me-2 py-2 px-3 border-1 green">
+						<form>
+							<input type="hidden" name="modif" value="Modifier">
+							<input type="hidden" name="action" value="modifPatient">
+							<input type="hidden" name="controller" value="patientslist">
+							<input type="submit" class="green no-border text-white" value="Modifier le patient">
+						</form>
 					</div>
 				</div>
 			</div>

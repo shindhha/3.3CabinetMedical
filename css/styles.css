@@ -7,6 +7,18 @@ body , html {
 
 }
 
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+	background-color: #FFFFFF;
+}
+
+.font-40{
+	font-size: 40px;
+    font-variation-settings: 'OPSZ' 40;
+}
+
+
+
+
 .row {
 	font-family: 'Inter', sans-serif;
 }
@@ -30,6 +42,9 @@ body , html {
 	bottom: 75% !important;
 }
 
+.lightGreen {
+	background-color: #9AF3AE;
+}
 
 .green {
 	background-color: #37AC6D;
@@ -81,3 +96,5 @@ input:focus {
 .h-50 {
 	max-height: 450px;
 }
+
+input

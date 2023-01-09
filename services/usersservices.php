@@ -21,9 +21,67 @@ class UsersServices
     $nbRow = $request->rowcount();
     return $nbRow >= 1;
   }
-  public function insertPatient($pdo,$idMedecin,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email)
+
+  public function updatePatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
-    $sql1 = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email)";
+    $sql = "UPDATE Patients 
+            SET LieuNaissance = :LieuNaissance,
+            nom = :nom,
+            prenom = :prenom,
+            dateNaissance = :dateNaissance,
+            adresse = :adresse,
+            codePostal = :codePostal,
+            medecinRef = :medecinRef,
+            numTel = :numTel,
+            email = :email,
+            sexe = :sexe,
+            notes = :notes
+            WHERE numSecu = :numSecu";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute(array('numSecu' => $numSecu,
+                         'LieuNaissance' => $LieuNaissance,
+                         'nom' => $nom,
+                         'prenom' => $prenom,
+                         'dateNaissance' => $dateNaissance,
+                         'adresse' => $adresse,
+                         'codePostal' => $codePostal,
+                         'medecinRef' => $medecinRef,
+                         'numTel' => $numTel,
+                         'email' => $email,
+                         'sexe' => $sexe,
+                         'notes' => $notes));
+
+  }
+
+  public function getMedecins($pdo)
+  {
+    $sql = "SELECT * 
+            FROM Medecins";
+
+    return $pdo->query($sql);
+  }
+
+  public function deletePatient($pdo,$numSecu)
+  {
+    $sql1 = "DELETE FROM PatientsMedecins WHERE numSecu = :numSecu";
+    $sql2 = "DELETE FROM Patients WHERE numSecu = :numSecu";
+
+    $stmt = $pdo->prepare($sql1);
+    $stmt->bindParam("numSecu",$numSecu);
+    $stmt->execute();
+
+    $stmt = $pdo->prepare($sql2);
+    $stmt->bindParam("numSecu",$numSecu);
+
+    $stmt->execute();
+
+  }
+
+  public function insertPatient($pdo,$idMedecin,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
+  {
+    $sql1 = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes)";
     
 
     $sql2 = "INSERT INTO PatientsMedecins (numSecu,numRPPS) VALUES (:numSecu,:numRPPS)";
@@ -38,7 +96,9 @@ class UsersServices
                          'codePostal' => $codePostal,
                          'medecinRef' => $medecinRef,
                          'numTel' => $numTel,
-                         'email' => $email));
+                         'email' => $email,
+                         'sexe' => $sexe,
+                         'notes' => $notes));
 
     $stmt = $pdo->prepare($sql2);
     $stmt->execute(array('numSecu' => $numSecu, 
@@ -75,7 +135,7 @@ class UsersServices
 
   public function getListPatients($pdo,$medecinRef,$numSecu = "%")
   {
-    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email
+    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM PatientsMedecins
             JOIN Patients
             ON PatientsMedecins.numSecu = Patients.numSecu

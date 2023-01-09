@@ -44,14 +44,14 @@
 				<!-- Bandeau outils -->	
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 container-fluid green">
+					<div class=" d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Patients </span>
+						<span class=" h1 d-md-block d-none"> Liste Patients </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
+								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
+								<span class="material-symbols-outlined text-black "> search </span>
 
 							</div>
 
@@ -87,8 +87,8 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
-								<table class="">
+							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+								<table class="table table-striped lightGreen">
 									<tr>
 										<th>numSecu</th>
 										<th>Lieu Naissance</th>
@@ -120,19 +120,30 @@
 										
 									
 									<div class="dropdown green">
-										<span class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									
-											</span>
+											more_horiz
+
+										</span>
 										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<input type="hidden" name="controller" value="patientslist">
-												<input type="hidden" name="action" value="fichePatient">
-												<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+												
 												<table class="text-white ">
-													<tr><td><input type="submit" name="actionP" value="Afficher"> </td></tr>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="fichePatient">
+														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+														<tr><input type="submit" value="Afficher"> </tr>
+													</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="deletePatient">
+														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+														<tr><input type="submit" value="Supprimer"> </tr>
+													</form>
 												</table>
 
-											</form>
+											
 										</div>
 									</div>
 
@@ -154,9 +165,10 @@
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
+							<input type="hidden" name="modif" value="Ajouter">
 							<input type="hidden" name="action" value="modifPatient">
 							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" value="Ajouter un patient">
+							<input type="submit" class="green no-border text-white" value="Ajouter un patient">
 						</form>
 					</div>
 				</div>
