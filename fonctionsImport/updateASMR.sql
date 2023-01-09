@@ -51,7 +51,7 @@ BEGIN
     if (codeHASTest IS NOT NULL) THEN
         UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
     ELSE
-        INSERT INTO HAS_LiensPageCT (codeHAS, lienPage) VALUES (N_codeHAS, " ");
+        INSERT INTO HAS_LiensPageCT (codeHAS, lienPage) VALUES (N_codeHAS, ' ');
         UPDATE CIS_HAS_ASMR SET codeHAS = N_codeHAS WHERE codeCIS = N_codeCIS;
     END IF;
 

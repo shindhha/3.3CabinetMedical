@@ -286,7 +286,7 @@ ALTER TABLE CIS_Titulaires ADD CONSTRAINT FK_CIS_Titulaires_ID_Label_Titulaire F
 /* -------------------------------------------- Creation de la table LibelleSmr -------------------------------------------- */
 CREATE TABLE LibelleSmr (
     idLibelleSMR INT(3),
-    libelleSmr VARCHAR(255)
+    libelleSmr TEXT
 );
 ALTER TABLE LibelleSmr ADD CONSTRAINT PK_LibelleSmr PRIMARY KEY (idLibelleSMR);
 ALTER TABLE LibelleSmr MODIFY idLibelleSMR INT(3) AUTO_INCREMENT;
