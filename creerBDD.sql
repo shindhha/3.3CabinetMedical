@@ -346,7 +346,7 @@ CREATE TABLE CIS_HAS_ASMR (
     codeHAS VARCHAR(8),
     idMotifEval INT(2),
     dateAvis DATE,
-    valeurASMR VARCHAR(25),
+    valeurASMR TEXT,
     idLibelleAsmr INT(3)
 );
 ALTER TABLE CIS_HAS_ASMR ADD CONSTRAINT PK_CIS_HAS_ASMR PRIMARY KEY (codeCIS);

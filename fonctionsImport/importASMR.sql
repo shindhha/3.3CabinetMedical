@@ -6,7 +6,7 @@ CREATE FUNCTION importASMR(
                     N_codeHAS TEXT,
                     N_MotifEval TEXT,
                     N_DateAvis DATE,
-                    N_ValeurASMR VARCHAR(25),
+                    N_ValeurASMR TEXT,
                     N_LibelleASMR TEXT)
 
     RETURNS INT DETERMINISTIC
