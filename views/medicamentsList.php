@@ -159,6 +159,9 @@
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
 				<!-- content -->
+				<div class=" d-flex text-green justify-content-start">
+					<?php echo count($drugs) ?> resultats
+				</div>
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">

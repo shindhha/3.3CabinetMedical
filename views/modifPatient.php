@@ -46,7 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Patients </span>
+						<span class="h1 d-md-block d-none"> Fiche Patient </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
@@ -76,12 +76,67 @@
 
 					</div>
 				</nav>
+				<!-- Bandeau Patient -->
+				<form>
+				<div class="blue row">
+					<div class="d-flex justify-content-between">
+						<span></span>
+						<div class="d-flex flex-row"> 
+							<div>Nom :<input class="form-control" type="text" name="nom" value=""> </div>
+							<div>Prenom :<input class="form-control" type="text" name="prenom" value=""> </div>
+						</div>
+						<div>dqs</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="d-flex flex-row justify-content-between text-green">
+						
+						<div class="d-flex flex-column justify-content-start ">
+							<h1>Informations</h1>
+							<div class="d-flex flex-row"> 
+								<span>Adresse</span> <input class="form-control" type="text" name="adresse"> 
+							</div>
+							<div class="d-flex flex-row">
+								<span>n°Telephone</span><input class="form-control" type="text" name="numTel">
+							</div>
+							<div class="d-flex flex-row">
+								<span>email</span><input class="form-control" type="text" name="email">
+							</div>
+							<div class="d-flex flex-row">
+								<select name="medecinRef" class="form-select">
+									<option>Medecin Traitant</option>
+									<option>1111111111</option>
+								</select>
+							</div>
+							<div class="d-flex flex-row">
+								<span>Numéro de sécurité sociale</span><input class="form-control" type="text" name="numSecu">
+							</div>
+							<div class="d-flex flex-row">
+								<span>Date de naissance</span><input class="form-control" type="date" name="dateNaissance">
+							</div>
+							<div class="d-flex flex-row">
+								<span>Lieu de naissance</span><input class="form-control" type="text" name="LieuNaissance">
+							</div>
+							<div class="d-flex flex-row">
+								<span>Code Postal</span><input class="form-control" type="number" name="codePostal">
+							</div>
+						</div>
+
+						<div class="d-flex flex-column">
+							<h1>Notes</h1>
+							
+								<textarea  name="notes" rows="5" cols="33">
+
+								</textarea>
+							
+							
+						</div>
+					</div>
+				</div>
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
-				<div class=" d-flex text-green justify-content-start">
-					<?php echo count($patients) ?> resultats
-				</div>
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
@@ -90,31 +145,16 @@
 							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
 								<table class="">
 									<tr>
-										<th>numSecu</th>
-										<th>Lieu Naissance</th>
-										<th>nom</th>
-										<th>prenom</th>
-										<th>dateNaissance</th>
-										<th>adresse</th>
-										<th>codePostal</th>
-										<th>medecinRef</th>
-										<th>numTel</th>
-										<th>email</th>
-										<th></th>
+										<th>Date</th>
+										<th>Motif</th>
+										<th>note</th>
 									</tr>
 									<?php 
-									foreach ($patients as $row) {
+									foreach ($visites as $row) {
 									echo "<tr>"
-											 ."<td>" . $row['numSecu'] . "</td>"
-											 ."<td>" . $row['LieuNaissance'] . "</td>"
-											 ."<td>" . $row['nom'] . "</td>"
-											 ."<td>" . $row['prenom'] . "</td>"
-											 ."<td>" . $row['dateNaissance'] . "</td>"
-											 ."<td>" . $row['adresse'] . "</td>"
-											 ."<td>" . $row['codePostal'] . "</td>"
-											 ."<td>" . $row['medecinRef'] . "</td>"
-											 ."<td>" . $row['numTel'] . "</td>"
-											 ."<td>" . $row['email'] ."</td>"
+											 ."<td>" . $row['motifVisite'] . "</td>"
+											 ."<td>" . $row['dateVisite'] . "</td>"
+											 ."<td>" . $row['note'] . "</td>"
 									?>
 									<td>
 										
@@ -124,15 +164,12 @@
 									
 											</span>
 										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<input type="hidden" name="controller" value="patientslist">
-												<input type="hidden" name="action" value="fichePatient">
-												<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+											
 												<table class="text-white ">
 													<tr><td><input type="submit" name="actionP" value="Afficher"> </td></tr>
 												</table>
 
-											</form>
+											
 										</div>
 									</div>
 
@@ -151,15 +188,24 @@
 
 					</div>
 				</div>
-				<div class="d-flex flex-row justify-content-end">
+				<div class="d-flex flex-row justify-content-between">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						<form>
-							<input type="hidden" name="action" value="modifPatient">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" value="Ajouter un patient">
-						</form>
+						
+						
+						<input type="submit" name="Annuler" value="Annuler">
+						
 					</div>
+					<div class="d-flex me-2 py-2 px-3 border-1 green">
+						
+
+						<input type="hidden" name="action" value="fichePatient">
+						<input type="hidden" name="controller" value="patientslist">
+						<input type="submit" name="Valider" value="Valider">
+						
+					</div>
+					
 				</div>
+			</form>
 			</div>
 
 		</div>

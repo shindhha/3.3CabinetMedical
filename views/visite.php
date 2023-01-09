@@ -46,7 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Liste Patients </span>
+						<span class="h1 d-md-block d-none"> Visite n° </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
@@ -76,13 +76,39 @@
 
 					</div>
 				</nav>
-
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
-				<!-- content -->
-				<div class=" d-flex text-green justify-content-start">
-					<?php echo count($patients) ?> resultats
+				<!-- Bandeau Patient -->
+				<div class="blue row">
+					<div class="d-flex justify-content-between">
+						<span></span>
+						<div><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></div>
+						<div>dqs</div>
+					</div>
 				</div>
-				<div class="row h-100 align-items-center text-center">
+
+				<div class="row">
+					<div class="d-flex flex-row justify-content-between text-green">
+						
+						<span>Motif : <?php  ?></span>
+						<span>Date :  <?php ?></span>
+
+						
+					</div>
+					<div class="d-flex flex-column justify-content-between text-green">
+						
+						Description
+						<textarea></textarea>
+						Conclusion
+						<textarea></textarea>
+					</div>
+					<div class="d-flex flex-row justify-content-between text-green">
+						
+						<input type="submit" value="Annuler">
+						<input type="submit" value="Valider">
+					</div>
+				</div>
+
+				<!-- content -->
+				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
@@ -90,58 +116,22 @@
 							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
 								<table class="">
 									<tr>
-										<th>numSecu</th>
-										<th>Lieu Naissance</th>
-										<th>nom</th>
-										<th>prenom</th>
-										<th>dateNaissance</th>
-										<th>adresse</th>
-										<th>codePostal</th>
-										<th>medecinRef</th>
-										<th>numTel</th>
-										<th>email</th>
-										<th></th>
+										<th>codeCIS</th>
+										<th>Nom</th>
+										<th>Substance Active</th>
 									</tr>
-									<?php 
-									foreach ($patients as $row) {
-									echo "<tr>"
-											 ."<td>" . $row['numSecu'] . "</td>"
-											 ."<td>" . $row['LieuNaissance'] . "</td>"
-											 ."<td>" . $row['nom'] . "</td>"
-											 ."<td>" . $row['prenom'] . "</td>"
-											 ."<td>" . $row['dateNaissance'] . "</td>"
-											 ."<td>" . $row['adresse'] . "</td>"
-											 ."<td>" . $row['codePostal'] . "</td>"
-											 ."<td>" . $row['medecinRef'] . "</td>"
-											 ."<td>" . $row['numTel'] . "</td>"
-											 ."<td>" . $row['email'] ."</td>"
-									?>
-									<td>
-										
-									
-									<div class="dropdown green">
-										<span class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									
-											</span>
-										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<input type="hidden" name="controller" value="patientslist">
-												<input type="hidden" name="action" value="fichePatient">
-												<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
-												<table class="text-white ">
-													<tr><td><input type="submit" name="actionP" value="Afficher"> </td></tr>
-												</table>
 
-											</form>
-										</div>
-									</div>
-
-									</td>
 									<?php
-											echo "</tr>";
-										}
-									?>
 									
+
+										foreach ($drugs as $row) {
+
+										echo "<tr>"
+											 ."<td>" . $row['codeCIS'] . "</td>"
+
+											 ."</tr>";
+										} 
+									?>
 								</table>
 
 							</div>
@@ -151,15 +141,17 @@
 
 					</div>
 				</div>
+
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						<form>
-							<input type="hidden" name="action" value="modifPatient">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" value="Ajouter un patient">
-						</form>
+						Ajouter un medicament
+					</div>
+					<div class="d-flex me-2 py-2 px-3 border-1 green">
+						Modifier la visite
 					</div>
 				</div>
+				
+				
 			</div>
 
 		</div>

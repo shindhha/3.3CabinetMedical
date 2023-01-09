@@ -87,25 +87,24 @@
 
 				<div class="row">
 					<div class="d-flex flex-row justify-content-between text-green">
-						
-						<div class="d-flex flex-column">
+						<div class="d-flex flex-column justify-content-start">
 							<h1>Informations</h1>
-							<span>Adresse</span>
-							<span>n°Telephone</span>
-							<span>email</span>
-							<span>Medecin Traitant</span>
-							<span>Numéro de sécurité sociale</span>
-							<span>Date de naissance</span>
-							<span>Lieu de naissance</span>
+							<span>Adresse :<?php echo $patient[0]['adresse'] ?></span> 
+							<span>n°Telephone :<?php echo "0".$patient[0]['numTel'] ?></span>
+							<span>email :<?php echo $patient[0]['email'] ?></span>
+							<span>Medecin Traitant :<?php echo $patient[0]['medecinRef'] ?></span>
+							<span>Numéro de sécurité sociale :<?php echo $_SESSION['patient'] ?></span>
+							<span>Date de naissance :<?php echo $patient[0]['dateNaissance'] ?></span>
+							<span>Lieu de naissance :<?php echo $patient[0]['LieuNaissance'] ?></span>
+							<span>CodePostal :<?php echo $patient[0]['codePostal'] ?></span>
 						</div>
 
 						<div class="d-flex flex-column">
 							<h1>Notes</h1>
 							<form>
-								<textarea id="story" name="story"
-          rows="5" cols="33">
-It was a dark and stormy night...
-</textarea>
+								<textarea id="story" name="story" rows="5" cols="33">
+
+								</textarea>
 							</form>
 							
 						</div>
@@ -124,21 +123,14 @@ It was a dark and stormy night...
 									<tr>
 										<th>Date</th>
 										<th>Motif</th>
-										<th>Ordonnance</th>
+										<th>note</th>
 									</tr>
 									<?php 
-									foreach ($patient as $row) {
+									foreach ($visites as $row) {
 									echo "<tr>"
-											 ."<td>" . $row['numSecu'] . "</td>"
-											 ."<td>" . $row['LieuNaissance'] . "</td>"
-											 ."<td>" . $row['nom'] . "</td>"
-											 ."<td>" . $row['prenom'] . "</td>"
-											 ."<td>" . $row['dateNaissance'] . "</td>"
-											 ."<td>" . $row['adresse'] . "</td>"
-											 ."<td>" . $row['codePostal'] . "</td>"
-											 ."<td>" . $row['medecinRef'] . "</td>"
-											 ."<td>" . $row['numTel'] . "</td>"
-											 ."<td>" . $row['email'] ."</td>"
+											 ."<td>" . $row['motifVisite'] . "</td>"
+											 ."<td>" . $row['dateVisite'] . "</td>"
+											 ."<td>" . $row['note'] . "</td>"
 									?>
 									<td>
 										
@@ -149,8 +141,9 @@ It was a dark and stormy night...
 											</span>
 										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<input type="hidden" name="controller" value="patient">
-												<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+												<input type="hidden" name="controller" value="patientslist">
+												<input type="hidden" name="action" value="visite">
+												<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
 												<table class="text-white ">
 													<tr><td><input type="submit" name="actionP" value="Afficher"> </td></tr>
 												</table>
