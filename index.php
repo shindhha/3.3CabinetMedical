@@ -1,17 +1,19 @@
 <?php
+session_start();
 /*
  * Sample without database connexion
  */
- $hostname = "sql.alphaline.ml";
+ $hostname = "localhost";
  $dbname = "test";
- $user = "guillaume";
- $password = "guillaume";
+ $user = "root";
+ $password = "root";
  $port = 3306;
- $charset = "utf8";
+ $charset = "utf8mb4";
 
 spl_autoload_extensions(".php");
 spl_autoload_register();
 date_default_timezone_set("UTC");
+set_time_limit(3600);
 use yasmf\Router;
 use yasmf\DataSource;
 

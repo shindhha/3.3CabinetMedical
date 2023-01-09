@@ -63,8 +63,6 @@
 
 								<form action="index.php" method="POST" class="d-flex flex-column gap-3">
 									<span class="fs-1"> Connexion a <u>MEDILOG</u> </span>
-
-
 									<div class="d-flex gap-3"><img src="res/iaccount.svg" class="sizeIcon"><input name="login" type="text" placeholder="Identifiant" class="border-0 border-1 w-75 ps-2 pt-2 pb-2"></div>
 
 									<div class="d-flex gap-3"><img src="res/ipassword.svg" class="sizeIcon"><input name="password" type="password" placeholder="Mot de passe" class="ps-2 border-0 border-1 w-75 pt-2 pb-2"></input></div>
