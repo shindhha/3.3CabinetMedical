@@ -3,8 +3,21 @@ body , html {
 	height: 100%;
 	width: 100%;
 	margin: 0px;
+	
 
 }
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+	background-color: #FFFFFF;
+}
+
+.font-40{
+	font-size: 40px;
+    font-variation-settings: 'OPSZ' 40;
+}
+
+
+
 
 .row {
 	font-family: 'Inter', sans-serif;
@@ -29,6 +42,9 @@ body , html {
 	bottom: 75% !important;
 }
 
+.lightGreen {
+	background-color: #9AF3AE;
+}
 
 .green {
 	background-color: #37AC6D;
@@ -59,9 +75,11 @@ input:focus {
 	outline: none;
 }
 
-input {
+.noBorder {
 	border: none;
 }
+
+
 
 .ps-6 {
 	margin-left: 50px;
@@ -73,4 +91,18 @@ input {
 
 .no-border {
 	border: none;
+}
+
+.h-50 {
+	max-height: 450px;
+}
+
+
+.enable-flex {
+	display: flex;
+}
+
+.input-grow {
+	flex-grow: 1;
+	text-align: center;
 }
