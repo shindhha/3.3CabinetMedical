@@ -49,29 +49,64 @@
 						<span class=" h1 d-md-block d-none"> Liste Patients </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
-							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black "> search </span>
+							<form action="index.php" action="POST" class="d-flex align-items-center">
+								<div class="d-flex me-2 py-2 px-3 bg-white border-1">
+									<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
+									<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
-							</div>
+								</div>
 
-							<!-- Filtre -->
-							<div class="dropdown green">
-								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+								<!-- Filtre -->
+								<div class="dropdown green">
+									<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									Filtres
-								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
+									</span>
+									<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+									
 										<input type="hidden" name="controller" value="medicamentslist">
 										<table class="text-white ">
-											
-										</table>
-
+											<tr>
+												<td>
+													<select name="pEtat" class="form-select text-green">
+														<option value="-1"<?php  ?>>Etat Commercialisation</option>
+														<option value="1" <?php  ?>>Commercialisé</option>
+														<option value="0" <?php ?>>Non Commercialisé</option>
+													</select>
+													
+												</td>
+												<td>
+													<select name="pSurveillance" class="form-select text-green">
+														<option value="-1"<?php  ?>>Surveillance Renforcée</option>
+														<option value="1" <?php  ?>>Oui</option>
+														<option value="0" <?php  ?>>Non</option>
+													</select>
+													
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<select name="pNiveauSmr" class="form-select text-green">
+														<option value="%">Valeur SMR</option>
+														<?php
+														
+														?>
+													</select>
+												</td>
+												<td>
+													<select name="pValeurASMR" class="form-select text-green">
+														<option value="%">Valeur ASMR</option>
+														<?php
+														
+														?>
+													</select>
+												</td>
+											</tr>
+</table>
 										<input type="submit" value="Rechercher" >
 									</div>
-								</form>
-							</div>
-
+								
+								</div>
+							</form>
 						</div>				
 
 					</div>

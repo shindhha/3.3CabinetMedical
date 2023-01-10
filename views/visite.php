@@ -46,33 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Visite n° </span>
-						<div class="d-flex align-items-center">
-							<!-- Barre de recherche -->
-							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
-
-							</div>
-
-							<!-- Filtre -->
-							<div class="dropdown green">
-								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									Filtres
-								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
-										<input type="hidden" name="controller" value="medicamentslist">
-										<table class="text-white ">
-											
-										</table>
-
-										<input type="submit" value="Rechercher" >
-									</div>
-								</form>
-							</div>
-
-						</div>				
+						<span class="h1 d-md-block d-none"> Visite n° </span>		
 
 					</div>
 				</nav>
@@ -86,39 +60,39 @@
 				</div>
 
 				<div class="row">
-					<div class="d-flex flex-row justify-content-between text-green">
+					<div class="d-flex flex-row justify-content-between text-dark px-5">
 						
 						<span>Motif : <?php echo $visite[0]['motifVisite'] ; ?></span>
 						<span>Date :  <?php echo $visite[0]['dateVisite']?></span>
 
 						
 					</div>
-					<div class="d-flex flex-column justify-content-between text-green">
-						
+					<div class="d-flex flex-column text-start text-dark">
 						Description
-						<textarea>
+						<div class="border border-dark px-2 pb-4">
 							<?php echo $visite[0]['Description'] ?>
-						</textarea>
+						</div>
 						Conclusion
-						<textarea>
+						<div class="border border-dark px-2 pb-4">
 							<?php echo $visite[0]['Conclusion'] ?>
-						</textarea>
-					</div>
-					<div class="d-flex flex-row justify-content-between text-green">
-						
-						<input type="submit" value="Annuler">
-						<input type="submit" value="Valider">
+						</div>
 					</div>
 				</div>
 
 				<!-- content -->
 				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
-					<div class="container ">
-						<div class="row justify-content-center">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5">
-								<table class="">
+					<div class="container ">
+						
+						
+						<div class="row justify-content-center">
+							
+							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+								<div class="text-dark text-start">
+							Liste des medicaments prescrit
+						</div>
+								<table class="table table-striped lightGreen border border-dark">
 									<tr>
 										<th>codeCIS</th>
 										<th>Nom</th>
@@ -148,10 +122,20 @@
 
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						Ajouter un medicament
+						<form>
+							<input type="hidden" name="modif" value="Ajouter">
+							<input type="hidden" name="action" value="addMedic">
+							<input type="hidden" name="controller" value="patientslist">
+							<input type="submit" class="green no-border text-white" value="Ajouter un medicament">
+						</form>
 					</div>
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						Modifier la visite
+						<form>
+							<input type="hidden" name="modif" value="Modifier">
+							<input type="hidden" name="action" value="addVisite">
+							<input type="hidden" name="controller" value="patientslist">
+							<input type="submit" class="green no-border text-white" value="Modifier la visite">
+						</form>
 					</div>
 				</div>
 				

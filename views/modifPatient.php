@@ -134,20 +134,25 @@
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-
+							<div class="d-flex me-2 py-2 px-3 border-1 green">
+						
+								<input type="hidden" name="modif" value="<?php echo $modif; ?>">
+								<input type="hidden" name="action" value="fichePatient">
+								<input type="hidden" name="controller" value="patientslist">
+								<input type="submit" class="green no-border text-white" value="Valider">
+						
+							</div>
+						</form>
+						<form>
 							<div class="d-flex flex-row justify-content-between">
 								<div class="d-flex me-2 py-2 px-3 border-1 green">
-								<input type="submit" class="green no-border text-white" value="Annuler">
-						
-								</div>
-								<div class="d-flex me-2 py-2 px-3 border-1 green">
-						
-									<input type="hidden" name="modif" value="<?php echo $modif; ?>">
-									<input type="hidden" name="action" value="fichePatient">
 									<input type="hidden" name="controller" value="patientslist">
-									<input type="submit" class="green no-border text-white" value="Valider">
+									<input type="hidden" name="action" value="fichePatient">
+									<input type="hidden" name="numSecu" value="<?php echo $_SESSION['patient'] ?>">
+									<input type="submit" class="bg-danger no-border text-white" value="Annuler">
 						
 								</div>
+								
 					
 							</div>
 

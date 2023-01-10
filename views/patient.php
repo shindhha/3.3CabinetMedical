@@ -119,10 +119,10 @@
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
-				
 				<div class="row align-items-center text-center">
 
 					<!-- Portail de connexion -->
+
 					<div class="container ">
 
 						<div class="row justify-content-center">
@@ -137,6 +137,7 @@
 										<th>Description</th>
 									</tr>
 									<?php
+
 									foreach ($visites as $row) {
 									echo "<tr>"
 											 ."<td>" . $row['motifVisite'] . "</td>"
@@ -151,15 +152,25 @@
 									
 											</span>
 										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<input type="hidden" name="controller" value="patientslist">
-												<input type="hidden" name="action" value="visite">
-												<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+											
 												<table class="text-white ">
-													<tr><td><input type="submit" name="actionP" value="Afficher"> </td></tr>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="visite">
+														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+														<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
+													</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="fichePatient">
+														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+														<input type="hidden" name="numSecu"
+														value="<?php echo $_SESSION['patient'] ?>">
+														<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
+													</form>
 												</table>
 
-											</form>
+											
 										</div>
 									</div>
 

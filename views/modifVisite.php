@@ -68,10 +68,10 @@
 						<div class="d-flex flex-column justify-content-start ">
 							<div class="d-flex flex-row justify-content-between">
 								<div class="d-flex flex-row"> 
-								<span>Motif</span> <input class="form-control" type="text" name="Motif" value="<?php if (isset($patient)) echo $patient[0]['adresse']; ?>"> 
+								<span>Motif</span> <input class="form-control" type="text" name="Motif" value="<?php if (isset($visite)) echo $visite[0]['motifVisite']; ?>"> 
 								</div>
 								<div class="d-flex flex-row">
-									<span>Date</span><input class="form-control" type="date" name="Date" value="<?php if (isset($patient)) echo $patient[0]['numTel']; ?>">
+									<span>Date</span><input class="form-control" type="date" name="Date" value="<?php if (isset($visite)) echo $visite[0]['dateVisite']; ?>">
 								</div>
 							</div>
 
@@ -80,7 +80,7 @@
 								<span>Description</span>
 
 								<textarea name="Description">
-									<?php if (isset($patient)) echo $patient[0]['email']; ?>
+									<?php if (isset($visite)) echo $visite[0]['Description']; ?>
 								</textarea>
 
 							</div>
@@ -90,7 +90,7 @@
 
 								<span>Conclusion</span>
 								<textarea name="Conclusion">
-									<?php if (isset($patient)) echo $patient[0]['numSecu']; ?>
+									<?php if (isset($visite)) echo $visite[0]['Conclusion']; ?>
 								</textarea>
 							</div>
 							
@@ -114,7 +114,7 @@
 						
 								</div>
 								<div class="d-flex me-2 py-2 px-3 border-1 green">
-						
+									<input type="hidden" name="idVisite" value="<?php echo $visite[0]['idVisite'] ?>">
 									<input type="hidden" name="modif" value="<?php echo $modif; ?>">
 									<input type="hidden" name="action" value="visite">
 									<input type="hidden" name="controller" value="patientslist">

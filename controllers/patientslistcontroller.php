@@ -51,7 +51,7 @@ class PatientsListController
     public function index($pdo) {
         $view = new View("Sae3.3CabinetMedical/views/patientslist");
 
-        $patients = $this->usersservices->getListPatients($pdo,$_SESSION['id']);
+        $patients = $this->usersservices->getListPatients($pdo,$_SESSION['medecin']);
 
 
 
@@ -62,6 +62,11 @@ class PatientsListController
     public function fichePatient($pdo)
     {
       $view = new View("Sae3.3CabinetMedical/views/patient");
+      $_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
+      $_SESSION['patient'] = HttpHelper::getParam("numSecu");
+
+
+
       $modif = HttpHelper::getParam("modif");
       $nom = HttpHelper::getParam("nom");
       $prenom = HttpHelper::getParam("prenom");
@@ -69,7 +74,6 @@ class PatientsListController
       $numTel = HttpHelper::getParam("numTel");
       $email = HttpHelper::getParam("email");
       $medecinRef = HttpHelper::getParam("medecinRef");
-      $numSecu = HttpHelper::getParam("numSecu");
       $dateNaissance = HttpHelper::getParam("dateNaissance");
       $LieuNaissance = HttpHelper::getParam("LieuNaissance");
       $notes = HttpHelper::getParam("notes");
@@ -77,27 +81,26 @@ class PatientsListController
       $sexe = (int) HttpHelper::getParam("sexe");
 
 
-      try {
+     
         if ($modif == "Ajouter") {
         
-          $this->usersservices->insertPatient($pdo,$_SESSION['id'],$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+          $this->usersservices->insertPatient($pdo,$_SESSION['medecin'],$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
         }
 
         if ($modif == "Modifier") {
-          $this->usersservices->updatePatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+          $this->usersservices->updatePatient($pdo,$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
         }
-      } catch (Exception $e) {
-        
-      }
+
+        if ($modif == "Supprimer") {
+          $this->usersservices->deleteVisite($pdo,$_SESSION['idVisite']);
+        }
 
       
 
-
-      $_SESSION['patient'] = $numSecu;
+      
       $visites = $this->usersservices->getVisites($pdo,$_SESSION['patient']);
-      $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$numSecu);
+      $patient = $this->usersservices->getListPatients($pdo,$_SESSION['medecin'],$_SESSION['patient']);
 
-      $view->setVar("numSecu",$numSecu);
       $view->setVar("visites",$visites);
       $view->setVar("patient",$patient);
       return $view;
@@ -111,7 +114,7 @@ class PatientsListController
       $modif = HttpHelper::getParam("modif");
       $medecins = $this->usersservices->getMedecins($pdo);
       if ($modif == "Modifier") {
-        $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$_SESSION['patient']);
+        $patient = $this->usersservices->getListPatients($pdo,$_SESSION['medecin'],$_SESSION['patient']);
         $view->setVar("patient",$patient);
       }
 
@@ -131,7 +134,7 @@ class PatientsListController
       $view = new View("Sae3.3CabinetMedical/views/patientslist");
       $numSecu = HttpHelper::getParam("numSecu");
       $this->usersservices->deletePatient($pdo,$numSecu);
-      $patients = $this->usersservices->getListPatients($pdo,$_SESSION['id']);
+      $patients = $this->usersservices->getListPatients($pdo,$_SESSION['medecin']);
       $view->setVar("patients",$patients);
       return $view;
     }
@@ -139,6 +142,7 @@ class PatientsListController
     public function visite($pdo)
     {
       $view = new View("Sae3.3CabinetMedical/views/visite");
+      $_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
       $modif = HttpHelper::getParam("modif");
       $motif = HttpHelper::getParam("Motif");
       $Date = HttpHelper::getParam("Date");
@@ -146,13 +150,19 @@ class PatientsListController
       $Conclusion = HttpHelper::getParam("Conclusion");
 
       if ($modif == "Ajouter") {
-        $this->usersservices->insertVisite($pdo,$_SESSION['patient'],$motif,$Date,$Description,$Conclusion);
-        $_SESSION['idVisite'] = $pdo->lastInsertId();
+       $_SESSION['idVisite'] =  $this->usersservices->insertVisite($pdo,$_SESSION['patient'],$motif,$Date,$Description,$Conclusion);
       }
+
+      if ($modif == "Modifier") {
+        $this->usersservices->modifVisite($pdo,$_SESSION['idVisite'],$motif,$Date,$Description,$Conclusion);
+      }
+
+      
 
       $drugs = $this->usersservices->getOrdonnances($pdo,$_SESSION['idVisite']);
       $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$_SESSION['patient']);
       $visite = $this->usersservices->getVisites($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
+      $view->setVar("modif",$modif);
       $view->setVar("visite",$visite);
       $view->setVar("drugs",$drugs);
       $view->setVar("patient",$patient);
@@ -164,7 +174,11 @@ class PatientsListController
       $view = new View("Sae3.3CabinetMedical/views/modifVisite");
 
       $modif = HttpHelper::getParam("modif");
-
+      if ($modif == "Modifier") {
+        $visite = $this->usersservices->getVisites($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
+        $view->setVar("visite",$visite);
+      }
+      
       $view->setVar("modif",$modif);
 
       return $view;

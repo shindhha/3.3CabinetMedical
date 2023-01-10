@@ -46,11 +46,12 @@
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
 						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
-						<div class="d-flex align-items-center">
+						
 							<!-- Barre de recherche -->
+						<form class="d-flex align-items-center" action="index.php" action="POST">
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
+								<input name="pPresentation" class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
+								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 							</div>
 
@@ -60,7 +61,7 @@
 									Filtres
 								</span>
 								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
+									<div class="d-flex flex-column green p-4">
 										<input type="hidden" name="controller" value="medicamentslist">
 										<table class="text-white ">
 											<tr>
@@ -83,13 +84,27 @@
 											</tr>
 											<tr>
 												<td>
-													<select class="form-select text-green">
-														<option>Valeur SMR</option>
+													<select name="pNiveauSmr" class="form-select text-green">
+														<option value="%">Valeur SMR</option>
+														<?php
+														while ($row = $niveauSmr->fetch()) {
+															echo "<option";
+															if ($pNiveauSmr == $row['libelleNiveauSMR']) echo " selected='selected'";
+															echo ">" . $row['libelleNiveauSMR'] . "</option>";
+														}
+														?>
 													</select>
 												</td>
 												<td>
-													<select class="form-select text-green">
-														<option>Valeur ASMR</option>
+													<select name="pValeurASMR" class="form-select text-green">
+														<option value="%">Valeur ASMR</option>
+														<?php
+														while ($row = $valeurASMR->fetch()) {
+															echo "<option";
+															if ($pValeurASMR == $row['valeurASMR']) echo " selected='selected'";
+															echo ">" . $row['valeurASMR'] . "</option>";
+														}
+														?>
 													</select>
 												</td>
 											</tr>
@@ -146,11 +161,12 @@
 												</td>
 											</tr>
 										</table>
-
 										<input type="submit" value="Rechercher" >
+</div>
+										
 									</div>
-								</form>
-							</div>
+							</form>
+
 
 						</div>				
 
@@ -177,17 +193,16 @@
 										<th>Voie d'administration</th>
 										<th>Taux Remboursement</th>
 										<th>Prix</th>
-										<th>Désignation </th>
+										<th>Presentation </th>
 										<th>Etat Commercialisation </th>
 										<th>Surveillance Renforcé</th>
-										<th>Designation Principe Actif </th>
 									</tr>
 
 									<?php
 									$surveillance = "";
 									$commercialiser = "";
 
-										foreach ($drugs as $row) {
+										foreach ($drugs as $row)  {
 											if ($row['etatCommercialisation']) {
 												$commercialiser = "Commercialiser";
 											} else {
@@ -202,13 +217,13 @@
 
 										echo "<tr>"
 											 ."<td>" . $row['codeCIS'] . "</td>"
-											 ."<td>" . "</td>"
-											 ."<td>" . "</td>"
+											 ."<td>" . $row['libelleNiveauSMR'] . "</td>"
+											 ."<td>" . $row['valeurASMR'] . "</td>"
 											 ."<td>" . $row['formePharma'] . "</td>"
 											 ."<td>" . $row['labelVoieAdministration'] . "</td>"
 											 ."<td>" . $row['tauxRemboursement'] . "</td>"
 											 ."<td>" . $row['prix'] . "</td>"
-											 ."<td>" . $row['designation'] . "</td>"
+											 ."<td>" . $row['libellePresentation'] . "</td>"
 											 ."<td>" . $commercialiser . "</td>"
 											 ."<td>" . $surveillance . "</td>"
 											 ."<td>" .  "</td>"

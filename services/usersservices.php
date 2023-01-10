@@ -106,11 +106,39 @@ class UsersServices
 
   }
 
+  public function modifVisite($pdo,$idVisite,$motifVisite,$dateVisite,$Description,$Conclusion)
+  {
+    $sql = "UPDATE Visites 
+    SET motifVisite = :motifVisite,
+    dateVisite = :dateVisite,
+    Description = :Description,
+    Conclusion = :Conclusion
+    WHERE idVisite = :idVisite";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array('motifVisite' => $motifVisite,
+                   'dateVisite' => $dateVisite,
+                   'Description' => $Description,
+                   'Conclusion' => $Conclusion,
+                   'idVisite' => $idVisite));
+  }
+
+
+  public function deleteVisite($pdo,$idVisite)
+  {
+    $sql1 = "DELETE FROM Visites WHERE idVisite = :idVisite";
+    $sql2 = "DELETE FROM ListeVisites WHERE idVisite = :idVisite";
+
+    $stmt = $pdo->prepare($sql2);
+    $stmt->execute(array('idVisite' => $idVisite));
+    $stmt = $pdo->prepare($sql1);
+    $stmt->execute(array('idVisite' => $idVisite));
+  }
 
   public function insertVisite($pdo,$numSecu,$motifVisite,$dateVisite,$Description,$Conclusion)
   {
     $sql1 = "INSERT INTO Visites (motifVisite,dateVisite,Description,Conclusion)
             VALUES (:motifVisite,:dateVisite,:Description,:Conclusion)";
+    
 
     $sql2 = "INSERT INTO ListeVisites (numSecu,idVisite) VALUES (:numSecu,LAST_INSERT_ID())";
 
@@ -119,11 +147,12 @@ class UsersServices
                    'dateVisite' => $dateVisite,
                    'Description' => $Description,
                    'Conclusion' => $Conclusion));
+    $lastInsertId = $pdo->lastInsertId();
+
     $stmt = $pdo->prepare($sql2);
 
-    $stmt->execute(array('numSecu' => $numSecu,
-                         ));
-
+    $stmt->execute(array('numSecu' => $numSecu));
+    return $lastInsertId;
   }
 
   public function getOrdonnances($pdo,$idVisite)
@@ -173,21 +202,25 @@ class UsersServices
     return $stmt->fetchAll();
 
   }
-  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1, $designation = "%")
+  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1,$valeurASMR = "%",$libelleNiveauSMR = "%", $libellePresentation = "%")
   {
-    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,designation,surveillanceRenforcee
+    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR
             FROM listMedic
             WHERE formePharma LIKE :formePharma
             AND labelVoieAdministration LIKE :labelVoieAdministration
-            AND designation LIKE :designation
+            AND libellePresentation LIKE :libellePresentation
             AND prix > :prixMin AND prix < :prixMax
+            AND valeurASMR LIKE :valeurASMR
+            AND libelleNiveauSMR LIKE :libelleNiveauSMR
             
             ";
     $param = array('formePharma' => $formePharma,
                    'labelVoieAdministration' => $labelVoieAdministration,
                    'prixMin' => $prixMin,
                    'prixMax' => $prixMax,
-                   'designation' => $designation,);
+                   'libellePresentation' => $libellePresentation,
+                   'valeurASMR' => $valeurASMR,
+                   'libelleNiveauSMR' => $libelleNiveauSMR);
 
     if ($etatCommercialisation != -1) {
       $sql = $sql . " AND etatCommercialisation = :etatCommercialisation";
@@ -213,7 +246,8 @@ class UsersServices
   public function getparams($pdo,$param,$table)
   {
     $sql = "SELECT DISTINCT(" . $param .")"
-           . " FROM " . $table;
+           . " FROM " . $table
+           . " ORDER BY " . $param;
 
     return $pdo->query($sql);
   }

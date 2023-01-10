@@ -58,13 +58,20 @@ class medicamentslistController
         $pPrixMax = (int) HttpHelper::getParam("pPrixMax") == 0 ? 10000 : (int) HttpHelper::getParam("pPrixMax");
         $pEtat =  HttpHelper::getParam("pEtat") !== null ? (int) HttpHelper::getParam("pEtat") : -1;
         $pSurveillance = HttpHelper::getParam("pSurveillance") !== null ? (int) HttpHelper::getParam("pSurveillance") : -1;
-
-        $d = [$pformePharma,$pVoieAdmi,$pTauxRem,$pPrixMin,$pPrixMax,$pEtat,$pSurveillance];
-        
-        $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance);
+        $pNiveauSmr = HttpHelper::getParam("pNiveauSmr") !== null ?  HttpHelper::getParam("pNiveauSmr") : "%";
+        $pValeurASMR = HttpHelper::getParam("pValeurASMR") !== null ?  HttpHelper::getParam("pValeurASMR") : "%";
+        $pPresentation = HttpHelper::getParam("pPresentation");
+        $valeurASMR = $this->usersservices->getparams($pdo,"valeurASMR","cis_has_asmr");
         $formePharmas = $this->usersservices->getparams($pdo,"formePharma","FormePharma");
         $voieAdministration = $this->usersservices->getparams($pdo,"labelVoieAdministration","ID_Label_VoieAdministration");
+        $niveauSmr = $this->usersservices->getparams($pdo,"libelleNiveauSMR","niveauSmr");
         $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","TauxRemboursement");
+        $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pPresentation . "%");
+
+        $view->setVar("pValeurASMR",$pValeurASMR);
+        $view->setVar("pNiveauSmr",$pNiveauSmr);
+        $view->setVar("niveauSmr",$niveauSmr);
+        $view->setVar("valeurASMR",$valeurASMR);
         $view->setVar("pformePharma",$pformePharma);
         $view->setVar("pVoieAdmi",$pVoieAdmi);
         $view->setVar("pTauxRem",$pTauxRem);
@@ -72,7 +79,6 @@ class medicamentslistController
         $view->setVar("pPrixMax",$pPrixMax);
         $view->setVar("pEtat",$pEtat);
         $view->setVar("pSurveillance",$pSurveillance);
-        $view->setVar("d",$d);
         $view->setVar("tauxRemboursements",$tauxRemboursements);
         $view->setVar("voieAd",$voieAdministration);
 		$view->setVar("formePharmas",$formePharmas);
