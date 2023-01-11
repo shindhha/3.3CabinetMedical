@@ -63,7 +63,12 @@ class PatientsListController
     {
       $view = new View("Sae3.3CabinetMedical/views/patient");
       $_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
-      $_SESSION['patient'] = HttpHelper::getParam("numSecu");
+
+      if (HttpHelper::getParam("numSecu") != "") {
+        $_SESSION['patient'] = HttpHelper::getParam("numSecu");
+      }
+
+      
 
 
 
@@ -142,7 +147,21 @@ class PatientsListController
     public function visite($pdo)
     {
       $view = new View("Sae3.3CabinetMedical/views/visite");
-      $_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
+      if (HttpHelper::getParam("idVisite") !== null) {
+        $_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
+      }
+
+      $codeCIS = HttpHelper::getParam("codeCIS");
+      try {
+        if ($codeCIS != "") {
+        $this->usersservices->addMedic($pdo,(int) $_SESSION['idVisite'],(int) $codeCIS);
+        }
+      } catch (Exception $e) {
+        throw new Exception($_SESSION['idVisite'],1);
+      }
+      
+
+
       $modif = HttpHelper::getParam("modif");
       $motif = HttpHelper::getParam("Motif");
       $Date = HttpHelper::getParam("Date");
@@ -156,16 +175,40 @@ class PatientsListController
       if ($modif == "Modifier") {
         $this->usersservices->modifVisite($pdo,$_SESSION['idVisite'],$motif,$Date,$Description,$Conclusion);
       }
+      $valeurASMR = $this->usersservices->getparams($pdo,"valeurASMR","cis_has_asmr");
+      $formePharmas = $this->usersservices->getparams($pdo,"formePharma","FormePharma");
+      $voieAdministration = $this->usersservices->getparams($pdo,"labelVoieAdministration","ID_Label_VoieAdministration");
+      $niveauSmr = $this->usersservices->getparams($pdo,"libelleNiveauSMR","niveauSmr");
+      $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","TauxRemboursement");
+      $voieAdministration = $this->usersservices->getparams($pdo,"labelVoieAdministration","ID_Label_VoieAdministration");
 
-      
-
-      $drugs = $this->usersservices->getOrdonnances($pdo,$_SESSION['idVisite']);
+      $pformePharma = HttpHelper::getParam("pformePharma") !== null ? HttpHelper::getParam("pformePharma") : "%" ;
+      $pVoieAdmi = HttpHelper::getParam("pVoieAdmi") !== null ? HttpHelper::getParam("pVoieAdmi") : "%" ;
+      $pTauxRem = HttpHelper::getParam("pTauxRem") !== null ? HttpHelper::getParam("pTauxRem") : "";
+      $pPrixMin = (int) HttpHelper::getParam("pPrixMin");
+      $pPrixMax = (int) HttpHelper::getParam("pPrixMax") == 0 ? 10000 : (int) HttpHelper::getParam("pPrixMax");
+      $pEtat =  HttpHelper::getParam("pEtat") !== null ? (int) HttpHelper::getParam("pEtat") : -1;
+      $pSurveillance = HttpHelper::getParam("pSurveillance") !== null ? (int) HttpHelper::getParam("pSurveillance") : -1;
+      $pNiveauSmr = HttpHelper::getParam("pNiveauSmr") !== null ?  HttpHelper::getParam("pNiveauSmr") : "%";
+      $pValeurASMR = HttpHelper::getParam("pValeurASMR") !== null ?  HttpHelper::getParam("pValeurASMR") : "%";
+      $pPresentation = HttpHelper::getParam("pPresentation");
+      $drugsVisite = $this->usersservices->getOrdonnances($pdo,$_SESSION['idVisite']);
+      $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pPresentation . "%");
       $patient = $this->usersservices->getListPatients($pdo,$_SESSION['id'],$_SESSION['patient']);
       $visite = $this->usersservices->getVisites($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
+      $view->setVar("idVisite",$_SESSION['idVisite']);
+      $view->setVar("niveauSmr",$niveauSmr);
+      $view->setVar("valeurASMR",$valeurASMR);
+      $view->setVar("voieAd",$voieAdministration);
+      $view->setVar("tauxRemboursements",$tauxRemboursements);
+      $view->setVar("formePharmas",$formePharmas);
       $view->setVar("modif",$modif);
       $view->setVar("visite",$visite);
       $view->setVar("drugs",$drugs);
+      $view->setVar("drugsVisite",$drugsVisite);
       $view->setVar("patient",$patient);
+      $view->setVar("pEtat",$pEtat);
+      $view->setVar("pSurveillance",$pSurveillance);
       return $view;
     }
 

@@ -50,7 +50,6 @@ class medicamentslistController
 	}
 	public function index($pdo) {
 		$view = new View("Sae3.3CabinetMedical/views/medicamentsList");
-
         $pformePharma = HttpHelper::getParam("pformePharma") !== null ? HttpHelper::getParam("pformePharma") : "%" ;
         $pVoieAdmi = HttpHelper::getParam("pVoieAdmi") !== null ? HttpHelper::getParam("pVoieAdmi") : "%" ;
         $pTauxRem = HttpHelper::getParam("pTauxRem") !== null ? HttpHelper::getParam("pTauxRem") : "";
@@ -67,6 +66,12 @@ class medicamentslistController
         $niveauSmr = $this->usersservices->getparams($pdo,"libelleNiveauSMR","niveauSmr");
         $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","TauxRemboursement");
         $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pPresentation . "%");
+
+        $idVisite = HttpHelper::getParam("idVisite");
+
+        if ($idVisite != "") {
+            $view->setVar("ajouter",true);
+        }
 
         $view->setVar("pValeurASMR",$pValeurASMR);
         $view->setVar("pNiveauSmr",$pNiveauSmr);

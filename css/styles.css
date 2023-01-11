@@ -3,7 +3,7 @@ body , html {
 	height: 100%;
 	width: 100%;
 	margin: 0px;
-	
+	overflow: hidden;
 
 }
 
@@ -77,6 +77,11 @@ input:focus {
 
 .noBorder {
 	border: none;
+}
+
+
+.hf {
+	height: 250px;
 }
 
 

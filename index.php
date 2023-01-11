@@ -20,3 +20,6 @@ use yasmf\DataSource;
 $router = new Router();
 $pdo = new DataSource($hostname,$port,$dbname,$user,$password,$charset);
 $router->route($pdo);
+?>
+<script type="text/javascript" src="scripts/script.js"></script>
+    </div>

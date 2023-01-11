@@ -212,7 +212,7 @@ class UsersServices
             AND prix > :prixMin AND prix < :prixMax
             AND valeurASMR LIKE :valeurASMR
             AND libelleNiveauSMR LIKE :libelleNiveauSMR
-            
+            LIMIT 50
             ";
     $param = array('formePharma' => $formePharma,
                    'labelVoieAdministration' => $labelVoieAdministration,
@@ -241,6 +241,13 @@ class UsersServices
     $stmt->execute($param);
 
     return $stmt->fetchAll();
+  }
+  public function addMedic($pdo,$idVisite,$codeCIS)
+  {
+    $sql = "INSERT INTO Ordonnances (idOrdonnance,codeCIS) VALUES (:idVisite,:codeCIS)";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array("idVisite" => $idVisite, "codeCIS" => $codeCIS));
   }
 
   public function getparams($pdo,$param,$table)

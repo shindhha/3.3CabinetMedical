@@ -88,10 +88,9 @@
 						
 						<div class="row justify-content-center">
 							
-							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
-								<div class="text-dark text-start">
-							Liste des medicaments prescrit
-						</div>
+							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+								<div class=" h-50 text-dark text-start overflow-scroll">
+									Liste des medicaments prescrit	
 								<table class="table table-striped lightGreen border border-dark">
 									<tr>
 										<th>codeCIS</th>
@@ -102,7 +101,7 @@
 									<?php
 									
 
-										foreach ($drugs as $row) {
+										foreach ($drugsVisite as $row) {
 
 										echo "<tr>"
 											 ."<td>" . $row['codeCIS'] . "</td>"
@@ -112,8 +111,8 @@
 									?>
 								</table>
 
+								</div>
 							</div>
-
 
 						</div>
 
@@ -123,10 +122,9 @@
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="modif" value="Ajouter">
-							<input type="hidden" name="action" value="addMedic">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" class="green no-border text-white" value="Ajouter un medicament">
+							<input type="hidden" name="idVisite" value="<?php echo $visite[0]['idVisite'] ?>">
+							<input type="hidden" name="controller" value="medicamentslist">
+							<input type="submit" class="green no-border text-white"  value="Ajouter un medicament">
 						</form>
 					</div>
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
@@ -138,13 +136,8 @@
 						</form>
 					</div>
 				</div>
-				
-				
 			</div>
-
 		</div>
-
-
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>
