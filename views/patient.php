@@ -34,7 +34,7 @@
 
 				</a>
 				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+					<span class="d-flex display-1 justify-content-center align-items-center material-symbols-outlined font-40">
 						groups
 					</span>
 				</a>
@@ -120,21 +120,17 @@
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
 				<div class="row align-items-center text-center">
-
 					<!-- Portail de connexion -->
-
 					<div class="container ">
-
 						<div class="row justify-content-center">
-
 							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
-
 								<div class="text-dark text-start h2">Liste des visites</div>
 								<table class="table table-striped lightGreen border-top border-dark">
 									<tr>
-										<th>Date</th>
 										<th>Motif</th>
+										<th>Date</th>
 										<th>Description</th>
+										<th></th>
 									</tr>
 									<?php
 
@@ -145,32 +141,27 @@
 											 ."<td>" . $row['Description'] . "</td>"
 									?>
 									<td>
-										
-									
-									<div class="dropdown green">
-										<span class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									
-											</span>
+									<div class="dropdown">
+										<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+											more_horiz
+										</span>
 										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-											
-												<table class="text-white ">
-													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="visite">
-														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
-													</form>
-													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="fichePatient">
-														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<input type="hidden" name="numSecu"
-														value="<?php echo $_SESSION['patient'] ?>">
-														<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
-													</form>
-												</table>
-
-											
+											<table class="text-white ">
+												<form action="index.php" action="POST" class="d-flex flex-column green">
+													<input type="hidden" name="controller" value="patientslist">
+													<input type="hidden" name="action" value="visite">
+													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+													<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
+												</form>
+												<form action="index.php" action="POST" class="d-flex flex-column green">
+													<input type="hidden" name="controller" value="patientslist">
+													<input type="hidden" name="action" value="fichePatient">
+													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+													<input type="hidden" name="numSecu"
+													value="<?php echo $_SESSION['patient'] ?>">
+													<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
+												</form>
+											</table>			
 										</div>
 									</div>
 
@@ -181,12 +172,8 @@
 									?>
 									
 								</table>
-
 							</div>
-
-
 						</div>
-
 					</div>
 				</div>
 				<div class="d-flex flex-row justify-content-end">
@@ -210,8 +197,6 @@
 			</div>
 
 		</div>
-
-
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>

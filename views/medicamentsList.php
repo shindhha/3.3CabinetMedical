@@ -28,12 +28,12 @@
 				</div>
 				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
 
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
+					<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
 						medication
 					</span>
 				</a>
 				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+					<span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
 						groups
 					</span>
 				</a>
@@ -242,9 +242,9 @@
 												
 												<table class="text-white ">
 													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="fichePatient">
-														
+														<input type="hidden" name="controller" value="medicamentslist">
+														<input type="hidden" name="action" value="ficheMedicament">
+														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
 														<tr><input type="submit" value="Afficher"> </tr>
 													</form>
 													<form action="index.php" action="POST" class="d-flex flex-column green">
@@ -287,21 +287,22 @@
 
 		    	<div class="modal-content gap-2">
 		    		<div class = "col-12 green d-flex text-start p-3 align-middle">
-		    			<span id ="libelle">salut a tous</span>
+		    			<span id ="libelle"></span>
 		    		</div>
+		    		<form>
 		    		<div class = "col-12 bg-white h-50 d-flex flex-column text-black text-start px-3">
 		    			<span> instruction medicament:</span>
-		    			<textarea class = ""></textarea>
+		    			<textarea name="instruction"></textarea>
 		    		</div>
 		    		<div class = "d-flex justify-content-end p-3">
-		    			<form>
+		    			
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
 		    				<input type="hidden" name="action" value = "visite">
 		    				<input type="hidden" name="codeCIS" value="" id ="code">
-		    			</form>
+		    			
 		    		</div>
-
+		    		</form>
 		    	</div>
 			</div>
 		</div>

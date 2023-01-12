@@ -51,7 +51,7 @@
 							<!-- Barre de recherche -->
 							<form action="index.php" action="POST" class="d-flex align-items-center">
 								<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-									<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
+									<input name="search" class="no-border" type="search" placeholder="Nom prenom" aria-label="Search">
 									<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 								</div>
@@ -63,46 +63,39 @@
 									</span>
 									<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 									
-										<input type="hidden" name="controller" value="medicamentslist">
+										<input type="hidden" name="controller" value="patientslist">
 										<table class="text-white ">
 											<tr>
 												<td>
-													<select name="pEtat" class="form-select text-green">
-														<option value="-1"<?php  ?>>Etat Commercialisation</option>
-														<option value="1" <?php  ?>>Commercialisé</option>
-														<option value="0" <?php ?>>Non Commercialisé</option>
-													</select>
+													<input type="date" name="dateMin">
 													
 												</td>
 												<td>
-													<select name="pSurveillance" class="form-select text-green">
-														<option value="-1"<?php  ?>>Surveillance Renforcée</option>
-														<option value="1" <?php  ?>>Oui</option>
-														<option value="0" <?php  ?>>Non</option>
-													</select>
+													<input type="date" name="dateMax">
 													
 												</td>
 											</tr>
 											<tr>
 												<td>
-													<select name="pNiveauSmr" class="form-select text-green">
-														<option value="%">Valeur SMR</option>
+													<select name="medecin" class="form-select text-green">
+														<option value="%">MEDECIN</option>
 														<?php
-														
+														while ($row = $medecin->fetch()) {
+															echo "<option value='" . $row['numRPPS'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+														}
 														?>
 													</select>
 												</td>
 												<td>
 													<select name="pValeurASMR" class="form-select text-green">
-														<option value="%">Valeur ASMR</option>
+														<option value="%"></option>
 														<?php
 														
 														?>
 													</select>
 												</td>
 											</tr>
-</table>
-										<input type="submit" value="Rechercher" >
+										</table>
 									</div>
 								
 								</div>

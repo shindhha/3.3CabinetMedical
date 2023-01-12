@@ -94,4 +94,10 @@ class medicamentslistController
 
 	}
 
+    public function ficheMedicament($pdo)
+    {
+        $view = new View("Sae3.3CabinetMedical/views/medicament");
+        return $view;
+    }
+
 }

@@ -157,8 +157,16 @@ class UsersServices
 
   public function getOrdonnances($pdo,$idVisite)
   {
-    $sql = "SELECT codeCIS
+    $sql = "SELECT Ordonnances.codeCIS,instruction,designation,libellePresentation
             FROM Ordonnances
+            JOIN CIS_BDPM
+            ON Ordonnances.codeCIS = CIS_BDPM.codeCIS
+            JOIN designationelempharma
+            ON designationelempharma.idDesignation = CIS_BDPM.idDesignation
+            JOIN CIS_CIP_BDPM
+            ON Ordonnances.codeCIS = CIS_CIP_BDPM.codeCIS
+            JOIN libellePresentation
+            ON libellePresentation.idLibellePresentation = CIS_CIP_BDPM.idLibellePresentation
             WHERE idOrdonnance = :idOrdonnance";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam("idOrdonnance",$idVisite);
@@ -184,18 +192,44 @@ class UsersServices
     return $stmt->fetchAll();
   }
 
-  public function getListPatients($pdo,$medecinRef,$numSecu = "%")
+  public function getPatient($pdo,$currentMedecin,$numSecu = "%")
   {
     $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM PatientsMedecins
             JOIN Patients
             ON PatientsMedecins.numSecu = Patients.numSecu
-            WHERE numRPPS = :numRPPS
-            AND Patients.numSecu LIKE :numSecu";
+            WHERE Patients.numSecu LIKE :numSecu
+            AND PatientsMedecins.numRPPS = :currentMedecin";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam('numRPPS',$medecinRef);
-    $stmt->bindParam('numSecu',$numSecu);
+    $stmt->bindParam('currentMedecin',$currentMedecin);
+    $stmt->bindParam('numSecu',$numSecu); 
+
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+
+  }
+
+  public function getListPatients($pdo,$currentMedecin,$medecinTraitant,$numSecu = "%",$search = "%")
+  {
+    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
+            FROM PatientsMedecins
+            JOIN Patients
+            ON PatientsMedecins.numSecu = Patients.numSecu
+            WHERE (nom LIKE :search1 OR prenom LIKE :search2)
+            AND Patients.numSecu LIKE :numSecu
+            AND PatientsMedecins.numRPPS = :currentMedecin
+            AND medecinRef LIKE :medecinTraitant";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam('currentMedecin',$currentMedecin);
+    $stmt->bindParam('search1',$search);
+    $stmt->bindParam('search2',$search); 
+    $stmt->bindParam('numSecu',$numSecu); 
+    $stmt->bindParam('medecinTraitant',$medecinTraitant);
+
 
     $stmt->execute();
 
@@ -242,12 +276,12 @@ class UsersServices
 
     return $stmt->fetchAll();
   }
-  public function addMedic($pdo,$idVisite,$codeCIS)
+  public function addMedic($pdo,$idVisite,$codeCIS,$instruction)
   {
-    $sql = "INSERT INTO Ordonnances (idOrdonnance,codeCIS) VALUES (:idVisite,:codeCIS)";
+    $sql = "INSERT INTO Ordonnances (idOrdonnance,codeCIS,instruction) VALUES (:idVisite,:codeCIS,:instruction)";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(array("idVisite" => $idVisite, "codeCIS" => $codeCIS));
+    $stmt->execute(array("idVisite" => $idVisite, "codeCIS" => $codeCIS, "instruction" => $instruction));
   }
 
   public function getparams($pdo,$param,$table)
@@ -257,6 +291,12 @@ class UsersServices
            . " ORDER BY " . $param;
 
     return $pdo->query($sql);
+  }
+
+  public function getMedicament($pdo,$codeCIS)
+  {
+    $sql = "SELECT *
+            FROM ";
   }
 
   private static $defaultUsersService ;

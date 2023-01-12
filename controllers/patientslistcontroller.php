@@ -51,10 +51,14 @@ class PatientsListController
     public function index($pdo) {
         $view = new View("Sae3.3CabinetMedical/views/patientslist");
 
-        $patients = $this->usersservices->getListPatients($pdo,$_SESSION['medecin']);
+        $search = HttpHelper::getParam("search") != "" ? HttpHelper::getParam("search") : "%";
 
+        $medecinTraitant = HttpHelper::getParam("medecin");
 
+        $patients = $this->usersservices->getListPatients($pdo,$_SESSION['medecin'],$medecinTraitant,$search."%");
+        $medecin = $this->usersservices->getMedecins($pdo);
 
+        $view->setVar("medecin",$medecin);
         $view->setVar("patients",$patients);
         return $view;
     }
@@ -104,7 +108,7 @@ class PatientsListController
 
       
       $visites = $this->usersservices->getVisites($pdo,$_SESSION['patient']);
-      $patient = $this->usersservices->getListPatients($pdo,$_SESSION['medecin'],$_SESSION['patient']);
+      $patient = $this->usersservices->getPatient($pdo,$_SESSION['medecin'],$_SESSION['patient']);
 
       $view->setVar("visites",$visites);
       $view->setVar("patient",$patient);
@@ -152,12 +156,12 @@ class PatientsListController
       }
 
       $codeCIS = HttpHelper::getParam("codeCIS");
+      $instruction = HttpHelper::getParam("instruction");
       try {
         if ($codeCIS != "") {
-        $this->usersservices->addMedic($pdo,(int) $_SESSION['idVisite'],(int) $codeCIS);
+          $this->usersservices->addMedic($pdo,(int) $_SESSION['idVisite'],(int) $codeCIS,$instruction);
         }
-      } catch (Exception $e) {
-        throw new Exception($_SESSION['idVisite'],1);
+      } catch (PDOException $e) {
       }
       
 

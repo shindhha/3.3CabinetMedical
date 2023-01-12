@@ -59,13 +59,13 @@
 					</div>
 				</div>
 
+				<div>
+					
+				</div>
 				<div class="row">
-					<div class="d-flex flex-row justify-content-between text-dark px-5">
-						
+					<div class="d-flex flex-row justify-content-between text-dark px-5">				
 						<span>Motif : <?php echo $visite[0]['motifVisite'] ; ?></span>
-						<span>Date :  <?php echo $visite[0]['dateVisite']?></span>
-
-						
+						<span>Date :  <?php echo $visite[0]['dateVisite']?></span>				
 					</div>
 					<div class="d-flex flex-column text-start text-dark">
 						Description
@@ -78,7 +78,6 @@
 						</div>
 					</div>
 				</div>
-
 				<!-- content -->
 				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
@@ -88,24 +87,22 @@
 						
 						<div class="row justify-content-center">
 							
-							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
-								<div class=" h-50 text-dark text-start overflow-scroll">
+							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 border-2 ">
+								<div class=" h-75 text-dark text-start overflow-scroll">
 									Liste des medicaments prescrit	
 								<table class="table table-striped lightGreen border border-dark">
 									<tr>
-										<th>codeCIS</th>
-										<th>Nom</th>
-										<th>Substance Active</th>
+										<th>Designation</th>
+										<th>Presentation</th>
+										<th>Instruction	</th>
 									</tr>
-
 									<?php
-									
-
 										foreach ($drugsVisite as $row) {
 
 										echo "<tr>"
-											 ."<td>" . $row['codeCIS'] . "</td>"
-
+											 ."<td>" . $row['designation'] . "</td>"
+											 ."<td>" . $row['libellePresentation'] . "</td>"
+											 ."<td>" . $row['instruction'] . "</td>"
 											 ."</tr>";
 										} 
 									?>
