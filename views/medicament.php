@@ -46,7 +46,7 @@
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
 						<span class="h1 d-md-block d-none"> Fiche Medicament </span>
-								
+								<?php echo $medicament['designation'] ?>
 
 					</div>
 				</nav>

@@ -67,12 +67,12 @@ class medicamentslistController
         $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","TauxRemboursement");
         $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pPresentation . "%");
 
-        $idVisite = HttpHelper::getParam("idVisite");
 
-        if ($idVisite != "") {
+        if ($_SESSION['idVisite'] != "") {
             $view->setVar("ajouter",true);
         }
 
+        $view->setVar("pPresentation",$pPresentation);
         $view->setVar("pValeurASMR",$pValeurASMR);
         $view->setVar("pNiveauSmr",$pNiveauSmr);
         $view->setVar("niveauSmr",$niveauSmr);
@@ -94,9 +94,13 @@ class medicamentslistController
 
 	}
 
-    public function ficheMedicament($pdo)
+    public function goFicheMedicament($pdo)
     {
         $view = new View("Sae3.3CabinetMedical/views/medicament");
+
+        $codeCIS = HttpHelper::getParam("codeCIS");
+        $medicament = $this->usersservices->getMedicament($pdo,$codeCIS);
+        $view->setVar("medicament",$medicament);
         return $view;
     }
 

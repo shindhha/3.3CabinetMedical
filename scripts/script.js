@@ -40,7 +40,8 @@ function showHint(str) {
     }
 }
 
-function add(str, code) {
+function add(str, code , instruction = "") {
 	document.getElementById("libelle").innerHTML = str;
 	document.getElementById("code").value = code;
+	document.getElementById("instruction").value = instruction;
 }

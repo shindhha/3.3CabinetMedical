@@ -38,9 +38,9 @@ class PatientsListController
 		$textInput = HttpHelper::getParam("search")? explode(" ", HttpHelper::getParam("search")) : "%"; 
 		$nom = $textInput[0]?: "";
 		$prenom = isset($textInput[1]) == true ? $textInput[1] : $textInput[0];
-		$medecinTraitant = HttpHelper::getParam("medecin");
+		$medecinTraitant = HttpHelper::getParam("medecin")?: "%";
 
-		$patients = $this->usersservices->getListPatients($pdo,$_SESSION['medecin'],$medecinTraitant,$nom."%",$prenom."%");
+		$patients = $this->usersservices->getListPatients($pdo,$medecinTraitant,$nom."%",$prenom."%");
 		$medecin = $this->usersservices->getMedecins($pdo);
 		$view->setVar("medecin",$medecin);
 		$view->setVar("patients",$patients);
@@ -63,9 +63,7 @@ class PatientsListController
 		if (HttpHelper::getParam("numSecu") != "") {
 			$_SESSION['patient'] = HttpHelper::getParam("numSecu");
 		}
-		if (HttpHelper::getParam("idVisite") != "") {
-			$_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
-		}
+		
 		$visites = $this->usersservices->getVisites($pdo,$_SESSION['patient']);
 		$patient = $this->usersservices->getPatient($pdo,$_SESSION['medecin'],$_SESSION['patient']);
 		$view->setVar("visites",$visites);
@@ -91,7 +89,7 @@ class PatientsListController
 		$sexe = (int) HttpHelper::getParam("sexe");
 
 
-		$this->usersservices->insertPatient($pdo,$_SESSION['medecin'],$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+		$this->usersservices->insertPatient($pdo,$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
 		return $this->goFichePatient($pdo);
 	}
 
@@ -116,7 +114,13 @@ class PatientsListController
 
 	public function deleteVisite($pdo)
 	{	
-		$this->usersservices->deleteVisite($pdo,$_SESSION['idVisite']);
+		if (HttpHelper::getParam("idVisite") != "") {
+			$_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
+		}
+		$this->usersservices->deleteVisiteFrom($pdo,"Ordonnances",$_SESSION['idVisite']);
+		$this->usersservices->deleteVisiteFrom($pdo,"ListeVisites",$_SESSION['idVisite']);
+		$this->usersservices->deleteVisiteFrom($pdo,"Visites",$_SESSION['idVisite']);
+
 		return $this->goFichePatient($pdo);
 	}
 
@@ -165,6 +169,13 @@ class PatientsListController
 		return $view;
 	}
 
+	public function deleteMedicament($pdo)
+	{
+		$codeCIS = HttpHelper::getParam("codeCIS");
+		$this->usersservices->deleteMedicament($pdo,$_SESSION['idVisite'],$codeCIS);
+		return $this->goFicheVisite($pdo);
+	}
+
 	public function updateVisite($pdo)
 	{
 		$motif = HttpHelper::getParam("Motif");
@@ -191,6 +202,14 @@ class PatientsListController
 		$codeCIS = HttpHelper::getParam("codeCIS");
 		$instruction = HttpHelper::getParam("instruction");
 		$this->usersservices->addMedic($pdo,(int) $_SESSION['idVisite'],(int) $codeCIS,$instruction);
+		return $this->goFicheVisite($pdo);
+	}
+
+	public function editInstruction($pdo)
+	{
+		$codeCIS = HttpHelper::getParam("codeCIS");
+		$instruction = HttpHelper::getParam("instruction");
+		$this->usersservices->editInstruction($pdo,$_SESSION['idVisite'],$codeCIS,$instruction);
 		return $this->goFicheVisite($pdo);
 	}
 

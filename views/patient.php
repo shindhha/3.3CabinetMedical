@@ -123,77 +123,78 @@
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
+							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
 								<div class="text-dark text-start h2">Liste des visites</div>
-								<table class="table table-striped lightGreen border-top border-dark">
-									<tr>
-										<th>Motif</th>
-										<th>Date</th>
-										<th>Description</th>
-										<th></th>
-									</tr>
-									<?php
-									var_dump($bite);
-									foreach ($visites as $row) {
-									echo "<tr>"
-											 ."<td>" . $row['motifVisite'] . "</td>"
-											 ."<td>" . $row['dateVisite'] . "</td>"
-											 ."<td>" . $row['Description'] . "</td>"
-									?>
-									<td>
-									<div class="dropdown">
-										<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-											more_horiz
-										</span>
-										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<table class="text-white ">
-												<form action="index.php" action="POST" class="d-flex flex-column green">
-													<input type="hidden" name="controller" value="patientslist">
-													<input type="hidden" name="action" value="goFicheVisite">
-													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-													<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
-												</form>
-												<form action="index.php" action="POST" class="d-flex flex-column green">
-													<input type="hidden" name="controller" value="patientslist">
-													<input type="hidden" name="action" value="fichePatient">
-													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-													<input type="hidden" name="numSecu"
-													value="<?php echo $_SESSION['patient'] ?>">
-													<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
-												</form>
-											</table>			
+								<div class="overflow-scroll h-50">
+									<table class="table table-striped lightGreen border-top border-dark">
+										<tr>
+											<th>Motif</th>
+											<th>Date</th>
+											<th>Description</th>
+											<th></th>
+										</tr>
+										<?php
+										var_dump($bite);
+										foreach ($visites as $row) {
+										echo "<tr>"
+												 ."<td>" . $row['motifVisite'] . "</td>"
+												 ."<td>" . $row['dateVisite'] . "</td>"
+												 ."<td>" . $row['Description'] . "</td>"
+										?>
+										<td>
+										<div class="dropdown">
+											<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+												more_horiz
+											</span>
+											<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+												<table class="text-white ">
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="goFicheVisite">
+														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+														<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
+													</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="deleteVisite">
+														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+														<input type="hidden" name="numSecu"
+														value="<?php echo $_SESSION['patient'] ?>">
+														<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
+													</form>
+												</table>			
+											</div>
 										</div>
+										</td>
+										<?php
+												echo "</tr>";
+											}
+										?>
+									</table>
+								</div>
+								<div class="d-flex flex-row justify-content-end">
+									<div class="d-flex me-2 py-2 px-3 border-1 green">
+										<form>
+											<input type="hidden" name="nextAction" value="addVisite">
+											<input type="hidden" name="action" value="goEditVisite">
+											<input type="hidden" name="controller" value="patientslist">
+											<input type="submit" class="green no-border text-white" value="Ajouter une visite">
+											</form>
 									</div>
-
-									</td>
-									<?php
-											echo "</tr>";
-										}
-									?>
-									
-								</table>
+									<div class="d-flex me-2 py-2 px-3 border-1 green">
+										<form>
+											<input type="hidden" name="nextAction" value="updatePatient">
+											<input type="hidden" name="action" value="goEditPatient">
+											<input type="hidden" name="controller" value="patientslist">
+											<input type="submit" class="green no-border text-white" value="Modifier le patient">
+										</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="d-flex flex-row justify-content-end">
-					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						<form>
-							<input type="hidden" name="nextAction" value="addVisite">
-							<input type="hidden" name="action" value="goEditVisite">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" class="green no-border text-white" value="Ajouter une visite">
-						</form>
-					</div>
-					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						<form>
-							<input type="hidden" name="nextAction" value="updatePatient">
-							<input type="hidden" name="action" value="goEditPatient">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" class="green no-border text-white" value="Modifier le patient">
-						</form>
-					</div>
-				</div>
+				
 			</div>
 
 		</div>

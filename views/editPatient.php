@@ -55,38 +55,31 @@
 				</nav>
 				<!-- Bandeau Patient -->
 				<form>
-				<div class="blue row">
-					<div class="d-flex justify-content-between">
-						<span></span>
-						<div class="d-flex flex-row"> 
-							<div>Nom :<input class="form-control" type="text" name="nom" value="<?php if (isset($patient)) echo $patient['nom']; ?>"> </div>
-							<div>Prenom :<input class="form-control" type="text" name="prenom" value="<?php if (isset($patient)) echo $patient['prenom']; ?>"> </div>
-						</div>
-						<div>
-							<select name="sexe">
-								<option value="1">Homme</option>
-								<option value="0">Femme</option>
-							</select>
-						</div>
-					</div>
-				</div>
 
 				<div class="row">
 					<div class="d-flex flex-row justify-content-between text-green">
 						
-						<div class="d-flex flex-column justify-content-start ">
-							<h1>Informations</h1>
+						<div class="d-flex col-5 flex-row gap-3">
+							<div class="d-flex col-5 flex-column text-end align-middle fs-4">
+								<span class="" >Nom</span>
+								<span class="" >Prenom</span>
+								<span class="" >n°Telephone</span>
+								<span class="" >Code Postal</span>
+								<span class="" >Sexe</span>
 
-							<div class="d-flex flex-row"> 
-								<span>Adresse</span> <input class="form-control" type="text" name="adresse" value="<?php if (isset($patient)) echo $patient['adresse']; ?>"> 
+								
 							</div>
-							<div class="d-flex flex-row">
-								<span>n°Telephone</span><input class="form-control" type="text" name="numTel" value="<?php if (isset($patient)) echo $patient['numTel']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>email</span><input class="form-control" type="text" name="email" value="<?php if (isset($patient)) echo $patient['email']; ?>">
-							</div>
-							<div class="d-flex flex-row">
+							<div class="d-flex col-5 flex-column justify-content-start">
+								<span class="d-flex ">
+									<input class="form-control " type="text" name="nom" value="<?php if (isset($patient)) echo $patient['nom']; ?>"> 
+								</span>
+								<div><input class="form-control" type="text" name="prenom" value="<?php if (isset($patient)) echo $patient['prenom']; ?>"> </div>
+								<div><input class="form-control" type="text" name="adresse" value="<?php if (isset($patient)) echo $patient['adresse']; ?>"> 
+								</div>
+								<div><input class="form-control" type="text" name="numTel" value="<?php if (isset($patient)) echo $patient['numTel']; ?>">
+								</div>
+								<div><input class="form-control" type="text" name="email" value="<?php if (isset($patient)) echo $patient['email']; ?>">
+								</div>
 								<select name="medecinRef" class="form-select">
 									<option>Medecin Traitant</option>
 									<?php 
@@ -101,18 +94,14 @@
 									?>
 									
 								</select>
-							</div>
-							<div class="d-flex flex-row">
-								<span>Numéro de sécurité sociale</span><input class="form-control" type="text" name="numSecu" value="<?php if (isset($patient)) echo $patient['numSecu']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>Date de naissance</span><input class="form-control" type="date" name="dateNaissance" value="<?php if (isset($patient)) echo $patient['dateNaissance']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>Lieu de naissance</span><input class="form-control" type="text" name="LieuNaissance" value="<?php if (isset($patient)) echo $patient['LieuNaissance']; ?>">
-							</div>
-							<div class="d-flex flex-row">
-								<span>Code Postal</span><input class="form-control" type="number" name="codePostal" value="<?php if (isset($patient)) echo $patient['codePostal']; ?>">
+								<div><input class="form-control" type="text" name="numSecu" value="<?php if (isset($patient)) echo $patient['numSecu']; ?>">
+								</div>
+								<div><input class="form-control" type="date" name="dateNaissance" value="<?php if (isset($patient)) echo $patient['dateNaissance']; ?>">
+								</div>
+								<div><input class="form-control" type="text" name="LieuNaissance" value="<?php if (isset($patient)) echo $patient['LieuNaissance']; ?>">
+								</div>
+								<div><input class="form-control" type="number" name="codePostal" value="<?php if (isset($patient)) echo $patient['codePostal']; ?>">
+								</div>
 							</div>
 						</div>
 

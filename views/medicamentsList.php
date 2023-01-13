@@ -50,7 +50,7 @@
 							<!-- Barre de recherche -->
 						<form class="d-flex align-items-center" action="index.php" action="POST">
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input name="pPresentation" class="no-border" type="search" placeholder="Mots clef" onkeyup="showHint(this.value)" aria-label="Search">
+								<input name="pPresentation" class="no-border" type="search" placeholder="Mots clef" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
 								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 							</div>
@@ -161,10 +161,9 @@
 												</td>
 											</tr>
 										</table>
-										<input type="submit" value="Rechercher" >
-</div>
-										
 									</div>
+										
+								</div>
 							</form>
 
 
@@ -243,7 +242,7 @@
 												<table class="text-white ">
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="medicamentslist">
-														<input type="hidden" name="action" value="ficheMedicament">
+														<input type="hidden" name="action" value="goFicheMedicament">
 														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
 														<tr><input type="submit" value="Afficher"> </tr>
 													</form>
