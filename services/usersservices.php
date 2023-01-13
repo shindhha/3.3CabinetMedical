@@ -175,21 +175,35 @@ class UsersServices
     return $stmt->fetchAll();
   }
 
-  public function getVisites($pdo,$numSecu,$idVisite = "%")
+  public function getVisites($pdo,$numSecu)
+  {
+    $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
+            FROM Visites
+            JOIN ListeVisites
+            ON ListeVisites.idVisite = Visites.idVisite
+            WHERE numSecu = :numSecu";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam("numSecu",$numSecu);
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+  }
+  public function getVisite($pdo,$numSecu,$idVisite)
   {
     $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
             FROM Visites
             JOIN ListeVisites
             ON ListeVisites.idVisite = Visites.idVisite
             WHERE numSecu = :numSecu
-            AND Visites.idVisite LIKE :idVisite";
+            AND Visites.idVisite = :idVisite";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam("numSecu",$numSecu);
     $stmt->bindParam("idVisite",$idVisite);
     $stmt->execute();
 
-    return $stmt->fetchAll();
+    return $stmt->fetch();
   }
 
   public function getPatient($pdo,$currentMedecin,$numSecu = "%")
@@ -208,26 +222,27 @@ class UsersServices
 
     $stmt->execute();
 
-    return $stmt->fetchAll();
+    return $stmt->fetch();
 
   }
 
-  public function getListPatients($pdo,$currentMedecin,$medecinTraitant,$numSecu = "%",$search = "%")
+  public function getListPatients($pdo,$currentMedecin,$medecinTraitant,$nom,$prenom)
   {
     $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM PatientsMedecins
             JOIN Patients
             ON PatientsMedecins.numSecu = Patients.numSecu
-            WHERE (nom LIKE :search1 OR prenom LIKE :search2)
-            AND Patients.numSecu LIKE :numSecu
+            WHERE ((nom LIKE :search1 OR prenom LIKE :search2)
+                   OR (nom LIKE :search3 OR prenom LIKE :search4))
             AND PatientsMedecins.numRPPS = :currentMedecin
             AND medecinRef LIKE :medecinTraitant";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam('currentMedecin',$currentMedecin);
-    $stmt->bindParam('search1',$search);
-    $stmt->bindParam('search2',$search); 
-    $stmt->bindParam('numSecu',$numSecu); 
+    $stmt->bindParam('search1',$nom);
+    $stmt->bindParam('search2',$prenom); 
+    $stmt->bindParam('search3',$prenom);
+    $stmt->bindParam('search4',$nom); 
     $stmt->bindParam('medecinTraitant',$medecinTraitant);
 
 
@@ -240,12 +255,12 @@ class UsersServices
   {
     $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR
             FROM listMedic
-            WHERE formePharma LIKE :formePharma
-            AND labelVoieAdministration LIKE :labelVoieAdministration
-            AND libellePresentation LIKE :libellePresentation
-            AND prix > :prixMin AND prix < :prixMax
-            AND valeurASMR LIKE :valeurASMR
-            AND libelleNiveauSMR LIKE :libelleNiveauSMR
+            WHERE (formePharma LIKE :formePharma OR formePharma IS NULL)
+            AND (labelVoieAdministration LIKE :labelVoieAdministration OR labelVoieAdministration IS NULL)
+            AND (libellePresentation LIKE :libellePresentation OR libellePresentation IS NULL)
+            AND (prix >= :prixMin AND prix < :prixMax OR prix IS NULL)
+            AND (valeurASMR LIKE :valeurASMR OR valeurASMR IS NULL)
+            AND (libelleNiveauSMR LIKE :libelleNiveauSMR OR libelleNiveauSMR IS NULL)
             LIMIT 50
             ";
     $param = array('formePharma' => $formePharma,

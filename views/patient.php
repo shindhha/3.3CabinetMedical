@@ -54,10 +54,10 @@
 				<div class="blue row">
 					<div class="d-flex justify-content-between">
 						<span></span>
-						<h1><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></h1>
+						<h1><?php echo $patient['nom'] . " " . $patient['prenom']?></h1>
 						<div>
 							<?php 
-							if ($patient[0]['sexe']) {
+							if ($patient['sexe']) {
 								echo "<span class='material-symbols-outlined font-40' >
 										man
 									</span>";
@@ -80,28 +80,28 @@
 							<div class="border-top border-dark pt-3	">
 								
 								<div class="d-flex flex-row justify-content-between">
-									<div> Adresse : </div> <div> <?php echo $patient[0]['adresse'] ?></div>
+									<div> Adresse : </div> <div> <?php echo $patient['adresse'] ?></div>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>n°Telephone : </div><?php echo "0".$patient[0]['numTel'] ?>	
+									<div>n°Telephone : </div><?php echo "0".$patient['numTel'] ?>	
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>email : </div><?php echo $patient[0]['email'] ?>
+									<div>email : </div><?php echo $patient['email'] ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>Medecin Traitant : </div><?php echo $patient[0]['medecinRef'] ?>
+									<div>Medecin Traitant : </div><?php echo $patient['medecinRef'] ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
 									<div>Numéro de sécurité sociale : </div><?php echo $_SESSION['patient'] ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>Date de naissance : </div><?php echo $patient[0]['dateNaissance'] ?>		
+									<div>Date de naissance : </div><?php echo $patient['dateNaissance'] ?>		
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>Lieu de naissance : </div><?php echo $patient[0]['LieuNaissance'] ?>		
+									<div>Lieu de naissance : </div><?php echo $patient['LieuNaissance'] ?>		
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>CodePostal : </div><?php echo $patient[0]['codePostal'] ?>
+									<div>CodePostal : </div><?php echo $patient['codePostal'] ?>
 								</div>
 							</div>
 							
@@ -110,7 +110,7 @@
 						<div class="d-flex flex-column col-xl-3 text-start">
 							<div class="h2">Notes</div>
 							<div class="d-flex align-items-start border border-dark ratio ratio-21x9">
-								<?php echo $patient[0]['notes'] ?>
+								<?php echo $patient['notes'] ?>
 							</div>
 							
 						</div>
@@ -133,7 +133,7 @@
 										<th></th>
 									</tr>
 									<?php
-
+									var_dump($bite);
 									foreach ($visites as $row) {
 									echo "<tr>"
 											 ."<td>" . $row['motifVisite'] . "</td>"
@@ -149,7 +149,7 @@
 											<table class="text-white ">
 												<form action="index.php" action="POST" class="d-flex flex-column green">
 													<input type="hidden" name="controller" value="patientslist">
-													<input type="hidden" name="action" value="visite">
+													<input type="hidden" name="action" value="goFicheVisite">
 													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
 													<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
 												</form>
@@ -179,16 +179,16 @@
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="modif" value="Ajouter">
-							<input type="hidden" name="action" value="addVisite">
+							<input type="hidden" name="nextAction" value="addVisite">
+							<input type="hidden" name="action" value="goEditVisite">
 							<input type="hidden" name="controller" value="patientslist">
 							<input type="submit" class="green no-border text-white" value="Ajouter une visite">
 						</form>
 					</div>
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="modif" value="Modifier">
-							<input type="hidden" name="action" value="modifPatient">
+							<input type="hidden" name="nextAction" value="updatePatient">
+							<input type="hidden" name="action" value="goEditPatient">
 							<input type="hidden" name="controller" value="patientslist">
 							<input type="submit" class="green no-border text-white" value="Modifier le patient">
 						</form>

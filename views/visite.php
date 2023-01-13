@@ -24,14 +24,11 @@
 			<div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
 				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
 				<div class=" green border-1 ratio ratio-1x1">
-
 				</div>
 				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
-
 					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
 						medication
 					</span>
-
 				</a>
 				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
 					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
@@ -42,49 +39,40 @@
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">
 				<!-- Bandeau outils -->	
-				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
 						<span class="h1 d-md-block d-none"> Visite n° </span>		
-
 					</div>
 				</nav>
 				<!-- Bandeau Patient -->
 				<div class="blue row">
 					<div class="d-flex justify-content-between">
 						<span></span>
-						<div><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></div>
+						<div><?php echo $patient['nom'] . " " . $patient['prenom']?></div>
 						<div>dqs</div>
 					</div>
 				</div>
-
-				<div>
-					
-				</div>
 				<div class="row">
 					<div class="d-flex flex-row justify-content-between text-dark px-5">				
-						<span>Motif : <?php echo $visite[0]['motifVisite'] ; ?></span>
-						<span>Date :  <?php echo $visite[0]['dateVisite']?></span>				
+						<span>Motif : <?php echo $visite['motifVisite'] ; ?></span>
+						<span>Date :  <?php echo $visite['dateVisite']?></span>				
 					</div>
 					<div class="d-flex flex-column text-start text-dark">
 						Description
 						<div class="border border-dark px-2 pb-4">
-							<?php echo $visite[0]['Description'] ?>
+							<?php echo $visite['Description'] ?>
 						</div>
 						Conclusion
 						<div class="border border-dark px-2 pb-4">
-							<?php echo $visite[0]['Conclusion'] ?>
+							<?php echo $visite['Conclusion'] ?>
 						</div>
 					</div>
 				</div>
 				<!-- content -->
 				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
-
 					<div class="container ">
-						
-						
 						<div class="row justify-content-center">
 							
 							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 border-2 ">
@@ -119,15 +107,15 @@
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="idVisite" value="<?php echo $visite[0]['idVisite'] ?>">
+							<input type="hidden" name="idVisite" value="<?php echo $visite['idVisite'] ?>">
 							<input type="hidden" name="controller" value="medicamentslist">
 							<input type="submit" class="green no-border text-white"  value="Ajouter un medicament">
 						</form>
 					</div>
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="modif" value="Modifier">
-							<input type="hidden" name="action" value="addVisite">
+							<input type="hidden" name="nextAction" value="updateVisite">
+							<input type="hidden" name="action" value="goEditVisite">
 							<input type="hidden" name="controller" value="patientslist">
 							<input type="submit" class="green no-border text-white" value="Modifier la visite">
 						</form>

@@ -298,7 +298,7 @@
 		    			
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
-		    				<input type="hidden" name="action" value = "visite">
+		    				<input type="hidden" name="action" value = "addMedicament">
 		    				<input type="hidden" name="codeCIS" value="" id ="code">
 		    			
 		    		</div>

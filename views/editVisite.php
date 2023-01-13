@@ -114,9 +114,7 @@
 						
 								</div>
 								<div class="d-flex me-2 py-2 px-3 border-1 green">
-									<input type="hidden" name="idVisite" value="<?php echo $visite[0]['idVisite'] ?>">
-									<input type="hidden" name="modif" value="<?php echo $modif; ?>">
-									<input type="hidden" name="action" value="visite">
+									<input type="hidden" name="action" value="<?php echo $action ?>">
 									<input type="hidden" name="controller" value="patientslist">
 									<input type="submit" class="green no-border text-white" value="Valider">
 						
