@@ -103,10 +103,6 @@ input:focus {
 }
 
 
-.enable-flex {
-	display: flex;
-}
-
 .input-grow {
 	flex-grow: 1;
 	text-align: center;

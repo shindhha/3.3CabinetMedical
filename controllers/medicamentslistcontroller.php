@@ -100,6 +100,7 @@ class medicamentslistController
 
         $codeCIS = HttpHelper::getParam("codeCIS");
         $medicament = $this->usersservices->getMedicament($pdo,$codeCIS);
+        $view->setVar("codeCIS",$codeCIS);
         $view->setVar("medicament",$medicament);
         return $view;
     }

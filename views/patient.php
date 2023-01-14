@@ -134,7 +134,6 @@
 											<th></th>
 										</tr>
 										<?php
-										var_dump($bite);
 										foreach ($visites as $row) {
 										echo "<tr>"
 												 ."<td>" . $row['motifVisite'] . "</td>"
