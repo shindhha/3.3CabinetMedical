@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS Cabinet;
 
 
 CREATE TABLE Patients (
-	numSecu CHAR(13) PRIMARY KEY,
+	idPatient INT(6) AUTO_INCREMENT PRIMARY KEY,
+	numSecu CHAR(13) UNIQUE,
 	LieuNaissance VARCHAR(200),
 	nom VARCHAR(25),
 	prenom VARCHAR(25),
@@ -24,8 +25,8 @@ CREATE TABLE Patients (
 );
 
 CREATE TABLE Medecins (
-
-	numRPPS CHAR(11) PRIMARY KEY,
+	idMedecin INT(6) AUTO_INCREMENT ,
+	numRPPS CHAR(11) UNIQUE,
 	nom VARCHAR(25),
 	prenom VARCHAR(25),
 	adresse VARCHAR(25),
@@ -36,7 +37,8 @@ CREATE TABLE Medecins (
 	activite VARCHAR(100),
 	codePostal INT(5),
 	ville VARCHAR(100),
-	lieuAct VARCHAR(100)	
+	lieuAct VARCHAR(100),
+	PRIMARY KEY (idMedecin)
 );
 CREATE TABLE Visites (
 	idVisite INT(6) AUTO_INCREMENT,
@@ -48,10 +50,10 @@ CREATE TABLE Visites (
 );
 
 CREATE TABLE ListeVisites (
-	numRPPS CHAR(11),
-	numSecu CHAR(13),
+	idMedecin INT(6),
+	idPatient INT(6),
 	idVisite INT(6),
-	PRIMARY KEY (idVisite,numSecu)
+	PRIMARY KEY (idVisite,idPatient)
 );
 
 CREATE TABLE Cabinet (
@@ -73,8 +75,8 @@ CREATE TABLE users (
 );
 ALTER TABLE Ordonnances ADD CONSTRAINT FK_Ordonnances_Medicaments FOREIGN KEY (codeCIS) REFERENCES CIS_BDPM(codeCIS);
 ALTER TABLE Patients ADD CONSTRAINT CK_Email_Patients CHECK (email LIKE '%@%.%');
-ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Medecins FOREIGN KEY (numRPPS) REFERENCES Medecins(numRPPS);
+ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Medecins FOREIGN KEY (idMedecin) REFERENCES Medecins(idMedecin);
 ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Visites FOREIGN KEY (idVisite) REFERENCES Visites(idVisite);
-ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Patients FOREIGN KEY (numSecu) REFERENCES Patients(numSecu);
+ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Patients FOREIGN KEY (idPatient) REFERENCES Patients(idPatient);
 ALTER TABLE Ordonnances ADD CONSTRAINT FK_Visites_Ordonnances FOREIGN KEY (idVisite) REFERENCES Visites(idVisite);
 ALTER TABLE Medecins ADD CONSTRAINT CK_Email_Medecins CHECK (email LIKE '%@%.%');
