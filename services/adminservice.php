@@ -10,14 +10,49 @@ use PDOException;
  */
 class AdminService
 {
-    private static $defaultAdminService ;
 
-    public static function getDefaultAdminService()
+    public function deleteUser($pdo,$userID)
     {
-        if (AdminService::$defaultAdminService == null) {
-            AdminService::$defaultAdminService = new AdminService();
-        }
-        return AdminService::$defaultAdminService;
+        $sql = "DELETE FROM users where id = :userID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("userID",$userID);
+        $stmt->execute();
+    }
+
+    public function deleteMedecin($pdo,$numRPPS)
+    {
+        $sql = "DELETE FROM Medecins WHERE numRPPS = :numRPPS";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("numRPPS",$numRPPS);
+        $stmt->execute();
+    }
+    public function getUserID($pdo,$login)
+    {
+        $sql = "SELECT id FROM users where login = :login";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("login",$login);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    public function updateUser($pdo,$idUser,$login,$password)
+    {
+        $sql = "UPDATE users 
+                SET login = :login , `password` = MD5(:password)
+                WHERE id = :idUser";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("idUser",$idUser);
+        $stmt->bindParam("login",$login);
+        $stmt->bindParam("password",$password);
+        $stmt->execute();
+    }
+    public function addUser($pdo,$login,$password)
+    {
+        $sql = "INSERT INTO users (login,`password`) VALUES (:login,MD5(:password))";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("login",$login);
+        $stmt->bindParam("password",$password);
+        $stmt->execute();
     }
 
     public function getMedecinsList($pdo)
@@ -30,28 +65,13 @@ class AdminService
 
     public function getMedecin($pdo, $numRPPS)
     {
-        $sql = "SELECT numRPPS, nom, prenom, adresse, numTel, email, dateInscription, dateDebutActivites, activite, codePostal, ville, lieuAct FROM Medecins WHERE numRPPS = :numRPPS";
+        $sql = "SELECT numRPPS, nom, prenom, adresse, numTel, email, dateInscription, dateDebutActivites, activite, codePostal, ville, lieuAct 
+                FROM Medecins 
+                WHERE numRPPS = :numRPPS";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam('numRPPS', $numRPPS);
         $stmt->execute();
         return $stmt->fetch();
-    }
-
-    public function getNewMedecin()
-    {
-        return array(
-            'numRPPS' => '',
-            'nom' => '',
-            'prenom' => '',
-            'adresse' => '',
-            'codePostal' => '',
-            'ville' => '',
-            'numTel' => '',
-            'email' => '',
-            'activite' => '',
-            'dateDebutActivites' => '',
-            'dateInscription' => date('Y-m-d')
-        );
     }
 
     public function updateMedecin($pdo, $rpps, $nom, $prenom, $adresse, $cp, $ville, $tel, $mail, $secteurActivite, $dateDebutActivites) {
@@ -84,6 +104,16 @@ class AdminService
         $stmt->bindParam('secteurActivite', $secteurActivite);
         $stmt->bindParam('dateDebutActivites', $dateDebutActivites);
         $stmt->execute();
+    }
+
+    private static $defaultAdminService ;
+
+    public static function getDefaultAdminService()
+    {
+        if (AdminService::$defaultAdminService == null) {
+            AdminService::$defaultAdminService = new AdminService();
+        }
+        return AdminService::$defaultAdminService;
     }
 
 }

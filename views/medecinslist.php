@@ -55,54 +55,61 @@ use yasmf\HttpHelper;
                 <!-- Portail de connexion -->
                 <div class="container ">
                     <div class="row justify-content-center">
-
-                        <div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 green border-2 p-5 table-responsive">
-                            <table class="table table-striped table-success table-hover">
-                                <tr>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Exerce depuis</th>
-                                    <th>Téléphone</th>
-                                    <th></th>
-                                </tr>
-                                <?php
-                                foreach ($medecinsList as $row) {
-                                    echo "<tr>"
-                                        ."<td>" . $row['nom'] . "</td>"
-                                        ."<td>" . $row['prenom'] . "</td>"
-                                        ."<td>" . $row['dateDebutActivites'] . "</td>"
-                                        ."<td>0" . $row['numTel'] . "</td>" // 0 pour le formatage (05.XX...)
-                                    ?>
-                                    <td>
-
-
-                                        <div class="dropdown green">
-										<span class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-
-											</span>
+                        <div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2">
+                            <div class="overflow-scroll ">
+                                <table class="table table-striped lightGreen table-hover">
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Exerce depuis</th>
+                                        <th>Téléphone</th>
+                                        <th></th>
+                                    </tr>
+                                    <?php
+                                    foreach ($medecinsList as $row) {
+                                        echo "<tr>"
+                                            ."<td>" . $row['nom'] . "</td>"
+                                            ."<td>" . $row['prenom'] . "</td>"
+                                            ."<td>" . $row['dateDebutActivites'] . "</td>"
+                                            ."<td>0" . $row['numTel'] . "</td>" // 0 pour le formatage (05.XX...)
+                                        ?>
+                                        <td>
+                                        <div class="dropdown">
+                                            <span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+                                                more_horiz
+                                            </span>
                                             <div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-                                                <form action="index.php" method="POST" class="d-flex flex-column green">
-                                                    <input type="hidden" name="controller" value="administrateur">
-                                                    <input type="hidden" name="action" value="editMedecin">
-                                                    <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
-                                                    <table class="text-white ">
-                                                        <tr><td><input type="submit" name="actionP" value="Modifier"> </td></tr>
-                                                    </table>
-
-                                                </form>
+                                                <table class="text-white ">
+                                                    <form action="index.php" action="POST" class="d-flex flex-column green">
+                                                        <input type="hidden" name="controller" value="administrateur">
+                                                        <input type="hidden" name="action" value="goFicheMedecin">
+                                                        <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
+                                                        <tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
+                                                    </form>
+                                                    <form action="index.php" action="POST" class="d-flex flex-column green">
+                                                        <input type="hidden" name="controller" value="administrateur">
+                                                        <input type="hidden" name="action" value="goEditMedecin">
+                                                        <input type="hidden" name="nextAction" value="updateMedecin">
+                                                        <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
+                                                        <tr><td><input type="submit" value="Modifier"> </td></tr>
+                                                    </form>
+                                                    <form action="index.php" action="POST" class="d-flex flex-column green">
+                                                        <input type="hidden" name="controller" value="administrateur">
+                                                        <input type="hidden" name="action" value="deleteMedecin">
+                                                        <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
+                                                        <tr><td><input type="submit"  value="Supprimer"> </td></tr>
+                                                    </form>
+                                                </table>            
                                             </div>
                                         </div>
-
-                                    </td>
-                                    <?php
-                                    echo "</tr>";
-                                }
-                                ?>
-
-                            </table>
-
+                                        </td>
+                                        <?php
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </table>
+                            </div>
                         </div>
-
 
                     </div>
 
@@ -111,9 +118,10 @@ use yasmf\HttpHelper;
             <div class="d-flex flex-row justify-content-between float-end">
                 <div class="d-flex me-2 py-2 px-3 border-1 green">
                     <form action="index.php" method="post">
-                        <input type="hidden" name="action" value="newMedecin">
+                        <input type="hidden" name="nextAction" value="addMedecin">
+                        <input type="hidden" name="action" value="goEditMedecin">
                         <input type="hidden" name="controller" value="administrateur">
-                        <input type="submit" name="Valider" value="Nouveau médecin">
+                        <input type="submit" class="green no-border text-white" value="Ajouter un médecin">
                     </form>
                 </div>
 

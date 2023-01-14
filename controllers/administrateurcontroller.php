@@ -45,6 +45,7 @@ use yasmf\HttpHelper;
 class AdministrateurController
 {
 	private $importservice;
+    private $adminservice;
 	private $files = [["CIS_bdpm.txt","BDPM",12,false,0,"BDPM","CIS_"],
 					  ["CIS_CIP_bdpm.txt","CIP",13,false,0,"CIP_BDPM","CIS_"],
 					  ["CIS_COMPO_bdpm.txt","COMPO",8,true,0,"COMPO","CIS_"],
@@ -116,59 +117,73 @@ class AdministrateurController
 		return $view;
 	}
 
-    public function listMedecins($pdo) {
+    public function deleteMedecin($pdo)
+    {
+        $numRPPS = HttpHelper::getParam("numRPPS");
+        $userID = $this->adminservice->getUserID($pdo,$numRPPS);
+        $this->adminservice->deleteUser($pdo,$userID['id']);
+        $this->adminservice->deleteMedecin($pdo,$numRPPS);
+        return $this->goListMedecins($pdo);
+    }
+
+    public function goListMedecins($pdo) {
 
         $view = new View("Sae3.3CabinetMedical/views/medecinslist");
         $view->setVar("medecinsList", $this->adminservice->getMedecinsList($pdo));
         return $view;
     }
 
-    public function editMedecin($pdo)
+    public function goEditMedecin($pdo)
     {
         $view = new View("Sae3.3CabinetMedical/views/editmedecin");
+        $view->setVar("nextAction",HttpHelper::getParam("nextAction"));
+        $numRPPS = HttpHelper::getParam('numRPPS');
+        $view->setVar("medecin", $this->adminservice->getMedecin($pdo,$numRPPS));
+        return $view;
+    }
+
+    public function goFicheMedecin($pdo)
+    {
+        $view = new View("Sae3.3CabinetMedical/views/medecin");
         $view->setVar("medecin", $this->adminservice->getMedecin($pdo, HttpHelper::getParam('numRPPS')));
         return $view;
     }
 
-    public function newMedecin($pdo) {
-        $view = new View("Sae3.3CabinetMedical/views/editmedecin");
-        $view->setVar("medecin", $this->adminservice->getNewMedecin());
-        $view->setVar("newMedecin", true);
-        return $view;
-    }
-
     public function updateMedecin($pdo) {
-
+        $view;
+        $numRPPS = HttpHelper::getParam('numRPPS');
+        $password = HttpHelper::getParam('password');
         try {
-            $this->adminservice->updateMedecin($pdo, HttpHelper::getParam('numRPPS'),
+            $this->adminservice->updateMedecin($pdo,$numRPPS ,
                 HttpHelper::getParam('nom'),
                 HttpHelper::getParam('prenom'),
                 HttpHelper::getParam('adresse'),
-                HttpHelper::getParam('codePostal'),
+                (int)HttpHelper::getParam('codePostal'),
                 HttpHelper::getParam('ville'),
-                HttpHelper::getParam('numTel'),
+                (int)HttpHelper::getParam('numTel'),
                 HttpHelper::getParam('email'),
                 HttpHelper::getParam('activite'),
                 HttpHelper::getParam('dateDebutActivite')
             );
-        } catch (\PDOException $e) {
-            $erreur = $e;
-        }
-
-        $view = $this->listMedecins($pdo);
-        if (isset($erreur)) {
+            $userID = $this->adminservice->getUserID($pdo,HttpHelper::getParam("actualLogin"));
+            $this->adminservice->updateUser($pdo,$userID['id'],$numRPPS,$password);
+            $view = $this->goFicheMedecin($pdo);
+        } catch (PDOException $e) {
+            $view = $this->goFicheMedecin($pdo);
             $view->setVar('erreurUpdate', true);
         }
 
 
+
         return $view;
 
     }
 
 
-    public function createMedecin($pdo) {
+    public function addMedecin($pdo) {
         try {
-            $this->adminservice->createMedecin($pdo, HttpHelper::getParam('numRPPS'),
+            $numRPPS = HttpHelper::getParam('numRPPS');
+            $this->adminservice->createMedecin($pdo,$numRPPS,
                 HttpHelper::getParam('nom'),
                 HttpHelper::getParam('prenom'),
                 HttpHelper::getParam('adresse'),
@@ -179,11 +194,12 @@ class AdministrateurController
                 HttpHelper::getParam('activite'),
                 HttpHelper::getParam('dateDebutActivite')
             );
+            $this->adminservice->addUser($pdo,$numRPPS,HttpHelper::getParam('password'));
         } catch (\PDOException $e) {
             $erreur = $e;
         }
 
-        $view = $this->listMedecins($pdo);
+        $view = $this->goFicheMedecin($pdo);
         if (isset($erreur)) {
             $view->setVar('erreurInsert', $erreur);
         }
