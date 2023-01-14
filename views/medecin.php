@@ -36,6 +36,7 @@ use yasmf\HttpHelper;
                         groups
                     </span>
             </a>
+
         </div>
         <!-- Main page -->
         <div class="col-md-11 h-75 text-center">
@@ -63,7 +64,6 @@ use yasmf\HttpHelper;
                 </div>
 
                 <div class="row">
-
                     <div class="d-flex flex-row justify-content-between text-green">
 
                         <div class="d-flex flex-column p-md-5">

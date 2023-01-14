@@ -94,7 +94,13 @@ class PatientsListController
 	}
 
 	public function updatePatient($pdo)
-	{
+	{	
+		if (HttpHelper::getParam("numSecu") != "") {
+			$_SESSION['patient'] = HttpHelper::getParam("numSecu");
+		}
+
+		$actualNumSecu = HttpHelper::getParam("actualNumSecu");
+
 		$nom = HttpHelper::getParam("nom");
 		$prenom = HttpHelper::getParam("prenom");
 		$adresse = HttpHelper::getParam("adresse");
@@ -106,8 +112,9 @@ class PatientsListController
 		$notes = HttpHelper::getParam("notes");
 		$codePostal = HttpHelper::getParam("codePostal");
 		$sexe = (int) HttpHelper::getParam("sexe");
+		$patientID = $this->usersservices->getPatientID($pdo,$actualNumSecu);
 
-		$this->usersservices->updatePatient($pdo,$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+		$this->usersservices->updatePatient($pdo,$patientID['id'],$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
 		return $this->goFichePatient($pdo);
 
 	}

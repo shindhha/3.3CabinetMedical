@@ -11,6 +11,15 @@ use PDOException;
 class AdminService
 {
 
+    public function getMedecinID($pdo,$numRPPS)
+    {
+        $sql = "SELECT id FROM Medecins where numRPPS = :numRPPS";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("numRPPS",$numRPPS);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
     public function deleteUser($pdo,$userID)
     {
         $sql = "DELETE FROM users where id = :userID";
@@ -74,10 +83,21 @@ class AdminService
         return $stmt->fetch();
     }
 
-    public function updateMedecin($pdo, $rpps, $nom, $prenom, $adresse, $cp, $ville, $tel, $mail, $secteurActivite, $dateDebutActivites) {
-        $sql = "UPDATE Medecins SET nom = :nom, prenom = :prenom, adresse = :adresse ,codePostal = :cp, ville = :ville, numTel = :tel, email = :mail, activite = :secteurActivite, dateDebutActivites = :dateDebutActivites WHERE numRPPS = :rpps";
+    public function updateMedecin($pdo,$idMedecin, $numRPPS, $nom, $prenom, $adresse, $cp, $ville, $tel, $mail, $secteurActivite, $dateDebutActivites) {
+        $sql = "UPDATE Medecins 
+        SET nom = :nom, 
+            prenom = :prenom, 
+            adresse = :adresse ,
+            codePostal = :cp, 
+            ville = :ville, 
+            numTel = :tel, 
+            email = :mail, 
+            activite = :secteurActivite, 
+            dateDebutActivites = :dateDebutActivites,
+            numRPPS = :numRPPS 
+            WHERE id = :idMedecin";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam('rpps', $rpps);
+        $stmt->bindParam('numRPPS', $numRPPS);
         $stmt->bindParam('nom', $nom);
         $stmt->bindParam('prenom', $prenom);
         $stmt->bindParam('adresse', $adresse);
@@ -87,6 +107,7 @@ class AdminService
         $stmt->bindParam('mail', $mail);
         $stmt->bindParam('secteurActivite', $secteurActivite);
         $stmt->bindParam('dateDebutActivites', $dateDebutActivites);
+        $stmt->bindParam('idMedecin', $idMedecin);
         $stmt->execute();
     }
 

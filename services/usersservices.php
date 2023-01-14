@@ -10,6 +10,15 @@ use PDOException;
  */
 class UsersServices
 {
+
+  public function getPatientID($pdo,$numSecu)
+  {
+    $sql = "SELECT id FROM Patients where numSecu = :numSecu";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("numSecu",$numSecu);
+        $stmt->execute();
+        return $stmt->fetch();
+  }
   public function findIfAdminExists($pdo,$username,$password)
   {
     $sql = "SELECT *
@@ -22,7 +31,7 @@ class UsersServices
     return $nbRow >= 1;
   }
 
-  public function updatePatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
+  public function updatePatient($pdo,$patientID,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
     $sql = "UPDATE Patients 
             SET LieuNaissance = :LieuNaissance,
@@ -35,8 +44,9 @@ class UsersServices
             numTel = :numTel,
             email = :email,
             sexe = :sexe,
-            notes = :notes
-            WHERE numSecu = :numSecu";
+            notes = :notes,
+            numSecu = :numSecu
+            WHERE id = :patientID";
 
     $stmt = $pdo->prepare($sql);
 
@@ -51,7 +61,8 @@ class UsersServices
                          'numTel' => $numTel,
                          'email' => $email,
                          'sexe' => $sexe,
-                         'notes' => $notes));
+                         'notes' => $notes,
+                         'patientID' => $patientID));
 
   }
 

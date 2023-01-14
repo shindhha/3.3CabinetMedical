@@ -153,8 +153,11 @@ class AdministrateurController
         $view;
         $numRPPS = HttpHelper::getParam('numRPPS');
         $password = HttpHelper::getParam('password');
+        $actualLogin = HttpHelper::getParam("actualLogin");
         try {
-            $this->adminservice->updateMedecin($pdo,$numRPPS ,
+            $medecinID = $this->adminservice->getMedecinID($pdo,$actualLogin);
+            $medecinID['name'] = "Medecin ID";
+            $this->adminservice->updateMedecin($pdo,$medecinID['id'],$numRPPS ,
                 HttpHelper::getParam('nom'),
                 HttpHelper::getParam('prenom'),
                 HttpHelper::getParam('adresse'),
@@ -165,7 +168,8 @@ class AdministrateurController
                 HttpHelper::getParam('activite'),
                 HttpHelper::getParam('dateDebutActivite')
             );
-            $userID = $this->adminservice->getUserID($pdo,HttpHelper::getParam("actualLogin"));
+            $userID = $this->adminservice->getUserID($pdo,$actualLogin);
+            $userID['name'] = "User ID";
             $this->adminservice->updateUser($pdo,$userID['id'],$numRPPS,$password);
             $view = $this->goFicheMedecin($pdo);
         } catch (PDOException $e) {
