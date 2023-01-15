@@ -170,12 +170,12 @@ class UsersServices
             FROM Ordonnances
             JOIN CIS_BDPM
             ON Ordonnances.codeCIS = CIS_BDPM.codeCIS
-            JOIN designationelempharma
-            ON designationelempharma.idDesignation = CIS_BDPM.idDesignation
+            JOIN DesignationElemPharma
+            ON DesignationElemPharma.idDesignation = CIS_BDPM.idDesignation
             JOIN CIS_CIP_BDPM
             ON Ordonnances.codeCIS = CIS_CIP_BDPM.codeCIS
-            JOIN libellePresentation
-            ON libellePresentation.idLibellePresentation = CIS_CIP_BDPM.idLibellePresentation
+            JOIN LibellePresentation
+            ON LibellePresentation.idLibellePresentation = CIS_CIP_BDPM.idLibellePresentation
             WHERE idVisite = :idVisite";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam("idVisite",$idVisite);
@@ -233,70 +233,70 @@ class UsersServices
 
   public function getMedicament($pdo,$codeCIS)
   {
-    $sql = "SELECT designation,formePharma,statutAdAMM,typeProc,autoEur,tauxRemboursement,codeCIP7,libellePresentation,statutAdminiPresentation,labelEtatCommercialisation,dateCommrcialisation,codeCIP13,agrementCollectivites,prix,IndicationRemboursement,labelGroupeGener,typeGenerique,numeroTri,labelElem,codesubstance,labelDosage,labelRefDosage,labelVoieAdministration,labelcondition,dateDebutInformation,dateFinInformation,labelTexte,labelTitulaire,libelleMotifEval,cis_has_smr.dateAvis as dateAvisSMR,niveauSMR,libelleSMR,lienPage,cis_has_asmr.dateAvis as dateAvisASMR,valeurASMR,libelleASMR
-      FROM cis_bdpm
+    $sql = "SELECT designation,formePharma,statutAdAMM,typeProc,autoEur,tauxRemboursement,codeCIP7,libellePresentation,statutAdminiPresentation,labelEtatCommercialisation,dateCommrcialisation,codeCIP13,agrementCollectivites,prix,IndicationRemboursement,labelGroupeGener,typeGenerique,numeroTri,labelElem,codesubstance,labelDosage,labelRefDosage,labelVoieAdministration,labelcondition,dateDebutInformation,dateFinInformation,labelTexte,labelTitulaire,libelleMotifEval,CIS_HAS_SMR.dateAvis as dateAvisSMR,niveauSMR,libelleSMR,lienPage,CIS_HAS_ASMR.dateAvis as dateAvisASMR,valeurASMR,libelleASMR
+      FROM CIS_BDPM
       LEFT JOIN DesignationElemPharma
-      ON cis_bdpm.idDesignation = DesignationElemPharma.idDesignation
+      ON CIS_BDPM.idDesignation = DesignationElemPharma.idDesignation
       LEFT JOIN FormePharma
-      ON cis_bdpm.idFormePharma = FormePharma.idFormePharma
+      ON CIS_BDPM.idFormePharma = FormePharma.idFormePharma
       LEFT JOIN StatutAdAMM 
-      ON cis_bdpm.idStatutAdAMM = StatutAdAMM.idStatutAdAMM
+      ON CIS_BDPM.idStatutAdAMM = StatutAdAMM.idStatutAdAMM
       LEFT JOIN TypeProc 
-      ON cis_bdpm.idTypeProc = TypeProc.idTypeProc
+      ON CIS_BDPM.idTypeProc = TypeProc.idTypeProc
       LEFT JOIN AutorEurop
-      ON cis_bdpm.idAutoEur = AutorEurop.idAutoEur
+      ON CIS_BDPM.idAutoEur = AutorEurop.idAutoEur
       LEFT JOIN TauxRemboursement 
-      ON cis_bdpm.codeCIS = TauxRemboursement.codeCIS
-      LEFT JOIN cis_cip_bdpm
-      ON cis_cip_bdpm.codeCIS = cis_bdpm.codeCIS
+      ON CIS_BDPM.codeCIS = TauxRemboursement.codeCIS
+      LEFT JOIN CIS_CIP_BDPM
+      ON CIS_CIP_BDPM.codeCIS = CIS_BDPM.codeCIS
       LEFT JOIN LibellePresentation 
-      ON cis_cip_bdpm.idLibellePresentation = LibellePresentation.idLibellePresentation
+      ON CIS_CIP_BDPM.idLibellePresentation = LibellePresentation.idLibellePresentation
       LEFT JOIN EtatCommercialisation
-      ON cis_cip_bdpm.idEtatCommercialisation = EtatCommercialisation.idEtatCommercialisation
-      LEFT JOIN cis_gener
-      ON cis_gener.codeCIS = cis_bdpm.codeCIS
+      ON CIS_CIP_BDPM.idEtatCommercialisation = EtatCommercialisation.idEtatCommercialisation
+      LEFT JOIN CIS_GENER
+      ON CIS_GENER.codeCIS = CIS_BDPM.codeCIS
       LEFT JOIN GroupeGener 
-      ON cis_gener.idGroupeGener = GroupeGener.idGroupeGener
-      LEFT JOIN cis_compo
-      ON cis_compo.codeCIS = cis_bdpm.codeCIS
+      ON CIS_GENER.idGroupeGener = GroupeGener.idGroupeGener
+      LEFT JOIN CIS_COMPO
+      ON CIS_COMPO.codeCIS = CIS_BDPM.codeCIS
       LEFT JOIN DesignationElem
-      ON cis_compo.idDesignationElemPharma = DesignationElem.idElem
+      ON CIS_COMPO.idDesignationElemPharma = DesignationElem.idElem
       LEFT JOIN CodeSubstance 
-      ON cis_compo.idCodeSubstance = CodeSubstance.idSubstance
-      AND cis_compo.varianceNomSubstance = CodeSubstance.varianceNom
+      ON CIS_COMPO.idCodeSubstance = CodeSubstance.idSubstance
+      AND CIS_COMPO.varianceNomSubstance = CodeSubstance.varianceNom
       LEFT JOIN Dosage 
-      ON cis_compo.idDosage = Dosage.idDosage
+      ON CIS_COMPO.idDosage = Dosage.idDosage
       LEFT JOIN RefDosage 
-      ON cis_compo.idRefDosage = RefDosage.idRefDosage
-      LEFT JOIN cis_voieadministration
-      ON cis_bdpm.codeCIS = cis_voieadministration.codeCIS
-      LEFT JOIN id_label_voieadministration
-      ON cis_voieadministration.idVoieAdministration = id_label_voieadministration.idVoieAdministration 
-      LEFT JOIN cis_cpd
-      ON cis_cpd.codeCIS = cis_bdpm.codeCIS
+      ON CIS_COMPO.idRefDosage = RefDosage.idRefDosage
+      LEFT JOIN CIS_VoieAdministration
+      ON CIS_BDPM.codeCIS = CIS_VoieAdministration.codeCIS
+      LEFT JOIN ID_Label_VoieAdministration
+      ON CIS_VoieAdministration.idVoieAdministration = ID_Label_VoieAdministration.idVoieAdministration 
+      LEFT JOIN CIS_CPD
+      ON CIS_CPD.codeCIS = CIS_BDPM.codeCIS
       LEFT JOIN LabelCondition 
-      ON cis_cpd.idCondition = LabelCondition.idCondition
-      LEFT JOIN cis_info
-      ON cis_bdpm.codeCIS = cis_info.codeCIS
-      LEFT JOIN info_texte
-      ON cis_info.idTexte = info_texte.idTexte
-      LEFT JOIN cis_titulaires
-      ON cis_bdpm.codeCIS = cis_titulaires.codeCIS
-      LEFT JOIN id_label_titulaire
-      ON cis_titulaires.idTitulaire = id_label_titulaire.idTitulaire
-      LEFT JOIN cis_has_smr
-      ON cis_bdpm.codeCIS = cis_has_smr.codeCIS
-      LEFT JOIN motifeval
-      ON cis_has_smr.idMotifEval = motifeval.idMotifEval
-      LEFT JOIN LibelleSMR 
-      ON cis_has_smr.idLibelleSmr = LibelleSMR.idLibelleSMR
-      LEFT JOIN has_lienspagect
-      ON cis_has_smr.codeHAS = has_lienspagect.codeHAS
-      LEFT JOIN cis_has_asmr
-      ON cis_bdpm.codeCIS = cis_has_asmr.codeCIS
-      LEFT JOIN LibelleASMR 
-      ON cis_has_asmr.idLibelleAsmr = LibelleASMR.idLibelleAsmr
-      WHERE cis_bdpm.codeCIS = :codeCIS
+      ON CIS_CPD.idCondition = LabelCondition.idCondition
+      LEFT JOIN CIS_INFO
+      ON CIS_BDPM.codeCIS = CIS_INFO.codeCIS
+      LEFT JOIN Info_Texte
+      ON CIS_INFO.idTexte = Info_Texte.idTexte
+      LEFT JOIN CIS_Titulaires
+      ON CIS_BDPM.codeCIS = CIS_Titulaires.codeCIS
+      LEFT JOIN ID_Label_Titulaire
+      ON CIS_Titulaires.idTitulaire = ID_Label_Titulaire.idTitulaire
+      LEFT JOIN CIS_HAS_SMR
+      ON CIS_BDPM.codeCIS = CIS_HAS_SMR.codeCIS
+      LEFT JOIN MotifEval
+      ON CIS_HAS_SMR.idMotifEval = MotifEval.idMotifEval
+      LEFT JOIN LibelleSmr 
+      ON CIS_HAS_SMR.idLibelleSmr = LibelleSmr.idLibelleSMR
+      LEFT JOIN HAS_LiensPageCT
+      ON CIS_HAS_SMR.codeHAS = HAS_LiensPageCT.codeHAS
+      LEFT JOIN CIS_HAS_ASMR
+      ON CIS_BDPM.codeCIS = CIS_HAS_ASMR.codeCIS
+      LEFT JOIN LibelleAsmr 
+      ON CIS_HAS_ASMR.idLibelleAsmr = LibelleAsmr.idLibelleAsmr
+      WHERE CIS_BDPM.codeCIS = :codeCIS
       ";
       $stmt = $pdo->prepare($sql);
 
