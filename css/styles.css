@@ -3,7 +3,7 @@ body , html {
 	height: 100%;
 	width: 100%;
 	margin: 0px;
-	
+	overflow: hidden;
 
 }
 
@@ -80,6 +80,11 @@ input:focus {
 }
 
 
+.hf {
+	height: 250px;
+}
+
+
 
 .ps-6 {
 	margin-left: 50px;
@@ -97,10 +102,6 @@ input:focus {
 	max-height: 450px;
 }
 
-
-.enable-flex {
-	display: flex;
-}
 
 .input-grow {
 	flex-grow: 1;

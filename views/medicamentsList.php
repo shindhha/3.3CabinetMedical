@@ -7,7 +7,7 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-	<script type="text/javascript" src="../scripts/script.js"></script>
+	
 	<title>MEDILOG</title>
 	
 </head>
@@ -28,12 +28,12 @@
 				</div>
 				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
 
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
+					<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
 						medication
 					</span>
 				</a>
 				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+					<span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
 						groups
 					</span>
 				</a>
@@ -46,11 +46,12 @@
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
 						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
-						<div class="d-flex align-items-center">
+						
 							<!-- Barre de recherche -->
+						<form class="d-flex align-items-center" action="index.php" action="POST">
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black"> search </span>
+								<input name="pPresentation" class="no-border" type="search" placeholder="Mots clef" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
+								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 							</div>
 
@@ -60,7 +61,7 @@
 									Filtres
 								</span>
 								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
+									<div class="d-flex flex-column green p-4">
 										<input type="hidden" name="controller" value="medicamentslist">
 										<table class="text-white ">
 											<tr>
@@ -83,13 +84,27 @@
 											</tr>
 											<tr>
 												<td>
-													<select class="form-select text-green">
-														<option>Valeur SMR</option>
+													<select name="pNiveauSmr" class="form-select text-green">
+														<option value="%">Valeur SMR</option>
+														<?php
+														while ($row = $niveauSmr->fetch()) {
+															echo "<option";
+															if ($pNiveauSmr == $row['libelleNiveauSMR']) echo " selected='selected'";
+															echo ">" . $row['libelleNiveauSMR'] . "</option>";
+														}
+														?>
 													</select>
 												</td>
 												<td>
-													<select class="form-select text-green">
-														<option>Valeur ASMR</option>
+													<select name="pValeurASMR" class="form-select text-green">
+														<option value="%">Valeur ASMR</option>
+														<?php
+														while ($row = $valeurASMR->fetch()) {
+															echo "<option";
+															if ($pValeurASMR == $row['valeurASMR']) echo " selected='selected'";
+															echo ">" . $row['valeurASMR'] . "</option>";
+														}
+														?>
 													</select>
 												</td>
 											</tr>
@@ -146,11 +161,11 @@
 												</td>
 											</tr>
 										</table>
-
-										<input type="submit" value="Rechercher" >
 									</div>
-								</form>
-							</div>
+										
+								</div>
+							</form>
+
 
 						</div>				
 
@@ -177,17 +192,17 @@
 										<th>Voie d'administration</th>
 										<th>Taux Remboursement</th>
 										<th>Prix</th>
-										<th>Désignation </th>
+										<th>Presentation </th>
 										<th>Etat Commercialisation </th>
 										<th>Surveillance Renforcé</th>
-										<th>Designation Principe Actif </th>
+										<th></th>
 									</tr>
 
 									<?php
 									$surveillance = "";
 									$commercialiser = "";
 
-										foreach ($drugs as $row) {
+										foreach ($drugs as $row)  {
 											if ($row['etatCommercialisation']) {
 												$commercialiser = "Commercialiser";
 											} else {
@@ -202,17 +217,55 @@
 
 										echo "<tr>"
 											 ."<td>" . $row['codeCIS'] . "</td>"
-											 ."<td>" . "</td>"
-											 ."<td>" . "</td>"
+											 ."<td>" . $row['libelleNiveauSMR'] . "</td>"
+											 ."<td>" . $row['valeurASMR'] . "</td>"
 											 ."<td>" . $row['formePharma'] . "</td>"
 											 ."<td>" . $row['labelVoieAdministration'] . "</td>"
 											 ."<td>" . $row['tauxRemboursement'] . "</td>"
 											 ."<td>" . $row['prix'] . "</td>"
-											 ."<td>" . $row['designation'] . "</td>"
+											 ."<td>" . $row['libellePresentation'] . "</td>"
 											 ."<td>" . $commercialiser . "</td>"
 											 ."<td>" . $surveillance . "</td>"
-											 ."<td>" .  "</td>"
-											 ."</tr>";
+									?>
+									<td>
+										
+									
+									<div class="dropdown ">
+										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+									
+											more_horiz
+
+										</span>
+										<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
+											<form action="index.php" action="POST" class="d-flex flex-column green">
+												
+												<table class="text-white ">
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="medicamentslist">
+														<input type="hidden" name="action" value="goFicheMedicament">
+														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+														<tr><input type="submit" value="Afficher"> </tr>
+													</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="visite">
+														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+														<?php if (isset($ajouter)) {
+														?>
+
+															<tr><a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS']  ?>')" role="button">Ajouter</a></tr>
+														<?php
+														} ?>
+														
+													</form>
+												</table>
+
+										</div>
+									</div>
+
+									</td>
+									<?php 
+											echo "</tr>";
 										} 
 									?>
 								</table>
@@ -227,9 +280,35 @@
 			</div>
 
 		</div>
+		
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		 	<div class="modal-dialog modal-xl">
+
+		    	<div class="modal-content gap-2">
+		    		<div class = "col-12 green d-flex text-start p-3 align-middle">
+		    			<span id ="libelle"></span>
+		    		</div>
+		    		<form>
+		    		<div class = "col-12 bg-white h-50 d-flex flex-column text-black text-start px-3">
+		    			<span> instruction medicament:</span>
+		    			<textarea name="instruction"></textarea>
+		    		</div>
+		    		<div class = "d-flex justify-content-end p-3">
+		    			
+		    				<input type="submit" value="confirmer">
+		    				<input type="hidden" name="controller" value = "patientslist">
+		    				<input type="hidden" name="action" value = "addMedicament">
+		    				<input type="hidden" name="codeCIS" value="" id ="code">
+		    			
+		    		</div>
+		    		</form>
+		    	</div>
+			</div>
+		</div>
 
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts/script.js"></script>
 	</div>
 </body>
 </html>

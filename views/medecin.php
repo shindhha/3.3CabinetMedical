@@ -36,6 +36,7 @@ use yasmf\HttpHelper;
                         groups
                     </span>
             </a>
+
         </div>
         <!-- Main page -->
         <div class="col-md-11 h-75 text-center">
@@ -54,71 +55,72 @@ use yasmf\HttpHelper;
                 <div class="blue row">
                     <div class="d-flex justify-content-between">
                         <span></span>
-                        <div><input type="text" name="nom" value="<?php if(isset($medecin['nom'])) echo $medecin['nom']; ?>" class="input-grow" placeholder="Nom"> <input type="text" name="prenom" value="<?php if(isset($medecin['nom'])) echo $medecin['prenom'];?>" class="input-grow" placeholder="Prénom"></div>
-                        <div>Sexe : </div>
+                        <div>
+                            <span><?php if(isset($medecin['nom'])) echo $medecin['nom']; ?></span> 
+                            <span><?php if(isset($medecin['prenom'])) echo $medecin['prenom']; ?></span>
+                        </div>
+                        <div></div>
                     </div>
                 </div>
 
                 <div class="row">
-
                     <div class="d-flex flex-row justify-content-between text-green">
 
                         <div class="d-flex flex-column p-md-5">
                             <h1>Informations personnelles</h1>
                             <span> Adresse
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="adresse" value="<?php if(isset($medecin['adresse'])) echo $medecin['adresse'];?>" class="input-grow">
+                                <div class="border border-1 border-green d-flex">
+                                    <span> <?php if(isset($medecin['adresse'])) echo $medecin['adresse']; ?>
+                                    </span>
                                 </div>
                             </span>
                             <span> Code postal / Ville
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="codePostal" value="<?php if(isset($medecin['codePostal'])) echo $medecin['codePostal']; ?>" class="input-grow"> / <input type="text" name="ville" value="<?php if(isset($medecin['codePostal'])) echo $medecin['ville']; ?>" class="input-grow">
+                                <div class="border border-1 border-green d-flex">
+                                    <span><?php if(isset($medecin['codePostal'])) echo $medecin['codePostal']; ?></span> / <span> <?php if(isset($medecin['ville'])) echo $medecin['ville']; ?></span>
                                 </div>
                             </span>
                             <span> Téléphone
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="numTel" value="<?php if(isset($medecin['numTel'])) echo $medecin['numTel'];?>" class="input-grow">
+                                <div class="border border-1 border-green d-flex">
+                                    <span> <?php if(isset($medecin['numTel'])) echo $medecin['numTel']; ?></span>
                                 </div>
                             </span>
                             <span>Email
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="email" value="<?php if(isset($medecin['email'])) echo $medecin['email']; ?>" class="input-grow">
+                                <div class="border border-1 border-green d-flex">
+                                    <span> <?php if(isset($medecin['email'])) echo $medecin['email']; ?></span>
                                 </div>
                             </span>
-                            <form method="post" action="index.php">
-                                <input type="hidden" name="controller" value="administrateur">
-                                <input type="hidden" name="action" value="listMedecins">
-                                <button type="submit">Annuler</button>
-                            </form>
+
                         </div>
 
                         <div class="d-flex flex-column p-md-5">
                             <h1>Informations professionnelles</h1>
                             <span> Numéro RPPS
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="numRPPS" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS']; ?>" class="input-grow">
+                                <div class="border border-1 border-green d-flex">
+                                    <span> <?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS']; ?></span>
                                 </div>
                             </span>
                             <span> Secteur d'activité
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="activite" value="<?php if(isset($medecin['activite'])) echo $medecin['activite'];?>" class="input-grow">
+                                <div class="border border-1 border-green d-flex">
+                                    <span> <?php if(isset($medecin['activite'])) echo $medecin['activite']; ?></span>
                                 </div>
                             </span>
-                            <span> Mot de passe
+                            <span> Date d'enregistrement
                                 <div class="border border-1 border-green text-black">
-                                    <input type="text" name="password" value="<?php if(isset($medecin['password'])) echo $medecin['password'];?>" class="input-grow">
+                                    <span><?php if(isset($medecin['dateInscription'])) echo $medecin['dateInscription']; ?></span>
                                 </div>
                             </span>
-                            <span> Date du début d'activité
-                                <div class="border border-1 border-green enable-flex">
-                                    <input type="date" name="dateDebutActivite" value="<?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?>" class="input-grow">
+                            <span>
+                                Date du début d'activité
+                                <div class="border border-1 border-green text-black">
+                                    
+                                    <span><?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?></span>
                                 </div>
                             </span>
-                            <input type="hidden" name="actualLogin" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS'];?>">>
-                            <input type="hidden" name="action" value="<?php echo $nextAction ?>">
-                            <input type="hidden" name="controller" value="administrateur">
-
-                            <button type="submit">Valider</button>
+                            <span> 
+                                <div class="border border-1 border-green d-flex text-green">
+                                    
+                                </div>
+                            </span>
                         </div>
                     </div>
                 </div>

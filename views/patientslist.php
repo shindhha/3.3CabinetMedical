@@ -49,29 +49,57 @@
 						<span class=" h1 d-md-block d-none"> Liste Patients </span>
 						<div class="d-flex align-items-center">
 							<!-- Barre de recherche -->
-							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input class="no-border" type="search" placeholder="Mots clef" aria-label="Search">
-								<span class="material-symbols-outlined text-black "> search </span>
+							<form action="index.php" action="POST" class="d-flex align-items-center">
+								<div class="d-flex me-2 py-2 px-3 bg-white border-1">
+									<input name="search" class="no-border" type="search" placeholder="Nom prenom" aria-label="Search">
+									<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
-							</div>
+								</div>
 
-							<!-- Filtre -->
-							<div class="dropdown green">
-								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+								<!-- Filtre -->
+								<div class="dropdown green">
+									<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									Filtres
-								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<form action="index.php" action="POST" class="d-flex flex-column green p-4">
-										<input type="hidden" name="controller" value="medicamentslist">
+									</span>
+									<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+									
+										<input type="hidden" name="controller" value="patientslist">
 										<table class="text-white ">
-											
+											<tr>
+												<td>
+													<input type="date" name="dateMin">
+													
+												</td>
+												<td>
+													<input type="date" name="dateMax">
+													
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<select name="medecin" class="form-select text-green">
+														<option value="%">MEDECIN</option>
+														<?php
+														while ($row = $medecin->fetch()) {
+															echo "<option value='" . $row['numRPPS'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+														}
+														?>
+													</select>
+												</td>
+												<td>
+													<select name="pValeurASMR" class="form-select text-green">
+														<option value="%"></option>
+														<?php
+														
+														?>
+													</select>
+												</td>
+											</tr>
 										</table>
-
-										<input type="submit" value="Rechercher" >
 									</div>
-								</form>
-							</div>
-
+								
+								</div>
+							</form>
 						</div>				
 
 					</div>
@@ -119,19 +147,19 @@
 									<td>
 										
 									
-									<div class="dropdown green">
+									<div class="dropdown ">
 										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									
 											more_horiz
 
 										</span>
-										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+										<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
 											<form action="index.php" action="POST" class="d-flex flex-column green">
 												
 												<table class="text-white ">
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="fichePatient">
+														<input type="hidden" name="action" value="goFichePatient">
 														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
 														<tr><input type="submit" value="Afficher"> </tr>
 													</form>
@@ -165,8 +193,8 @@
 				<div class="d-flex flex-row justify-content-end">
 					<div class="d-flex me-2 py-2 px-3 border-1 green">
 						<form>
-							<input type="hidden" name="modif" value="Ajouter">
-							<input type="hidden" name="action" value="modifPatient">
+							<input type="hidden" name="nextAction" value="addPatient">
+							<input type="hidden" name="action" value="goEditPatient">
 							<input type="hidden" name="controller" value="patientslist">
 							<input type="submit" class="green no-border text-white" value="Ajouter un patient">
 						</form>
@@ -175,6 +203,7 @@
 			</div>
 
 		</div>
+
 
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>

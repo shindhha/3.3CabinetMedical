@@ -29,7 +29,7 @@
 						settings
 					</span>
                 </a>
-                <a href="index.php?controller=administrateur&action=listMedecins" class="green border-1 ratio ratio-1x1">
+                <a href="index.php?controller=administrateur&action=goListMedecins" class="green border-1 ratio ratio-1x1">
                     <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
                         groups
                     </span>

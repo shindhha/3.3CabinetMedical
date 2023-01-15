@@ -34,7 +34,7 @@
 
 				</a>
 				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+					<span class="d-flex display-1 justify-content-center align-items-center material-symbols-outlined font-40">
 						groups
 					</span>
 				</a>
@@ -54,16 +54,16 @@
 				<div class="blue row">
 					<div class="d-flex justify-content-between">
 						<span></span>
-						<h1><?php echo $patient[0]['nom'] . " " . $patient[0]['prenom']?></h1>
+						<h1><?php echo $patient['nom'] . " " . $patient['prenom']?></h1>
 						<div>
 							<?php 
-							if ($patient[0]['sexe']) {
-								echo "<i class='material-symbols-outlined font-40' >
-										woman
-									</i>";
-							} else {
-								echo "<span class='material-symbols-outlined'>
+							if ($patient['sexe']) {
+								echo "<span class='material-symbols-outlined font-40' >
 										man
+									</span>";
+							} else {
+								echo "<span class='material-symbols-outlined font-40'>
+										woman
 									</span>";
 							}
 							?>
@@ -73,23 +73,44 @@
 				</div>
 
 				<div class="row">
-					<div class="d-flex flex-row px-5 justify-content-between text-green">
-						<div class="d-flex flex-column justify-content-start">
-							<h1>Informations</h1>
-							<span>Adresse :<?php echo $patient[0]['adresse'] ?></span> 
-							<span>n°Telephone :<?php echo "0".$patient[0]['numTel'] ?></span>
-							<span>email :<?php echo $patient[0]['email'] ?></span>
-							<span>Medecin Traitant :<?php echo $patient[0]['medecinRef'] ?></span>
-							<span>Numéro de sécurité sociale :<?php echo $_SESSION['patient'] ?></span>
-							<span>Date de naissance :<?php echo $patient[0]['dateNaissance'] ?></span>
-							<span>Lieu de naissance :<?php echo $patient[0]['LieuNaissance'] ?></span>
-							<span>CodePostal :<?php echo $patient[0]['codePostal'] ?></span>
+					<div class="d-flex  flex-row px-5 justify-content-between text-dark">
+						<div class="d-flex flex-column col-xl-5 text-start">
+							
+							<div class="h2"> Informations </div>
+							<div class="border-top border-dark pt-3	">
+								
+								<div class="d-flex flex-row justify-content-between">
+									<div> Adresse : </div> <div> <?php echo $patient['adresse'] ?></div>
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>n°Telephone : </div><?php echo "0".$patient['numTel'] ?>	
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>email : </div><?php echo $patient['email'] ?>
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>Medecin Traitant : </div><?php echo $patient['medecinRef'] ?>
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>Numéro de sécurité sociale : </div><?php echo $_SESSION['patient'] ?>
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>Date de naissance : </div><?php echo $patient['dateNaissance'] ?>		
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>Lieu de naissance : </div><?php echo $patient['LieuNaissance'] ?>		
+								</div>
+								<div class="d-flex flex-row justify-content-between">
+									<div>CodePostal : </div><?php echo $patient['codePostal'] ?>
+								</div>
+							</div>
+							
 						</div>
 
-						<div class="d-flex flex-column">
-							<h1>Notes</h1>
-							<div>
-								<?php echo $patient[0]['notes'] ?>
+						<div class="d-flex flex-column col-xl-3 text-start">
+							<div class="h2">Notes</div>
+							<div class="d-flex align-items-start border border-dark ratio ratio-21x9">
+								<?php echo $patient['notes'] ?>
 							</div>
 							
 						</div>
@@ -98,83 +119,84 @@
 
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
-				<h1 class="text-green">Liste des visites</h1>
 				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-
-							<div class="overflow-scroll h-50 col-md-10 col-xl-9 col-sm-7 col-12 success border-2 p-5">
-								<table class="table table-striped lightGreen">
-									<tr>
-										<th>Date</th>
-										<th>Motif</th>
-										<th>note</th>
-									</tr>
-									<?php
-									foreach ($visites as $row) {
-									echo "<tr>"
-											 ."<td>" . $row['motifVisite'] . "</td>"
-											 ."<td>" . $row['dateVisite'] . "</td>"
-											 ."<td>" . $row['note'] . "</td>"
-									?>
-									<td>
-										
-									
-									<div class="dropdown green">
-										<span class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									
+							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
+								<div class="text-dark text-start h2">Liste des visites</div>
+								<div class="overflow-scroll h-50">
+									<table class="table table-striped lightGreen border-top border-dark">
+										<tr>
+											<th>Motif</th>
+											<th>Date</th>
+											<th>Description</th>
+											<th></th>
+										</tr>
+										<?php
+										foreach ($visites as $row) {
+										echo "<tr>"
+												 ."<td>" . $row['motifVisite'] . "</td>"
+												 ."<td>" . $row['dateVisite'] . "</td>"
+												 ."<td>" . $row['Description'] . "</td>"
+										?>
+										<td>
+										<div class="dropdown">
+											<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+												more_horiz
 											</span>
-										<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<input type="hidden" name="controller" value="patientslist">
-												<input type="hidden" name="action" value="visite">
-												<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+											<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 												<table class="text-white ">
-													<tr><td><input type="submit" name="actionP" value="Afficher"> </td></tr>
-												</table>
-
-											</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="goFicheVisite">
+														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+														<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
+													</form>
+													<form action="index.php" action="POST" class="d-flex flex-column green">
+														<input type="hidden" name="controller" value="patientslist">
+														<input type="hidden" name="action" value="deleteVisite">
+														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+														<input type="hidden" name="numSecu"
+														value="<?php echo $_SESSION['patient'] ?>">
+														<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
+													</form>
+												</table>			
+											</div>
 										</div>
+										</td>
+										<?php
+												echo "</tr>";
+											}
+										?>
+									</table>
+								</div>
+								<div class="d-flex flex-row justify-content-end">
+									<div class="d-flex me-2 py-2 px-3 border-1 green">
+										<form>
+											<input type="hidden" name="nextAction" value="addVisite">
+											<input type="hidden" name="action" value="goEditVisite">
+											<input type="hidden" name="controller" value="patientslist">
+											<input type="submit" class="green no-border text-white" value="Ajouter une visite">
+											</form>
 									</div>
-
-									</td>
-									<?php
-											echo "</tr>";
-										}
-									?>
-									
-								</table>
-
+									<div class="d-flex me-2 py-2 px-3 border-1 green">
+										<form>
+											<input type="hidden" name="nextAction" value="updatePatient">
+											<input type="hidden" name="action" value="goEditPatient">
+											<input type="hidden" name="controller" value="patientslist">
+											<input type="submit" class="green no-border text-white" value="Modifier le patient">
+										</form>
+									</div>
+								</div>
 							</div>
-
-
 						</div>
-
 					</div>
 				</div>
-				<div class="d-flex flex-row justify-content-end">
-					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						<form>
-							<input type="hidden" name="action" value="modifPatient">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" class="green no-border text-white" value="Ajouter une visite">
-						</form>
-					</div>
-					<div class="d-flex me-2 py-2 px-3 border-1 green">
-						<form>
-							<input type="hidden" name="modif" value="Modifier">
-							<input type="hidden" name="action" value="modifPatient">
-							<input type="hidden" name="controller" value="patientslist">
-							<input type="submit" class="green no-border text-white" value="Modifier le patient">
-						</form>
-					</div>
-				</div>
+				
 			</div>
 
 		</div>
-
-
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>

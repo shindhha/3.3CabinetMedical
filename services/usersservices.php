@@ -10,6 +10,15 @@ use PDOException;
  */
 class UsersServices
 {
+
+  public function getPatientID($pdo,$numSecu)
+  {
+    $sql = "SELECT id FROM Patients where numSecu = :numSecu";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam("numSecu",$numSecu);
+        $stmt->execute();
+        return $stmt->fetch();
+  }
   public function findIfAdminExists($pdo,$username,$password)
   {
     $sql = "SELECT *
@@ -22,7 +31,7 @@ class UsersServices
     return $nbRow >= 1;
   }
 
-  public function updatePatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
+  public function updatePatient($pdo,$patientID,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
     $sql = "UPDATE Patients 
             SET LieuNaissance = :LieuNaissance,
@@ -35,8 +44,9 @@ class UsersServices
             numTel = :numTel,
             email = :email,
             sexe = :sexe,
-            notes = :notes
-            WHERE numSecu = :numSecu";
+            notes = :notes,
+            numSecu = :numSecu
+            WHERE id = :patientID";
 
     $stmt = $pdo->prepare($sql);
 
@@ -51,8 +61,17 @@ class UsersServices
                          'numTel' => $numTel,
                          'email' => $email,
                          'sexe' => $sexe,
-                         'notes' => $notes));
+                         'notes' => $notes,
+                         'patientID' => $patientID));
 
+  }
+
+  public function editInstruction($pdo,$idVisite,$codeCIS,$instruction)
+  {
+    $sql = "UPDATE Ordonnances SET instruction = :instruction WHERE idVisite = :idVisite AND codeCIS = :codeCIS";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array('instruction' => $instruction, 'idVisite' => $idVisite, 'codeCIS' => $codeCIS));
   }
 
   public function getMedecins($pdo)
@@ -61,6 +80,14 @@ class UsersServices
             FROM Medecins";
 
     return $pdo->query($sql);
+  }
+
+  public function deleteMedicament($pdo,$idVisite,$codeCIS)
+  {
+    $sql = "DELETE FROM Ordonnances WHERE idVisite = :idVisite AND codeCIS = :codeCIS";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array('idVisite' => $idVisite, 'codeCIS' => $codeCIS));
   }
 
   public function deletePatient($pdo,$numSecu)
@@ -79,14 +106,13 @@ class UsersServices
 
   }
 
-  public function insertPatient($pdo,$idMedecin,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
+  public function insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
-    $sql1 = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes)";
+    $sql = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes)";
     
 
-    $sql2 = "INSERT INTO PatientsMedecins (numSecu,numRPPS) VALUES (:numSecu,:numRPPS)";
 
-    $stmt = $pdo->prepare($sql1);
+    $stmt = $pdo->prepare($sql);
     $stmt->execute(array('numSecu' => $numSecu,
                          'LieuNaissance' => $LieuNaissance,
                          'nom' => $nom,
@@ -100,19 +126,69 @@ class UsersServices
                          'sexe' => $sexe,
                          'notes' => $notes));
 
-    $stmt = $pdo->prepare($sql2);
-    $stmt->execute(array('numSecu' => $numSecu, 
-                         'numRPPS' => $idMedecin));
+  }
 
+  public function modifVisite($pdo,$idVisite,$motifVisite,$dateVisite,$Description,$Conclusion)
+  {
+    $sql = "UPDATE Visites 
+    SET motifVisite = :motifVisite,
+    dateVisite = :dateVisite,
+    Description = :Description,
+    Conclusion = :Conclusion
+    WHERE idVisite = :idVisite";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array('motifVisite' => $motifVisite,
+                   'dateVisite' => $dateVisite,
+                   'Description' => $Description,
+                   'Conclusion' => $Conclusion,
+                   'idVisite' => $idVisite));
+  }
+
+  public function deleteVisiteFrom($pdo,$table,$idVisite)
+  {
+    $sql = "DELETE FROM " . $table . " WHERE idVisite = :idVisite";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam('idVisite',$idVisite);
+    $stmt->execute();
+  }
+
+  public function insertVisite($pdo,$numSecu,$motifVisite,$dateVisite,$Description,$Conclusion)
+  {
+    $sql1 = "INSERT INTO Visites (motifVisite,dateVisite,Description,Conclusion)
+            VALUES (:motifVisite,:dateVisite,:Description,:Conclusion)";
+    
+
+    $sql2 = "INSERT INTO ListeVisites (numSecu,idVisite) VALUES (:numSecu,LAST_INSERT_ID())";
+
+    $stmt = $pdo->prepare($sql1);
+    $stmt->execute(array('motifVisite' => $motifVisite,
+                   'dateVisite' => $dateVisite,
+                   'Description' => $Description,
+                   'Conclusion' => $Conclusion));
+    $lastInsertId = $pdo->lastInsertId();
+
+    $stmt = $pdo->prepare($sql2);
+
+    $stmt->execute(array('numSecu' => $numSecu));
+    return $lastInsertId;
   }
 
   public function getOrdonnances($pdo,$idVisite)
   {
-    $sql = "SELECT codeCIS
+    $sql = "SELECT Ordonnances.codeCIS,instruction,designation,libellePresentation
             FROM Ordonnances
-            WHERE idOrdonnance = :idOrdonnance";
+            JOIN CIS_BDPM
+            ON Ordonnances.codeCIS = CIS_BDPM.codeCIS
+            JOIN designationelempharma
+            ON designationelempharma.idDesignation = CIS_BDPM.idDesignation
+            JOIN CIS_CIP_BDPM
+            ON Ordonnances.codeCIS = CIS_CIP_BDPM.codeCIS
+            JOIN libellePresentation
+            ON libellePresentation.idLibellePresentation = CIS_CIP_BDPM.idLibellePresentation
+            WHERE idVisite = :idVisite";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam("idOrdonnance",$idVisite);
+    $stmt->bindParam("idVisite",$idVisite);
     $stmt->execute();
 
     return $stmt->fetchAll();
@@ -120,7 +196,7 @@ class UsersServices
 
   public function getVisites($pdo,$numSecu)
   {
-    $sql = "SELECT motifVisite,dateVisite,note,Visites.idVisite
+    $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
             FROM Visites
             JOIN ListeVisites
             ON ListeVisites.idVisite = Visites.idVisite
@@ -132,40 +208,154 @@ class UsersServices
 
     return $stmt->fetchAll();
   }
-
-  public function getListPatients($pdo,$medecinRef,$numSecu = "%")
+  public function getVisite($pdo,$numSecu,$idVisite)
   {
-    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
-            FROM PatientsMedecins
-            JOIN Patients
-            ON PatientsMedecins.numSecu = Patients.numSecu
-            WHERE numRPPS = :numRPPS
-            AND Patients.numSecu LIKE :numSecu";
+    $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
+            FROM Visites
+            JOIN ListeVisites
+            ON ListeVisites.idVisite = Visites.idVisite
+            WHERE numSecu = :numSecu
+            AND Visites.idVisite = :idVisite";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam('numRPPS',$medecinRef);
-    $stmt->bindParam('numSecu',$numSecu);
+    $stmt->bindParam("numSecu",$numSecu);
+    $stmt->bindParam("idVisite",$idVisite);
+    $stmt->execute();
+
+    return $stmt->fetch();
+  }
+
+  public function getPatient($pdo,$currentMedecin,$numSecu = "%")
+  {
+    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
+            FROM Patients
+            WHERE Patients.numSecu LIKE :numSecu";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam('numSecu',$numSecu); 
+
+
+    $stmt->execute();
+
+    return $stmt->fetch();
+
+  }
+
+  public function getMedicament($pdo,$codeCIS)
+  {
+    $sql = "SELECT designation,formePharma,statutAdAMM,typeProc,autoEur,tauxRemboursement,codeCIP7,libellePresentation,statutAdminiPresentation,labelEtatCommercialisation,dateCommrcialisation,codeCIP13,agrementCollectivites,prix,IndicationRemboursement,labelGroupeGener,typeGenerique,numeroTri,labelElem,codesubstance,labelDosage,labelRefDosage,labelVoieAdministration,labelcondition,dateDebutInformation,dateFinInformation,labelTexte,labelTitulaire,libelleMotifEval,cis_has_smr.dateAvis as dateAvisSMR,niveauSMR,libelleSMR,lienPage,cis_has_asmr.dateAvis as dateAvisASMR,valeurASMR,libelleASMR
+      FROM cis_bdpm
+      LEFT JOIN DesignationElemPharma
+      ON cis_bdpm.idDesignation = DesignationElemPharma.idDesignation
+      LEFT JOIN FormePharma
+      ON cis_bdpm.idFormePharma = FormePharma.idFormePharma
+      LEFT JOIN StatutAdAMM 
+      ON cis_bdpm.idStatutAdAMM = StatutAdAMM.idStatutAdAMM
+      LEFT JOIN TypeProc 
+      ON cis_bdpm.idTypeProc = TypeProc.idTypeProc
+      LEFT JOIN AutorEurop
+      ON cis_bdpm.idAutoEur = AutorEurop.idAutoEur
+      LEFT JOIN TauxRemboursement 
+      ON cis_bdpm.codeCIS = TauxRemboursement.codeCIS
+      LEFT JOIN cis_cip_bdpm
+      ON cis_cip_bdpm.codeCIS = cis_bdpm.codeCIS
+      LEFT JOIN LibellePresentation 
+      ON cis_cip_bdpm.idLibellePresentation = LibellePresentation.idLibellePresentation
+      LEFT JOIN EtatCommercialisation
+      ON cis_cip_bdpm.idEtatCommercialisation = EtatCommercialisation.idEtatCommercialisation
+      LEFT JOIN cis_gener
+      ON cis_gener.codeCIS = cis_bdpm.codeCIS
+      LEFT JOIN GroupeGener 
+      ON cis_gener.idGroupeGener = GroupeGener.idGroupeGener
+      LEFT JOIN cis_compo
+      ON cis_compo.codeCIS = cis_bdpm.codeCIS
+      LEFT JOIN DesignationElem
+      ON cis_compo.idDesignationElemPharma = DesignationElem.idElem
+      LEFT JOIN CodeSubstance 
+      ON cis_compo.idCodeSubstance = CodeSubstance.idSubstance
+      AND cis_compo.varianceNomSubstance = CodeSubstance.varianceNom
+      LEFT JOIN Dosage 
+      ON cis_compo.idDosage = Dosage.idDosage
+      LEFT JOIN RefDosage 
+      ON cis_compo.idRefDosage = RefDosage.idRefDosage
+      LEFT JOIN cis_voieadministration
+      ON cis_bdpm.codeCIS = cis_voieadministration.codeCIS
+      LEFT JOIN id_label_voieadministration
+      ON cis_voieadministration.idVoieAdministration = id_label_voieadministration.idVoieAdministration 
+      LEFT JOIN cis_cpd
+      ON cis_cpd.codeCIS = cis_bdpm.codeCIS
+      LEFT JOIN LabelCondition 
+      ON cis_cpd.idCondition = LabelCondition.idCondition
+      LEFT JOIN cis_info
+      ON cis_bdpm.codeCIS = cis_info.codeCIS
+      LEFT JOIN info_texte
+      ON cis_info.idTexte = info_texte.idTexte
+      LEFT JOIN cis_titulaires
+      ON cis_bdpm.codeCIS = cis_titulaires.codeCIS
+      LEFT JOIN id_label_titulaire
+      ON cis_titulaires.idTitulaire = id_label_titulaire.idTitulaire
+      LEFT JOIN cis_has_smr
+      ON cis_bdpm.codeCIS = cis_has_smr.codeCIS
+      LEFT JOIN motifeval
+      ON cis_has_smr.idMotifEval = motifeval.idMotifEval
+      LEFT JOIN LibelleSMR 
+      ON cis_has_smr.idLibelleSmr = LibelleSMR.idLibelleSMR
+      LEFT JOIN has_lienspagect
+      ON cis_has_smr.codeHAS = has_lienspagect.codeHAS
+      LEFT JOIN cis_has_asmr
+      ON cis_bdpm.codeCIS = cis_has_asmr.codeCIS
+      LEFT JOIN LibelleASMR 
+      ON cis_has_asmr.idLibelleAsmr = LibelleASMR.idLibelleAsmr
+      WHERE cis_bdpm.codeCIS = :codeCIS
+      ";
+      $stmt = $pdo->prepare($sql);
+
+      $stmt->bindParam('codeCIS',$codeCIS);
+      $stmt->execute();
+
+      return $stmt->fetch();
+  }
+
+  public function getListPatients($pdo,$medecinTraitant,$nom,$prenom)
+  {
+    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
+            FROM Patients
+            WHERE ((nom LIKE :search1 OR prenom LIKE :search2)
+                   OR (nom LIKE :search3 OR prenom LIKE :search4))
+            AND medecinRef LIKE :medecinTraitant";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam('search1',$nom);
+    $stmt->bindParam('search2',$prenom); 
+    $stmt->bindParam('search3',$prenom);
+    $stmt->bindParam('search4',$nom); 
+    $stmt->bindParam('medecinTraitant',$medecinTraitant);
+
 
     $stmt->execute();
 
     return $stmt->fetchAll();
 
   }
-  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1, $designation = "%")
+  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1,$valeurASMR = "%",$libelleNiveauSMR = "%", $libellePresentation = "%")
   {
-    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,designation,surveillanceRenforcee
+    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR
             FROM listMedic
-            WHERE formePharma LIKE :formePharma
-            AND labelVoieAdministration LIKE :labelVoieAdministration
-            AND designation LIKE :designation
-            AND prix > :prixMin AND prix < :prixMax
+            WHERE (formePharma LIKE :formePharma OR formePharma IS NULL)
+            AND (labelVoieAdministration LIKE :labelVoieAdministration OR labelVoieAdministration IS NULL)
+            AND (libellePresentation LIKE :libellePresentation OR libellePresentation IS NULL)
+            AND (prix >= :prixMin AND prix < :prixMax OR prix IS NULL)
+            AND (valeurASMR LIKE :valeurASMR OR valeurASMR IS NULL)
+            AND (libelleNiveauSMR LIKE :libelleNiveauSMR OR libelleNiveauSMR IS NULL)
             
             ";
     $param = array('formePharma' => $formePharma,
                    'labelVoieAdministration' => $labelVoieAdministration,
                    'prixMin' => $prixMin,
                    'prixMax' => $prixMax,
-                   'designation' => $designation,);
+                   'libellePresentation' => $libellePresentation,
+                   'valeurASMR' => $valeurASMR,
+                   'libelleNiveauSMR' => $libelleNiveauSMR);
 
     if ($etatCommercialisation != -1) {
       $sql = $sql . " AND etatCommercialisation = :etatCommercialisation";
@@ -181,17 +371,25 @@ class UsersServices
       $sql = $sql . " AND surveillanceRenforcee = :surveillanceRenforcee";
       $param['surveillanceRenforcee'] = $surveillanceRenforcee;
     }
-
+    $sql .= " LIMIT 50";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($param);
 
     return $stmt->fetchAll();
   }
+  public function addMedic($pdo,$idVisite,$codeCIS,$instruction)
+  {
+    $sql = "INSERT INTO Ordonnances (idVisite,codeCIS,instruction) VALUES (:idVisite,:codeCIS,:instruction)";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array("idVisite" => $idVisite, "codeCIS" => $codeCIS, "instruction" => $instruction));
+  }
 
   public function getparams($pdo,$param,$table)
   {
     $sql = "SELECT DISTINCT(" . $param .")"
-           . " FROM " . $table;
+           . " FROM " . $table
+           . " ORDER BY " . $param;
 
     return $pdo->query($sql);
   }
