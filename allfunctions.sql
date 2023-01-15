@@ -360,7 +360,7 @@ ALTER TABLE CIS_HAS_ASMR ADD CONSTRAINT FK_CIS_HAS_ASMR_LibelleAsmr FOREIGN KEY 
 CREATE TABLE ErreursImportation (
     idErreur INT(5),
     dateErreur DATETIME DEFAULT CURRENT_TIMESTAMP,
-    nomProcedure VARCHAR(255),
+    nomProcedure TEXT,
     messageErreur TEXT
 );
 
