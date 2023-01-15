@@ -76,6 +76,7 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2">
+								<?php if(isset($addMedicError)) echo $addMedicError; ?>
 								<div class="  text-dark text-start h2"> Liste des medicaments prescrit </div>
 								<div class="overflow-scroll h-50 ">
 									<table class="table table-striped lightGreen border border-dark">

@@ -89,7 +89,7 @@
 									<div>email : </div><?php echo $patient['email'] ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>Medecin Traitant : </div><?php echo $patient['medecinRef'] ?>
+									<div>Medecin Traitant : </div><?php echo $patient['medecinRef'] != 0 ? $patient['medecinRef'] : "Non définie"; ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
 									<div>Numéro de sécurité sociale : </div><?php echo $_SESSION['patient'] ?>
@@ -185,6 +185,7 @@
 											<input type="hidden" name="nextAction" value="updatePatient">
 											<input type="hidden" name="action" value="goEditPatient">
 											<input type="hidden" name="controller" value="patientslist">
+											<input type="hidden" name="numSecu" value="<?php echo $patient['numSecu']; ?>">
 											<input type="submit" class="green no-border text-white" value="Modifier le patient">
 										</form>
 									</div>

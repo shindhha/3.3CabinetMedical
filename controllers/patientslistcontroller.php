@@ -5,6 +5,7 @@ namespace controllers;
 use yasmf\View;
 use services\UsersServices;
 use yasmf\HttpHelper;
+use PDOException;
 
 /**
  * yasmf - Yet Another Simple MVC Framework (For PHP)
@@ -65,7 +66,7 @@ class PatientsListController
 		}
 		
 		$visites = $this->usersservices->getVisites($pdo,$_SESSION['patient']);
-		$patient = $this->usersservices->getPatient($pdo,$_SESSION['medecin'],$_SESSION['patient']);
+		$patient = $this->usersservices->getPatient($pdo,$_SESSION['patient']);
 		$view->setVar("visites",$visites);
 		$view->setVar("patient",$patient);
 		return $view;
@@ -73,9 +74,9 @@ class PatientsListController
 
 	public function addPatient($pdo)
 	{
-		if (HttpHelper::getParam("numSecu") != "") {
-			$_SESSION['patient'] = HttpHelper::getParam("numSecu");
-		}
+		$_SESSION['patient'] = "";
+		$numSecu = HttpHelper::getParam("numSecu");
+		$view;
 		$nom = HttpHelper::getParam("nom");
 		$prenom = HttpHelper::getParam("prenom");
 		$adresse = HttpHelper::getParam("adresse");
@@ -88,19 +89,36 @@ class PatientsListController
 		$codePostal = HttpHelper::getParam("codePostal");
 		$sexe = (int) HttpHelper::getParam("sexe");
 
+		try {
+			$this->usersservices->insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+			$_SESSION['patient'] = $numSecu;
+			$view = $this->goFichePatient($pdo);
 
-		$this->usersservices->insertPatient($pdo,$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
-		return $this->goFichePatient($pdo);
+		} catch (PDOException $e) {
+			$view = $this->goEditPatient($pdo,"addPatient");
+			if ($e->getCode() == "23000") {
+				$view->setVar("numSecuError","Ce numéro de sécurité sociale est déjà utilisé ! ");
+			}
+			if ($e->getCode() == "HY000") {
+				$view->setVar("emailError","L'adresse mail n'est pas valide ! ");
+			}
+			if ($e->getCode() == "1") {
+				$view->setVar("numSecuError",$e->getMessage());
+			}
+		}
+		
+		
+		return $view;
 	}
 
 	public function updatePatient($pdo)
 	{	
-		if (HttpHelper::getParam("numSecu") != "") {
-			$_SESSION['patient'] = HttpHelper::getParam("numSecu");
-		}
+
+		$numSecu = HttpHelper::getParam("numSecu");
+		
 
 		$actualNumSecu = HttpHelper::getParam("actualNumSecu");
-
+		$view;
 		$nom = HttpHelper::getParam("nom");
 		$prenom = HttpHelper::getParam("prenom");
 		$adresse = HttpHelper::getParam("adresse");
@@ -113,9 +131,24 @@ class PatientsListController
 		$codePostal = HttpHelper::getParam("codePostal");
 		$sexe = (int) HttpHelper::getParam("sexe");
 		$patientID = $this->usersservices->getPatientID($pdo,$actualNumSecu);
-
-		$this->usersservices->updatePatient($pdo,$patientID['id'],$_SESSION['patient'],$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
-		return $this->goFichePatient($pdo);
+		try {
+			$this->usersservices->updatePatient($pdo,$patientID['id'],$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+			$_SESSION['patient'] = $numSecu;
+			$view = $this->goFichePatient($pdo);
+		} catch (PDOException $e) {
+			$view = $this->goEditPatient($pdo,"updatePatient");
+			if ($e->getCode() == "23000") {
+				$view->setVar("numSecuError","Ce numéro de sécurité sociale est déjà utilisé ! ");
+			}
+			if ($e->getCode() == "HY000") {
+				$view->setVar("emailError","L'adresse mail n'est pas valide ! ");
+			}
+			if ($e->getCode() == "1") {
+				$view->setVar("numSecuError",$e->getMessage());
+			}
+		}
+		
+		return $view;
 
 	}
 
@@ -131,15 +164,34 @@ class PatientsListController
 		return $this->goFichePatient($pdo);
 	}
 
-	public function goEditPatient($pdo)
+	public function goEditPatient($pdo,$action = "")
 	{
 		$view = new View("Sae3.3CabinetMedical/views/editPatient");
-		$nextAction = HttpHelper::getParam('nextAction');
-		$medecins = $this->usersservices->getMedecins($pdo);
-		if ($nextAction == "updatePatient") {
-			$patient = $this->usersservices->getPatient($pdo,$_SESSION['medecin'],$_SESSION['patient']);
-			$view->setVar("patient",$patient);
+		$patient;
+		if ($action == "addPatient") {
+			$patient['numSecu'] = HttpHelper::getParam("numSecu");
+			$patient['LieuNaissance'] = HttpHelper::getParam("LieuNaissance");
+			$patient['nom'] = HttpHelper::getParam("nom");
+			$patient['prenom'] = HttpHelper::getParam("prenom");
+			$patient['dateNaissance'] = HttpHelper::getParam("dateNaissance");
+			$patient['adresse'] = HttpHelper::getParam("adresse");
+			$patient['codePostal'] = HttpHelper::getParam("codePostal");
+			$patient['medecinRef'] = HttpHelper::getParam("medecinRef");
+			$patient['numTel'] = HttpHelper::getParam("numTel");
+			$patient['email'] = HttpHelper::getParam("email");
+			$patient['sexe'] = HttpHelper::getParam("sexe");
+			$patient['notes'] = HttpHelper::getParam("notes");
+		} else {
+			$numSecu = HttpHelper::getParam("numSecu");
+			$patient = $this->usersservices->getPatient($pdo,$numSecu);
+			$_SESSION['patient'] = HttpHelper::getParam("numSecu");
 		}
+		
+		$nextAction = HttpHelper::getParam('nextAction')?: $action;
+		$medecins = $this->usersservices->getMedecins($pdo);
+		
+		$view->setVar("patient",$patient);
+		
 		$view->setVar("medecins",$medecins);      
 		$view->setVar("action",$nextAction);
 		return $view;
@@ -152,7 +204,7 @@ class PatientsListController
 			$_SESSION['idVisite'] = HttpHelper::getParam("idVisite");
 		}
 		$drugsVisite = $this->usersservices->getOrdonnances($pdo,$_SESSION['idVisite']);
-		$patient = $this->usersservices->getPatient($pdo,$_SESSION['id'],$_SESSION['patient']);
+		$patient = $this->usersservices->getPatient($pdo,$_SESSION['patient']);
 		$visite = $this->usersservices->getVisite($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
 		$view->setVar("idVisite",$_SESSION['idVisite']);
 		$view->setVar("visite",$visite);
@@ -208,8 +260,16 @@ class PatientsListController
 	{	
 		$codeCIS = HttpHelper::getParam("codeCIS");
 		$instruction = HttpHelper::getParam("instruction");
-		$this->usersservices->addMedic($pdo,(int) $_SESSION['idVisite'],(int) $codeCIS,$instruction);
-		return $this->goFicheVisite($pdo);
+
+		$view = $this->goFicheVisite($pdo);
+		try {
+			$this->usersservices->addMedic($pdo,(int) $_SESSION['idVisite'],(int) $codeCIS,$instruction);
+		} catch (PDOException $e) {
+			$view->setVar("addMedicError","Ce médicament a déjà été ajouter !");
+		}
+
+		
+		return $view;
 	}
 
 	public function editInstruction($pdo)

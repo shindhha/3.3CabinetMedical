@@ -71,7 +71,7 @@
 								<span>Motif</span> <input class="form-control" type="text" name="Motif" value="<?php if (isset($visite)) echo $visite[0]['motifVisite']; ?>"> 
 								</div>
 								<div class="d-flex flex-row">
-									<span>Date</span><input class="form-control" type="date" name="Date" value="<?php if (isset($visite)) echo $visite[0]['dateVisite']; ?>">
+									<span>Date</span><input class="form-control" type="date" name="Date" max="<?php echo date('Y-m-d'); ?>" value="<?php if (isset($visite)) echo $visite[0]['dateVisite']; ?>">
 								</div>
 							</div>
 

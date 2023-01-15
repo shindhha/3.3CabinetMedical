@@ -4,6 +4,7 @@
 namespace services;
 
 use PDOException;
+use Exception;
 
 /**
  *
@@ -33,6 +34,9 @@ class UsersServices
 
   public function updatePatient($pdo,$patientID,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
+    if (!preg_match("#[1-9]{13}#",$numSecu)) {
+      throw new PDOException("Le numéro de sécurité sociale n'est pas valide ! ", 1);
+    }
     $sql = "UPDATE Patients 
             SET LieuNaissance = :LieuNaissance,
             nom = :nom,
@@ -49,7 +53,6 @@ class UsersServices
             WHERE id = :patientID";
 
     $stmt = $pdo->prepare($sql);
-
     $stmt->execute(array('numSecu' => $numSecu,
                          'LieuNaissance' => $LieuNaissance,
                          'nom' => $nom,
@@ -108,6 +111,9 @@ class UsersServices
 
   public function insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
+    if (!preg_match("#[1-9]{13}#",$numSecu)) {
+      throw new PDOException("Le numéro de sécurité sociale n'est pas valide ! ", 1);
+    }
     $sql = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes)";
     
 
@@ -225,7 +231,7 @@ class UsersServices
     return $stmt->fetch();
   }
 
-  public function getPatient($pdo,$currentMedecin,$numSecu = "%")
+  public function getPatient($pdo,$numSecu)
   {
     $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM Patients
