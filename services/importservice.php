@@ -101,21 +101,15 @@ class ImportService
 		$trimLine = $param[3];
 		$iCis = $param[4];
 		$table = $param[5];
-		$prefixe = $param[6];
 		$fileName = $param[0];
-		$compteur = 0;
-		$table = $prefixe . $table;
+		$idName = $param[6]?: "codeCIS";
 		$file = fopen(ImportService::$path.$fileName, "r");
 		$content = fread($file, filesize(ImportService::$path.$fileName));
 		$lines = explode("\n", $content);
 		foreach ($lines as $line) {
 			$args = $this->FormatLine($line,$trimLine);
 			$calledFunction = "";
-			if ($fileName == "HAS_LiensPageCT_bdpm.txt"){
-				$d = $this->CTExists($pdo,$args[$iCis],$table);
-			}else{
-				$d = $this->CISExists($pdo,$args[$iCis],$table);
-			}
+			$d = $this->idExists($pdo,$table,$idName,$args[$iCis]);
 			try {
 				$pdo->beginTransaction();
 
@@ -133,11 +127,10 @@ class ImportService
 				}
 
 				$pdo->commit();
-				$compteur++;
 				
 			} catch (PDOException $e) {
 				$pdo->rollback();
-				$this->insertError($pdo,$calledFunction . " Line " . $args[$iCis]  ,$e->getCode(),$e->getMessage());
+				$this->insertError($pdo,$calledFunction . " Code cis n° :  " . $args[$iCis]  ,$e->getCode(),$e->getMessage());
 				
 				
 				
@@ -149,18 +142,10 @@ class ImportService
 		}
 	}
 
-	public function CISExists($pdo,$numCIS,$table)
+	public function idExists($pdo,$table,$idName,$valueID)
 	{
-		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE codeCis = :codeCIS");
-		$stmt->bindParam("codeCIS",$numCIS);
-		$stmt->execute();
-		return $stmt->rowcount() > 0;
-	}
-
-	public function CTExists($pdo,$numCT,$table)
-	{
-		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE codeHAS = :codeHAS");
-		$stmt->bindParam("codeHAS",$numCT);
+		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE ". $idName ." = :valueID");
+		$stmt->bindParam("valueID",$valueID);
 		$stmt->execute();
 		return $stmt->rowcount() > 0;
 	}

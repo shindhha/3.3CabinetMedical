@@ -46,15 +46,15 @@ class AdministrateurController
 {
 	private $importservice;
     private $adminservice;
-	private $files = [["CIS_bdpm.txt","BDPM",12,false,0,"BDPM","CIS_"],
-					  ["CIS_CIP_bdpm.txt","CIP",13,false,0,"CIP_BDPM","CIS_"],
-					  ["CIS_COMPO_bdpm.txt","COMPO",8,true,0,"COMPO","CIS_"],
-					  ["CIS_HAS_SMR_bdpm.txt","SMR",6,false,0,"HAS_SMR","CIS_"],
-					  ["CIS_HAS_ASMR_bdpm.txt","ASMR",6,false,0,"HAS_ASMR","CIS_"],
-					  ["HAS_LiensPageCT_bdpm.txt","CT",2,false,0,"HAS_LiensPageCT",""],
-					  ["CIS_GENER_bdpm.txt","GENER",5,true,2,"GENER","CIS_"],
-					  ["CIS_CPD_bdpm.txt","CPD",2,false,0,"CPD","CIS_"],
-					  ["CIS_InfoImportantes_bdpm.txt","INFO",4,false,0,"INFO","CIS_"]];
+	private $files = [["CIS_bdpm.txt","BDPM",12,false,0,"CIS_BDPM"],
+					  ["CIS_CIP_bdpm.txt","CIP",13,false,4,"CIS_CIP_BDPM","codeCIP13"],
+					  ["CIS_COMPO_bdpm.txt","COMPO",8,true,0,"CIS_COMPO"],
+					  ["CIS_HAS_SMR_bdpm.txt","SMR",6,false,0,"CIS_HAS_SMR"],
+					  ["CIS_HAS_ASMR_bdpm.txt","ASMR",6,false,0,"CIS_HAS_ASMR"],
+					  ["HAS_LiensPageCT_bdpm.txt","CT",2,false,0,"HAS_LiensPageCT","codeHAS"],
+					  ["CIS_GENER_bdpm.txt","GENER",5,true,2,"CIS_GENER"],
+					  ["CIS_CPD_bdpm.txt","CPD",2,false,0,"CIS_CPD"],
+					  ["CIS_InfoImportantes_bdpm.txt","INFO",4,false,0,"CIS_INFO"]];
 
 	public function __construct() {
 		$this->importservice = ImportService::getDefaultImportService();
