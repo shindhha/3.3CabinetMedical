@@ -160,13 +160,13 @@
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="goFichePatient">
-														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
 														<tr><input type="submit" value="Afficher"> </tr>
 													</form>
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="deletePatient">
-														<input type="hidden" name="numSecu" value="<?php echo $row['numSecu'] ?>">
+														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
 														<tr><input type="submit" value="Supprimer"> </tr>
 													</form>
 												</table>

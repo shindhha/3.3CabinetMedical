@@ -42,7 +42,7 @@
 				<!-- Bandeau outils -->	
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
-						
+						<?php var_dump($_SESSION['idVisite']); ?>
 						<span class="h1 d-md-block d-none"> Visite n° </span>		
 					</div>
 				</nav>

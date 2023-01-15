@@ -12,14 +12,6 @@ use Exception;
 class UsersServices
 {
 
-  public function getPatientID($pdo,$numSecu)
-  {
-    $sql = "SELECT id FROM Patients where numSecu = :numSecu";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam("numSecu",$numSecu);
-        $stmt->execute();
-        return $stmt->fetch();
-  }
   public function findIfAdminExists($pdo,$username,$password)
   {
     $sql = "SELECT *
@@ -50,7 +42,7 @@ class UsersServices
             sexe = :sexe,
             notes = :notes,
             numSecu = :numSecu
-            WHERE id = :patientID";
+            WHERE idPatient = :patientID";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array('numSecu' => $numSecu,
@@ -92,21 +84,12 @@ class UsersServices
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array('idVisite' => $idVisite, 'codeCIS' => $codeCIS));
   }
-
-  public function deletePatient($pdo,$numSecu)
+  public function deletePatientFrom($pdo,$table,$idPatient)
   {
-    $sql1 = "DELETE FROM PatientsMedecins WHERE numSecu = :numSecu";
-    $sql2 = "DELETE FROM Patients WHERE numSecu = :numSecu";
-
-    $stmt = $pdo->prepare($sql1);
-    $stmt->bindParam("numSecu",$numSecu);
+    $sql = "DELETE FROM " . $table . " WHERE idPatient = :idPatient";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam("idPatient",$idPatient);
     $stmt->execute();
-
-    $stmt = $pdo->prepare($sql2);
-    $stmt->bindParam("numSecu",$numSecu);
-
-    $stmt->execute();
-
   }
 
   public function insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
@@ -131,6 +114,7 @@ class UsersServices
                          'email' => $email,
                          'sexe' => $sexe,
                          'notes' => $notes));
+    return $pdo->lastInsertId();
 
   }
 
@@ -159,13 +143,13 @@ class UsersServices
     $stmt->execute();
   }
 
-  public function insertVisite($pdo,$numSecu,$motifVisite,$dateVisite,$Description,$Conclusion)
+  public function insertVisite($pdo,$idPatient,$motifVisite,$dateVisite,$Description,$Conclusion)
   {
     $sql1 = "INSERT INTO Visites (motifVisite,dateVisite,Description,Conclusion)
             VALUES (:motifVisite,:dateVisite,:Description,:Conclusion)";
     
 
-    $sql2 = "INSERT INTO ListeVisites (numSecu,idVisite) VALUES (:numSecu,LAST_INSERT_ID())";
+    $sql2 = "INSERT INTO ListeVisites (idPatient,idVisite) VALUES (:idPatient,LAST_INSERT_ID())";
 
     $stmt = $pdo->prepare($sql1);
     $stmt->execute(array('motifVisite' => $motifVisite,
@@ -176,13 +160,13 @@ class UsersServices
 
     $stmt = $pdo->prepare($sql2);
 
-    $stmt->execute(array('numSecu' => $numSecu));
+    $stmt->execute(array('idPatient' => $idPatient));
     return $lastInsertId;
   }
 
   public function getOrdonnances($pdo,$idVisite)
   {
-    $sql = "SELECT Ordonnances.codeCIS,instruction,designation,libellePresentation
+    $sql = "SELECT DISTINCT(Ordonnances.codeCIS),instruction,designation,libellePresentation
             FROM Ordonnances
             JOIN CIS_BDPM
             ON Ordonnances.codeCIS = CIS_BDPM.codeCIS
@@ -200,45 +184,45 @@ class UsersServices
     return $stmt->fetchAll();
   }
 
-  public function getVisites($pdo,$numSecu)
+  public function getVisites($pdo,$idPatient)
   {
     $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
             FROM Visites
             JOIN ListeVisites
             ON ListeVisites.idVisite = Visites.idVisite
-            WHERE numSecu = :numSecu";
+            WHERE idPatient = :idPatient";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam("numSecu",$numSecu);
+    $stmt->bindParam("idPatient",$idPatient);
     $stmt->execute();
 
     return $stmt->fetchAll();
   }
-  public function getVisite($pdo,$numSecu,$idVisite)
+  public function getVisite($pdo,$idPatient,$idVisite)
   {
     $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
             FROM Visites
             JOIN ListeVisites
             ON ListeVisites.idVisite = Visites.idVisite
-            WHERE numSecu = :numSecu
+            WHERE idPatient = :idPatient
             AND Visites.idVisite = :idVisite";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam("numSecu",$numSecu);
+    $stmt->bindParam("idPatient",$idPatient);
     $stmt->bindParam("idVisite",$idVisite);
     $stmt->execute();
 
     return $stmt->fetch();
   }
 
-  public function getPatient($pdo,$numSecu)
+  public function getPatient($pdo,$idPatient)
   {
-    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
+    $sql = "SELECT idPatient, Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM Patients
-            WHERE Patients.numSecu LIKE :numSecu";
+            WHERE Patients.idPatient LIKE :idPatient";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam('numSecu',$numSecu); 
+    $stmt->bindParam('idPatient',$idPatient);
 
 
     $stmt->execute();
@@ -324,7 +308,7 @@ class UsersServices
 
   public function getListPatients($pdo,$medecinTraitant,$nom,$prenom)
   {
-    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
+    $sql = "SELECT idPatient, Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM Patients
             WHERE ((nom LIKE :search1 OR prenom LIKE :search2)
                    OR (nom LIKE :search3 OR prenom LIKE :search4))

@@ -45,7 +45,7 @@
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
-						
+						<?php var_dump($_SESSION['patient']) ?>
 						<span class="h1 d-md-block d-none"> Fiche Patient </span>		
 
 					</div>
@@ -92,7 +92,7 @@
 									<div>Medecin Traitant : </div><?php echo $patient['medecinRef'] != 0 ? $patient['medecinRef'] : "Non définie"; ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
-									<div>Numéro de sécurité sociale : </div><?php echo $_SESSION['patient'] ?>
+									<div>Numéro de sécurité sociale : </div><?php echo $patient['numSecu'] ?>
 								</div>
 								<div class="d-flex flex-row justify-content-between">
 									<div>Date de naissance : </div><?php echo $patient['dateNaissance'] ?>		
@@ -157,7 +157,7 @@
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="deleteVisite">
 														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<input type="hidden" name="numSecu"
+														<input type="hidden" name="idPatient"
 														value="<?php echo $_SESSION['patient'] ?>">
 														<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
 													</form>
@@ -185,7 +185,6 @@
 											<input type="hidden" name="nextAction" value="updatePatient">
 											<input type="hidden" name="action" value="goEditPatient">
 											<input type="hidden" name="controller" value="patientslist">
-											<input type="hidden" name="numSecu" value="<?php echo $patient['numSecu']; ?>">
 											<input type="submit" class="green no-border text-white" value="Modifier le patient">
 										</form>
 									</div>

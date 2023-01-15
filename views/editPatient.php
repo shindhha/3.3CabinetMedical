@@ -152,7 +152,6 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 							<div class="d-flex me-2 py-2 px-3 border-1 green">
-								<input type="hidden" name="actualNumSecu" value="<?php if (isset($patient['numSecu'])) echo $patient['numSecu']; ?>">
 								<input type="hidden" name="action" value="<?php echo $action ?>">
 								<input type="hidden" name="controller" value="patientslist">
 								<input type="submit" class="green no-border text-white" value="Valider">
@@ -165,7 +164,6 @@
 
 									<input type="hidden" name="controller" value="patientslist">
 									<input type="hidden" name="action" value="<?php echo $nextAction ?>">
-									<input type="hidden" name="numSecu" value="<?php echo $_SESSION['patient'] ?>">
 									<input type="submit" class="bg-danger no-border text-white" value="Annuler">
 						
 								</div>
