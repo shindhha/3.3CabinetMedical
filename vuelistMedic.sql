@@ -1,20 +1,20 @@
 CREATE VIEW listMedic as
-select cis_bdpm.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR from cis_bdpm 
-LEFT JOIN cis_cip_bdpm 
-ON cis_bdpm.codeCIS = cis_cip_bdpm.codeCIS
-LEFT JOIN cis_voieadministration
-ON cis_bdpm.codeCIS = cis_voieadministration.codeCIS
-LEFT JOIN cis_has_smr
-ON cis_bdpm.codeCIS = cis_has_smr.codeCIS
-LEFT JOIN cis_has_asmr
-ON cis_bdpm.codeCIS = cis_has_asmr.codeCIS
-LEFT JOIN formepharma
-ON cis_bdpm.idFormePharma = formepharma.idFormePharma
-LEFT JOIN id_label_voieadministration
-ON cis_voieadministration.idVoieAdministration = id_label_voieadministration.idVoieAdministration
-LEFT JOIN tauxremboursement
-ON cis_bdpm.codeCIS = tauxremboursement.codeCIS
-LEFT JOIN libellepresentation
-ON libellepresentation.idLibellePresentation = cis_cip_bdpm.idLibellePresentation
-LEFT JOIN niveausmr
-ON niveausmr.idNiveauSMR = cis_has_smr.niveauSMR
+select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR from CIS_BDPM
+LEFT JOIN CIS_CIP_BDPM
+ON CIS_BDPM.codeCIS = CIS_CIP_BDPM.codeCIS
+LEFT JOIN CIS_VoieAdministration
+ON CIS_BDPM.codeCIS = CIS_VoieAdministration.codeCIS
+LEFT JOIN CIS_HAS_SMR
+ON CIS_BDPM.codeCIS = CIS_HAS_SMR.codeCIS
+LEFT JOIN CIS_HAS_ASMR
+ON CIS_BDPM.codeCIS = CIS_HAS_ASMR.codeCIS
+LEFT JOIN FormePharma
+ON CIS_BDPM.idFormePharma = FormePharma.idFormePharma
+LEFT JOIN ID_Label_VoieAdministration
+ON CIS_VoieAdministration.idVoieAdministration = ID_Label_VoieAdministration.idVoieAdministration
+LEFT JOIN TauxRemboursement
+ON CIS_BDPM.codeCIS = TauxRemboursement.codeCIS
+LEFT JOIN LibellePresentation
+ON LibellePresentation.idLibellePresentation = CIS_CIP_BDPM.idLibellePresentation
+LEFT JOIN NiveauSMR
+ON NiveauSMR.idNiveauSMR = CIS_HAS_SMR.niveauSMR;
