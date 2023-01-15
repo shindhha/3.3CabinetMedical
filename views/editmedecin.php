@@ -55,7 +55,7 @@ use yasmf\HttpHelper;
                     <div class="d-flex justify-content-between">
                         <span></span>
                         <div><input type="text" name="nom" value="<?php if(isset($medecin['nom'])) echo $medecin['nom']; ?>" class="input-grow" placeholder="Nom"> <input type="text" name="prenom" value="<?php if(isset($medecin['nom'])) echo $medecin['prenom'];?>" class="input-grow" placeholder="Prénom"></div>
-                        <div>Sexe : </div>
+                        <div></div>
                     </div>
                 </div>
 
@@ -72,15 +72,18 @@ use yasmf\HttpHelper;
                             </span>
                             <span> Code postal / Ville
                                 <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="codePostal" value="<?php if(isset($medecin['codePostal'])) echo $medecin['codePostal']; ?>" class="input-grow"> / <input type="text" name="ville" value="<?php if(isset($medecin['codePostal'])) echo $medecin['ville']; ?>" class="input-grow">
+                                    <input type="number" name="codePostal" min="1001" max="98800" value="<?php if(isset($medecin['codePostal'])) echo $medecin['codePostal']; ?>" class="input-grow"> / <input type="text" name="ville" value="<?php if(isset($medecin['codePostal'])) echo $medecin['ville']; ?>" class="input-grow">
                                 </div>
                             </span>
                             <span> Téléphone
                                 <div class="border border-1 border-green enable-flex">
-                                    <input type="text" name="numTel" value="<?php if(isset($medecin['numTel'])) echo $medecin['numTel'];?>" class="input-grow">
+                                    <input type="number" name="numTel" min="600000000" max="799999999" value="<?php if(isset($medecin['numTel'])) echo $medecin['numTel'];?>" class="input-grow">
                                 </div>
                             </span>
-                            <span>Email
+                            <span>
+                                <?php if (isset($emailError)) echo $emailError; ?>
+                                Email
+
                                 <div class="border border-1 border-green enable-flex">
                                     <input type="text" name="email" value="<?php if(isset($medecin['email'])) echo $medecin['email']; ?>" class="input-grow">
                                 </div>
@@ -94,8 +97,11 @@ use yasmf\HttpHelper;
 
                         <div class="d-flex flex-column p-md-5">
                             <h1>Informations professionnelles</h1>
-                            <span> Numéro RPPS
+                            <span> 
+                                <?php if (isset($numRPPSError)) echo $numRPPSError; ?>
+                                Numéro RPPS
                                 <div class="border border-1 border-green enable-flex">
+
                                     <input type="text" name="numRPPS" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS']; ?>" class="input-grow">
                                 </div>
                             </span>
@@ -109,12 +115,14 @@ use yasmf\HttpHelper;
                                     <input type="text" name="password" value="<?php if(isset($medecin['password'])) echo $medecin['password'];?>" class="input-grow">
                                 </div>
                             </span>
-                            <span> Date du début d'activité
+                            <span> 
+                                <?php if(isset($dateError)) echo $dateError; ?>
+                                Date du début d'activité
                                 <div class="border border-1 border-green enable-flex">
-                                    <input type="date" name="dateDebutActivite" value="<?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?>" class="input-grow">
+                                    <input type="date" name="dateDebutActivite" max="<?php echo date('Y-m-d'); ?>" value="<?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?>" class="input-grow">
                                 </div>
                             </span>
-                            <input type="hidden" name="actualLogin" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS'];?>">>
+                            <input type="hidden" name="actualLogin" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS'];?>">
                             <input type="hidden" name="action" value="<?php echo $nextAction ?>">
                             <input type="hidden" name="controller" value="administrateur">
 

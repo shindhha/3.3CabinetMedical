@@ -84,6 +84,12 @@ class AdminService
     }
 
     public function updateMedecin($pdo,$idMedecin, $numRPPS, $nom, $prenom, $adresse, $cp, $ville, $tel, $mail, $secteurActivite, $dateDebutActivites) {
+        if (!preg_match("#[1-9]{11}#",$numRPPS)) {
+            throw new PDOException("Le numéro de Répertoire Partagé des Professionnels intervenant dans le système de Santé (RPPS) n'est pas valide ! ", 1);
+        }
+        if ($dateDebutActivites == "") {
+            throw new PDOException("Veuillez selectionner une date ! ",2);
+        }
         $sql = "UPDATE Medecins 
         SET nom = :nom, 
             prenom = :prenom, 
@@ -111,10 +117,16 @@ class AdminService
         $stmt->execute();
     }
 
-    public function createMedecin($pdo, $rpps, $nom, $prenom, $adresse, $cp, $ville, $tel, $mail, $secteurActivite, $dateDebutActivites) {
-        $sql = "INSERT INTO Medecins (numRPPS, nom, prenom, adresse, codePostal, ville, numTel, email, activite, dateDebutActivites, dateInscription) VALUE (:rpps, :nom, :prenom, :adresse, :cp, :ville, :tel, :mail, :secteurActivite, :dateDebutActivites, CURDATE())";
+    public function createMedecin($pdo, $numRPPS, $nom, $prenom, $adresse, $cp, $ville, $tel, $mail, $secteurActivite, $dateDebutActivites) {
+        if (!preg_match("#[1-9]{11}#",$numRPPS)) {
+            throw new PDOException("Le numéro de Répertoire Partagé des Professionnels intervenant dans le système de Santé (RPPS) n'est pas valide ! ", 1);
+        }
+        if ($dateDebutActivites == "") {
+            throw new PDOException("Veuillez selectionner une date ! ",2);
+        }
+        $sql = "INSERT INTO Medecins (numRPPS, nom, prenom, adresse, codePostal, ville, numTel, email, activite, dateDebutActivites, dateInscription) VALUE (:numRPPS, :nom, :prenom, :adresse, :cp, :ville, :tel, :mail, :secteurActivite, :dateDebutActivites, CURDATE())";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam('rpps', $rpps);
+        $stmt->bindParam('numRPPS', $numRPPS);
         $stmt->bindParam('nom', $nom);
         $stmt->bindParam('prenom', $prenom);
         $stmt->bindParam('adresse', $adresse);

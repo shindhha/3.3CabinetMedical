@@ -24,6 +24,7 @@ use services\usersServices;
 use services\ImportService;
 use services\AdminService;
 use yasmf\HttpHelper;
+use PDOException;
 /**
  * yasmf - Yet Another Simple MVC Framework (For PHP)
  *     Copyright (C) 2019   Franck SILVESTRE
@@ -96,12 +97,7 @@ class AdministrateurController
 		$iCis = $this->files[$file][4];
 		$bd = $this->files[$file][5];
 		$prefixe = $this->files[$file][6];
-		
-		
 		try {
-			
-			
-
 			$importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
 			$updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
 			
@@ -111,9 +107,6 @@ class AdministrateurController
 			throw new PDOException($e->getMessage(), $e->getCode());
 			
 		}
-
-		
-
 		return $view;
 	}
 
@@ -133,12 +126,32 @@ class AdministrateurController
         return $view;
     }
 
-    public function goEditMedecin($pdo)
+    public function goEditMedecin($pdo,$action = "")
     {
         $view = new View("Sae3.3CabinetMedical/views/editmedecin");
-        $view->setVar("nextAction",HttpHelper::getParam("nextAction"));
-        $numRPPS = HttpHelper::getParam('numRPPS');
-        $view->setVar("medecin", $this->adminservice->getMedecin($pdo,$numRPPS));
+        $medecin;
+        if ($action == "addMedecin") {
+            $medecin['numRPPS'] = HttpHelper::getParam("numRPPS");
+            $medecin['nom'] = HttpHelper::getParam("nom");
+            $medecin['prenom'] = HttpHelper::getParam("prenom");
+            $medecin['adresse'] = HttpHelper::getParam("adresse");
+            $medecin['numTel'] = HttpHelper::getParam("numTel");
+            $medecin['email'] = HttpHelper::getParam("email");
+            $medecin['dateDebutActivites'] = HttpHelper::getParam("dateDebutActivite");
+            $medecin['activite'] = HttpHelper::getParam("activite");
+            $medecin['codePostal'] = HttpHelper::getParam("codePostal");
+            $medecin['ville'] = HttpHelper::getParam("ville");
+            $medecin['lieuAct'] = HttpHelper::getParam("lieuAct");
+        } else {
+            $numRPPS = HttpHelper::getParam('numRPPS');
+            $medecin = $this->adminservice->getMedecin($pdo,$numRPPS);
+            
+        }
+        $view->setVar("medecin",$medecin);
+        $nextAction = HttpHelper::getParam("nextAction")?: $action;
+        $view->setVar("nextAction",$nextAction);
+        
+        
         return $view;
     }
 
@@ -156,7 +169,6 @@ class AdministrateurController
         $actualLogin = HttpHelper::getParam("actualLogin");
         try {
             $medecinID = $this->adminservice->getMedecinID($pdo,$actualLogin);
-            $medecinID['name'] = "Medecin ID";
             $this->adminservice->updateMedecin($pdo,$medecinID['id'],$numRPPS ,
                 HttpHelper::getParam('nom'),
                 HttpHelper::getParam('prenom'),
@@ -169,12 +181,22 @@ class AdministrateurController
                 HttpHelper::getParam('dateDebutActivite')
             );
             $userID = $this->adminservice->getUserID($pdo,$actualLogin);
-            $userID['name'] = "User ID";
             $this->adminservice->updateUser($pdo,$userID['id'],$numRPPS,$password);
             $view = $this->goFicheMedecin($pdo);
         } catch (PDOException $e) {
-            $view = $this->goFicheMedecin($pdo);
-            $view->setVar('erreurUpdate', true);
+            $view = $this->goEditMedecin($pdo,"updateMedecin");
+            if ($e->getCode() == "23000") {
+                $view->setVar("numRPPSError","Ce numéro RPPS est déjà utilisé ! ");
+            }
+            if ($e->getCode() == "HY000") {
+                $view->setVar("emailError","L'adresse mail n'est pas valide ! ");
+            }
+            if ($e->getCode() == "1") {
+                $view->setVar("numRPPSError",$e->getMessage());
+            }
+            if ($e->getCode() == "2") {
+                $view->setVar("dateError",$e->getMessage());
+            }
         }
 
 
@@ -199,15 +221,22 @@ class AdministrateurController
                 HttpHelper::getParam('dateDebutActivite')
             );
             $this->adminservice->addUser($pdo,$numRPPS,HttpHelper::getParam('password'));
+            $view = $this->goFicheMedecin($pdo); 
         } catch (\PDOException $e) {
-            $erreur = $e;
+            $view = $this->goEditMedecin($pdo,"addMedecin");
+            if ($e->getCode() == "23000") {
+                $view->setVar("numRPPSError","Ce numéro RPPS est déjà utilisé ! ");
+            }
+            if ($e->getCode() == "1") {
+                $view->setVar("numRPPSError",$e->getMessage());
+            }
+            if ($e->getCode() == "HY000") {
+                $view->setVar("emailError","L'adresse mail n'est pas valide ! ");
+            }
+            if ($e->getCode() == "2") {
+                $view->setVar("dateError",$e->getMessage());
+            }
         }
-
-        $view = $this->goFicheMedecin($pdo);
-        if (isset($erreur)) {
-            $view->setVar('erreurInsert', $erreur);
-        }
-
         return $view;
 
     }
