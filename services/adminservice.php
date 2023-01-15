@@ -13,7 +13,7 @@ class AdminService
 
     public function getMedecinID($pdo,$numRPPS)
     {
-        $sql = "SELECT id FROM Medecins where numRPPS = :numRPPS";
+        $sql = "SELECT idMedecin FROM Medecins where numRPPS = :numRPPS";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam("numRPPS",$numRPPS);
         $stmt->execute();
@@ -101,7 +101,7 @@ class AdminService
             activite = :secteurActivite, 
             dateDebutActivites = :dateDebutActivites,
             numRPPS = :numRPPS 
-            WHERE id = :idMedecin";
+            WHERE idMedecin = :idMedecin";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam('numRPPS', $numRPPS);
         $stmt->bindParam('nom', $nom);
