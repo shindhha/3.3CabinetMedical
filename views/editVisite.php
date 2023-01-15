@@ -68,10 +68,11 @@
 						<div class="d-flex flex-column justify-content-start ">
 							<div class="d-flex flex-row justify-content-between">
 								<div class="d-flex flex-row"> 
-								<span>Motif</span> <input class="form-control" type="text" name="Motif" value="<?php if (isset($visite)) echo $visite[0]['motifVisite']; ?>"> 
+								<span>Motif</span> <input class="form-control" type="text" name="motifVisite" value="<?php if (isset($visite['motifVisite'])) echo $visite['motifVisite']; ?>"> 
 								</div>
 								<div class="d-flex flex-row">
-									<span>Date</span><input class="form-control" type="date" name="Date" max="<?php echo date('Y-m-d'); ?>" value="<?php if (isset($visite)) echo $visite[0]['dateVisite']; ?>">
+									<?php if (isset($dateError)) echo $dateError; ?>
+									<span>Date</span><input class="form-control" type="date" name="Date" max="<?php echo date('Y-m-d'); ?>" value="<?php if (isset($visite['dateVisite'])) echo $visite['dateVisite']; ?>">
 								</div>
 							</div>
 
@@ -79,19 +80,15 @@
 							<div class="d-flex flex-column text-start">
 								<span>Description</span>
 
-								<textarea name="Description">
-									<?php if (isset($visite)) echo $visite[0]['Description']; ?>
-								</textarea>
-
+								<textarea name="Description"><?php if (isset($visite['Description'])) echo $visite['Description']; ?></textarea>
 							</div>
 							
 							<div class="d-flex flex-column text-start	">
 
 
 								<span>Conclusion</span>
-								<textarea name="Conclusion">
-									<?php if (isset($visite)) echo $visite[0]['Conclusion']; ?>
-								</textarea>
+								<textarea name="Conclusion"><?php if (isset($visite['Conclusion'])) echo $visite['Conclusion']; ?></textarea>
+								
 							</div>
 							
 							

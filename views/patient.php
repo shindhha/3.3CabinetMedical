@@ -154,12 +154,8 @@
 														<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
 													</form>
 													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="deleteVisite">
 														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<input type="hidden" name="idPatient"
-														value="<?php echo $_SESSION['patient'] ?>">
-														<tr><td><input type="submit" name="modif" value="Supprimer"> </td></tr>
+														<tr><td><a  href="#exampleModal" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </td></tr>
 													</form>
 												</table>			
 											</div>
@@ -178,7 +174,7 @@
 											<input type="hidden" name="action" value="goEditVisite">
 											<input type="hidden" name="controller" value="patientslist">
 											<input type="submit" class="green no-border text-white" value="Ajouter une visite">
-											</form>
+										</form>
 									</div>
 									<div class="d-flex me-2 py-2 px-3 border-1 green">
 										<form>
@@ -194,6 +190,33 @@
 					</div>
 				</div>
 				
+			</div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		 		<div class="modal-dialog modal-md modal-dialog-centered">
+
+		    		<div class="modal-content ">
+		    			<div class = "h5 col-12 green d-flex text-start p-3 align-middle">
+		    				<span id ="libelle"></span>
+		    			</div>
+		    			<div class="text-center text-danger d-flex flex-column">
+		    				<span>Etes vous sur de vouloir supprimer la visite ?</span>
+		    				<span>Touts ses médicaments seront supprimer .</span>
+		    			</div>
+		    			<div class = "d-flex justify-content-end p-3 gap-3">
+		    				<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" data-bs-dismiss="modal" value="Close">
+		    				<form>		
+		    					<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" value="confirmer">
+								<input type="hidden" name="controller" value="patientslist">
+								<input type="hidden" name="action" value="deleteVisite">
+		    					<input type="hidden" name="idVisite" value="" id ="code">
+		    					<input type="hidden" name="idPatient" value="<?php echo $_SESSION['patient'] ?>">
+		    				</form>
+
+		    			</div>
+		    			
+		    			
+		    		</div>
+				</div>
 			</div>
 
 		</div>

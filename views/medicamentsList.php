@@ -282,7 +282,7 @@
 		</div>
 		
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		 	<div class="modal-dialog modal-xl">
+		 	<div class="modal-dialog modal-xl modal-dialog-centered">
 
 		    	<div class="modal-content gap-2">
 		    		<div class = "col-12 green d-flex text-start p-3 align-middle">

@@ -42,7 +42,6 @@
 				<!-- Bandeau outils -->	
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
-						<?php var_dump($_SESSION['idVisite']); ?>
 						<span class="h1 d-md-block d-none"> Visite n° </span>		
 					</div>
 				</nav>
@@ -51,7 +50,7 @@
 					<div class="d-flex justify-content-between">
 						<span></span>
 						<div><?php echo $patient['nom'] . " " . $patient['prenom']?></div>
-						<div>dqs</div>
+						<div></div>
 					</div>
 				</div>
 				<div class="row d-flex flex-column gap-3">
@@ -75,7 +74,7 @@
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2">
+							<div class=" col-md-10 col-xl-12 text-danger text-start col-sm-7 col-12 success border-2">
 								<?php if(isset($addMedicError)) echo $addMedicError; ?>
 								<div class="  text-dark text-start h2"> Liste des medicaments prescrit </div>
 								<div class="overflow-scroll h-50 ">
@@ -150,7 +149,6 @@
 		</div>
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		 	<div class="modal-dialog modal-xl">
-
 		    	<div class="modal-content gap-2">
 		    		<div class = "col-12 green d-flex text-start p-3 align-middle">
 		    			<span id ="libelle"></span>

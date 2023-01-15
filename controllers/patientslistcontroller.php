@@ -208,16 +208,21 @@ class PatientsListController
 		return $view;
 	}
 
-	public function goEditVisite($pdo)
+	public function goEditVisite($pdo,$action = "")
 	{
 		$view = new View("Sae3.3CabinetMedical/views/editVisite");
-
-		$nextAction = HttpHelper::getParam("nextAction");
-		if ($nextAction == "updateVisite") {
-			$visite = $this->usersservices->getVisites($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
-			$view->setVar("visite",$visite);
+		$visite;
+		if ($action == "addVisite") {
+			$visite['motifVisite'] = HttpHelper::getParam("motifVisite");
+			$visite['dateVisite'] = HttpHelper::getParam("dateVisite");
+			$visite['Description'] = HttpHelper::getParam("Description");
+			$visite['Conclusion'] = HttpHelper::getParam("Conclusion");
+		} else {
+			$visite = $this->usersservices->getVisite($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
 		}
 
+		$nextAction = HttpHelper::getParam("nextAction")?: $action;
+		$view->setVar("visite",$visite);
 		$view->setVar("action",$nextAction);
 
 		return $view;
@@ -232,22 +237,44 @@ class PatientsListController
 
 	public function updateVisite($pdo)
 	{
-		$motif = HttpHelper::getParam("Motif");
+		$view;
+		$motif = HttpHelper::getParam("motifVisite");
 		$Date = HttpHelper::getParam("Date");
 		$Description = HttpHelper::getParam("Description");
 		$Conclusion = HttpHelper::getParam("Conclusion");
-		$this->usersservices->modifVisite($pdo,$_SESSION['idVisite'],$motif,$Date,$Description,$Conclusion);
-		return $this->goFicheVisite($pdo);
+		
+		try {
+			$this->usersservices->modifVisite($pdo,$_SESSION['idVisite'],$motif,$Date,$Description,$Conclusion);
+			$view = $this->goFicheVisite($pdo);
+		} catch (PDOException $e) {
+			$view = $this->goEditVisite($pdo,"updateVisite");
+			if ($e->getCode() == "22007") {
+				$view->setVar("dateError","Veuillez sélectionner la date.");
+			}
+		}
+		
+		return $view;
 	}
 
 	public function addVisite($pdo)
 	{
-		$motif = HttpHelper::getParam("Motif");
+		$view;
+		$motif = HttpHelper::getParam("motifVisite");
 		$Date = HttpHelper::getParam("Date");
 		$Description = HttpHelper::getParam("Description");
 		$Conclusion = HttpHelper::getParam("Conclusion");
-		$_SESSION['idVisite'] =  $this->usersservices->insertVisite($pdo,$_SESSION['patient'],$motif,$Date,$Description,$Conclusion);
-		return $this->goFicheVisite($pdo);
+		
+		try {
+			$_SESSION['idVisite'] = $this->usersservices->insertVisite($pdo,$_SESSION['patient'],$motif,$Date,$Description,$Conclusion);
+			$view = $this->goFicheVisite($pdo);
+		} catch (PDOException $e) {
+			$view = $this->goEditVisite($pdo,"addVisite");
+			if ($e->getCode() == "22007") {
+				$view->setVar("dateError","Veuillez sélectionner la date.");
+			}
+		}
+		
+		return $view;
 	}
 
 	public function addMedicament($pdo)
