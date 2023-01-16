@@ -7,7 +7,7 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-	<script type="text/javascript" src="../scripts/script.js"></script>
+
 	<title>MEDILOG</title>
 	
 </head>
@@ -164,10 +164,8 @@
 														<tr><input type="submit" value="Afficher"> </tr>
 													</form>
 													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="deletePatient">
 														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
-														<tr><input type="submit" value="Supprimer"> </tr>
+														<a  href="#exampleModal" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
 													</form>
 												</table>
 
@@ -201,11 +199,37 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		 		<div class="modal-dialog modal-md modal-dialog-centered">
+
+		    		<div class="modal-content ">
+		    			<div class = "h5 col-12 green d-flex text-start p-3 align-middle">
+		    				<span id ="libelle"></span>
+		    			</div>
+		    			<div class="text-center text-danger d-flex flex-column">
+		    				<span>Etes vous sur de vouloir supprimer le patient ?</span>
+		    				<span>Toutes ses visites seront perdue .</span>
+		    			</div>
+		    			<div class = "d-flex justify-content-end p-3 gap-3">
+		    				<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" data-bs-dismiss="modal" value="Annuler">
+		    				<form>		
+		    					<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" value="confirmer">
+								<input type="hidden" name="controller" value="patientslist">
+								<input type="hidden" name="action" value="deletePatient">
+		    					<input type="hidden" name="idPatient" value="" id ="code">
+		    				</form>
+
+		    			</div>
+		    			
+		    			
+		    		</div>
+				</div>
+			</div>
 
 		</div>
 
 
-
+		<script type="text/javascript" src="scripts/script.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>

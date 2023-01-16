@@ -3,11 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
-
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-	<script type="text/javascript" src="../scripts/script.js"></script>
 	<title>MEDILOG</title>
 	
 </head>
@@ -127,12 +125,15 @@
 								<div class="text-dark text-start h2">Liste des visites</div>
 								<div class="overflow-scroll h-50">
 									<table class="table table-striped lightGreen border-top border-dark">
-										<tr>
-											<th>Motif</th>
-											<th>Date</th>
-											<th>Description</th>
-											<th></th>
-										</tr>
+										<thead class="sticky-top green">
+											<tr>
+												<th>Motif</th>
+												<th>Date</th>
+												<th>Description</th>
+												<th></th>
+											</tr>
+										</thead>
+										
 										<?php
 										foreach ($visites as $row) {
 										echo "<tr>"
@@ -200,10 +201,10 @@
 		    			</div>
 		    			<div class="text-center text-danger d-flex flex-column">
 		    				<span>Etes vous sur de vouloir supprimer la visite ?</span>
-		    				<span>Touts ses médicaments seront supprimer .</span>
+		    				<span>Touts ses médicaments seront perdue .</span>
 		    			</div>
 		    			<div class = "d-flex justify-content-end p-3 gap-3">
-		    				<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" data-bs-dismiss="modal" value="Close">
+		    				<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" data-bs-dismiss="modal" value="Annuler">
 		    				<form>		
 		    					<input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" value="confirmer">
 								<input type="hidden" name="controller" value="patientslist">
@@ -220,6 +221,7 @@
 			</div>
 
 		</div>
+		<script type="text/javascript" src="scripts/script.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>
 </body>

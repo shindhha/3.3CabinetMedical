@@ -17,8 +17,6 @@ body , html {
 }
 
 
-
-
 .row {
 	font-family: 'Inter', sans-serif;
 }
@@ -27,6 +25,9 @@ body , html {
 	height: 15%;
 }
 
+.z-index-dropdown {
+	z-index: 9999;
+}
 
 .border-1 {
 	border-radius: 25px;
@@ -106,4 +107,16 @@ input:focus {
 .input-grow {
 	flex-grow: 1;
 	text-align: center;
+}
+
+.h-1001 {
+	height: 100%;
+}
+
+.d {
+	display: grid;
+	place-items: center;
+}
+.s {
+	align-self: center;
 }

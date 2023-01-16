@@ -39,7 +39,7 @@
 				</a>
 			</div>
 			<!-- Main page -->
-			<div class="col-md-11 h-75 text-center">
+			<div class="col-md-11 h-100 text-center">
 				<!-- Bandeau outils -->	
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
@@ -56,11 +56,11 @@
 							</div>
 
 							<!-- Filtre -->
-							<div class="dropdown green">
+							<div class="dropdown green z-index-dropdown">
 								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									Filtres
 								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+								<div class="p-0  dropdown-menu dropdown-menu-end  green text-white no-border" aria-labelledby="dropdownMenuButton1">
 									<div class="d-flex flex-column green p-4">
 										<input type="hidden" name="controller" value="medicamentslist">
 										<table class="text-white ">
@@ -177,98 +177,90 @@
 				<div class=" d-flex text-green justify-content-start">
 					<?php echo count($drugs) ?> resultats
 				</div>
-				<div class="row h-100 align-items-center text-center">
+				<div class="row h-100 ">
 					<!-- Portail de connexion -->
-					<div class="container ">
-						<div class="row justify-content-center">
+					<div class="container  ">
+						<div class="row justify-content-center  ">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
-								<table class="table table-striped lightGreen">
-									<tr>
-										<th>codeCIS</th>
-										<th>Valeur SMR</th>
-										<th>Valeur ASMR</th>
-										<th>Forme Pharmaceutique</th>
-										<th>Voie d'administration</th>
-										<th>Taux Remboursement</th>
-										<th>Prix</th>
-										<th>Presentation </th>
-										<th>Etat Commercialisation </th>
-										<th>Surveillance Renforcé</th>
-										<th></th>
-									</tr>
+							<div class="col-md-8 col-xl-11 col-sm-7 col-11  ">
 
-									<?php
-									$surveillance = "";
-									$commercialiser = "";
-
-										foreach ($drugs as $row)  {
-											if ($row['etatCommercialisation']) {
-												$commercialiser = "Commercialiser";
-											} else {
-												$commercialiser = "Non Commercialiser";
-											}
-
-											if ($row['surveillanceRenforcee']) {
-												$surveillance = "OUI";
-											} else {
-												$surveillance = "NON";
-											}
-
-										echo "<tr>"
-											 ."<td>" . $row['codeCIS'] . "</td>"
-											 ."<td>" . $row['libelleNiveauSMR'] . "</td>"
-											 ."<td>" . $row['valeurASMR'] . "</td>"
-											 ."<td>" . $row['formePharma'] . "</td>"
-											 ."<td>" . $row['labelVoieAdministration'] . "</td>"
-											 ."<td>" . $row['tauxRemboursement'] . "</td>"
-											 ."<td>" . $row['prix'] . "</td>"
-											 ."<td>" . $row['libellePresentation'] . "</td>"
-											 ."<td>" . $commercialiser . "</td>"
-											 ."<td>" . $surveillance . "</td>"
-									?>
-									<td>
-										
-									
-									<div class="dropdown ">
-										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									
-											more_horiz
-
-										</span>
-										<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<form action="index.php" action="POST" class="d-flex flex-column green">
-												
-												<table class="text-white ">
-													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="medicamentslist">
-														<input type="hidden" name="action" value="goFicheMedicament">
-														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
-														<tr><input type="submit" value="Afficher"> </tr>
-													</form>
-													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="visite">
-														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
-														<?php if (isset($ajouter)) {
-														?>
-
-															<tr><a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS']  ?>')" role="button">Ajouter</a></tr>
-														<?php
-														} ?>
-														
-													</form>
-												</table>
-
+								<div class="overflow-scroll h-15 border border-success ">
+									<table class="table table-striped lightGreen">
+										<thead class="sticky-top bg-white text-dark  ">
+											<tr>
+												<th>codeCIS</th>
+												<th>Valeur SMR</th>
+												<th>Valeur ASMR</th>
+												<th>Forme Pharmaceutique</th>
+												<th>Voie d'administration</th>
+												<th>Taux Remboursement</th>
+												<th>Prix</th>
+												<th>Presentation </th>
+												<th>Etat Commercialisation </th>
+												<th>Surveillance Renforcé</th>
+												<th></th>
+											</tr>
+										</thead>
+										<?php
+										$surveillance = "";
+										$commercialiser = "";
+											foreach ($drugs as $row)  {
+												if ($row['etatCommercialisation']) {
+													$commercialiser = "Commercialiser";
+												} else {
+													$commercialiser = "Non Commercialiser";
+												}
+												if ($row['surveillanceRenforcee']) {
+													$surveillance = "OUI";
+												} else {
+													$surveillance = "NON";
+												}
+											echo "<tr>"
+												 ."<td>" . $row['codeCIS'] . "</td>"
+												 ."<td>" . $row['libelleNiveauSMR'] . "</td>"
+												 ."<td>" . $row['valeurASMR'] . "</td>"
+												 ."<td>" . $row['formePharma'] . "</td>"
+												 ."<td>" . $row['labelVoieAdministration'] . "</td>"
+												 ."<td>" . $row['tauxRemboursement'] . "</td>"
+												 ."<td>" . $row['prix'] . "</td>"
+												 ."<td>" . $row['libellePresentation'] . "</td>"
+												 ."<td>" . $commercialiser . "</td>"
+												 ."<td>" . $surveillance . "</td>"
+										?>
+										<td>		
+										<div class="dropdown ">
+											<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+												more_horiz
+											</span>
+											<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
+												<form action="index.php" action="POST" class="d-flex flex-column green">			
+													<table class="text-white ">
+														<form action="index.php" action="POST" class="d-flex flex-column green">
+															<input type="hidden" name="controller" value="medicamentslist">
+															<input type="hidden" name="action" value="goFicheMedicament">
+															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+															<tr><input type="submit" value="Afficher"> </tr>
+														</form>
+														<form action="index.php" action="POST" class="d-flex flex-column green">
+															<input type="hidden" name="controller" value="patientslist">
+															<input type="hidden" name="action" value="visite">
+															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+															<?php if (isset($ajouter)) {
+															?>
+																<a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS']  ?>')" role="button">Ajouter</a>
+															<?php
+															} ?>						
+														</form>
+													</table>
+											</div>
 										</div>
-									</div>
-
-									</td>
-									<?php 
-											echo "</tr>";
-										} 
-									?>
-								</table>
+										</td>
+										<?php 
+												echo "</tr>";
+											} 
+										?>
+									</table>
+								</div>
 
 							</div>
 
@@ -308,7 +300,7 @@
 
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript" src="../scripts/script.js"></script>
+		<script type="text/javascript" src="scripts/script.js"></script>
 	</div>
 </body>
 </html>
