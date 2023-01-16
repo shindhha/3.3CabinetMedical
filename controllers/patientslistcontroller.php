@@ -200,7 +200,7 @@ class PatientsListController
 		}
 		$drugsVisite = $this->usersservices->getOrdonnances($pdo,$_SESSION['idVisite']);
 		$patient = $this->usersservices->getPatient($pdo,$_SESSION['patient']);
-		$visite = $this->usersservices->getVisite($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
+		$visite = $this->usersservices->getVisite($pdo,$_SESSION['idVisite']);
 		$view->setVar("idVisite",$_SESSION['idVisite']);
 		$view->setVar("visite",$visite);
 		$view->setVar("drugsVisite",$drugsVisite);
@@ -219,7 +219,7 @@ class PatientsListController
 			$visite['Description'] = HttpHelper::getParam("Description");
 			$visite['Conclusion'] = HttpHelper::getParam("Conclusion");
 		} else {
-			$visite = $this->usersservices->getVisite($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
+			$visite = $this->usersservices->getVisite($pdo,$_SESSION['idVisite']);
 		}
 
 		

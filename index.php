@@ -18,7 +18,7 @@
  * Sample without database connexion
  */
  $hostname = "localhost";
- $dbname = "test";
+ $dbname = "sae";
  $user = "root";
  $password = "root";
  $port = 3306;
