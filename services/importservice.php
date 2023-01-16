@@ -109,25 +109,19 @@ class ImportService
 		foreach ($lines as $line) {
 			$args = $this->FormatLine($line,$trimLine);
 			$calledFunction = "";
-            if ($table == "CIS_HAS_SMR" || $table == "CIS_HAS_ASR") {
-                $d = $this->idExists($pdo, $table, "codeHAS", $args[1]) && $this->idExists($pdo, $table, "codeCIS", $args[0]);
-            } else {
+            $d = false;
+            if (!in_array($table, ["CIS_HAS_SMR", "CIS_HAS_ASMR"])) { // On ne déclanche pas d'update pour SMR & ASMR TODO penser a truncate ces tables
                 $d = $this->idExists($pdo, $table, $idName, $args[$iCis]);
             }
 			try {
 				$pdo->beginTransaction();
 
-				
-
 				if ($d) {
 					$calledFunction = "update" . $fileName;
 					$updateStmt->execute($args);
-					
-					
 				} else {
 					$calledFunction = "import" . $fileName;
 					$importStmt->execute($args);
-					
 				}
 
 				$pdo->commit();
