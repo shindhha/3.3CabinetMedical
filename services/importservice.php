@@ -49,7 +49,7 @@ class ImportService
 		return $text;
 	}
 
-	public function download ($name) {
+	public function download($name) {
 		$destination = ImportService::$path.$name;
 		$source = "https://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=".$name;
 		$ch = curl_init($source);
@@ -97,12 +97,15 @@ class ImportService
 		return $args;
 	}
 
-	public function exportToBD ($pdo,$importStmt,$updateStmt,$param) {
+	public function exportToBD($pdo,$importStmt,$updateStmt,$param) {
 		$trimLine = $param[3];
 		$iCis = $param[4];
 		$table = $param[5];
 		$fileName = $param[0];
-		$idName = $param[6]?: "codeCIS";
+		$idName = isset($param[6]) ? $param[6] : "codeCIS";
+
+        $this->download($fileName);
+
 		$file = fopen(ImportService::$path.$fileName, "r");
 		$content = fread($file, filesize(ImportService::$path.$fileName));
 		$lines = explode("\n", $content);

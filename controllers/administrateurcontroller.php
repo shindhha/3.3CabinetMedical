@@ -54,7 +54,7 @@ class AdministrateurController
 					  ["HAS_LiensPageCT_bdpm.txt","CT",2,false,0,"HAS_LiensPageCT","codeHAS"],
 					  ["CIS_GENER_bdpm.txt","GENER",5,true,2,"CIS_GENER"],
 					  ["CIS_CPD_bdpm.txt","CPD",2,false,0,"CIS_CPD"],
-					  ["CIS_InfoImportantes_bdpm.txt","INFO",4,false,0,"CIS_INFO"]];
+					  ["CIS_InfoImportantes.txt","INFO",4,false,0,"CIS_INFO"]];
 
 	public function __construct() {
 		$this->importservice = ImportService::getDefaultImportService();
@@ -95,8 +95,6 @@ class AdministrateurController
 		$trimLine = $this->files[$file][3];
 		$iCis = $this->files[$file][4];
 		$bd = $this->files[$file][5];
-		$prefixe = $this->files[$file][6];
-		
 		
 		try {
 			
