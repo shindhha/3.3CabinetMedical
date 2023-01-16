@@ -100,8 +100,13 @@ class medicamentslistController
 
         $codeCIS = HttpHelper::getParam("codeCIS");
         $medicament = $this->usersservices->getMedicament($pdo,$codeCIS);
+        $lteSmr = $this->usersservices->getAllSMR($pdo,$codeCIS);
+        $lteASMR = $this->usersservices->getAllASMR($pdo,$codeCIS);
+
         $view->setVar("codeCIS",$codeCIS);
         $view->setVar("medicament",$medicament);
+        $view->setVar("lteSmr",$lteSmr);
+        $view->setVar("lteASMR",$lteASMR);
         return $view;
     }
 

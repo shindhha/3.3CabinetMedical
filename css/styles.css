@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
-body , html {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+body, html {
 	height: 100%;
 	width: 100%;
-	margin: 0px;
+	margin: 0;
 	overflow: hidden;
 
 }
@@ -19,10 +19,20 @@ body , html {
 
 .row {
 	font-family: 'Inter', sans-serif;
+	font-weight: 800;
 }
+
 
 .h-15 {
 	height: 15%;
+}
+
+.h-11 {
+	height: 11%;
+}
+
+.h-89 {
+	height: 89%;
 }
 
 .z-index-dropdown {

@@ -48,7 +48,7 @@
 						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
 						
 							<!-- Barre de recherche -->
-						<form class="d-flex align-items-center" action="index.php" action="POST">
+						<form class="d-flex align-items-center" action="index.php" method="POST">
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
 								<input name="pPresentation" class="no-border" type="search" placeholder="Mots clef" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
 								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
@@ -189,8 +189,7 @@
 										<thead class="sticky-top bg-white text-dark  ">
 											<tr>
 												<th>codeCIS</th>
-												<th>Valeur SMR</th>
-												<th>Valeur ASMR</th>
+                                                <th>Designation</th>
 												<th>Forme Pharmaceutique</th>
 												<th>Voie d'administration</th>
 												<th>Taux Remboursement</th>
@@ -206,9 +205,9 @@
 										$commercialiser = "";
 											foreach ($drugs as $row)  {
 												if ($row['etatCommercialisation']) {
-													$commercialiser = "Commercialiser";
+													$commercialiser = "Commercialisé";
 												} else {
-													$commercialiser = "Non Commercialiser";
+													$commercialiser = "Non Commercialisé";
 												}
 												if ($row['surveillanceRenforcee']) {
 													$surveillance = "OUI";
@@ -217,8 +216,7 @@
 												}
 											echo "<tr>"
 												 ."<td>" . $row['codeCIS'] . "</td>"
-												 ."<td>" . $row['libelleNiveauSMR'] . "</td>"
-												 ."<td>" . $row['valeurASMR'] . "</td>"
+                                                 ."<td>" . $row['designation'] . "</td>"
 												 ."<td>" . $row['formePharma'] . "</td>"
 												 ."<td>" . $row['labelVoieAdministration'] . "</td>"
 												 ."<td>" . $row['tauxRemboursement'] . "</td>"
@@ -233,15 +231,15 @@
 												more_horiz
 											</span>
 											<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
-												<form action="index.php" action="POST" class="d-flex flex-column green">			
+												<form action="index.php" method="POST" class="d-flex flex-column green">
 													<table class="text-white ">
-														<form action="index.php" action="POST" class="d-flex flex-column green">
+														<form action="index.php" method="POST" class="d-flex flex-column green">
 															<input type="hidden" name="controller" value="medicamentslist">
 															<input type="hidden" name="action" value="goFicheMedicament">
 															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
 															<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 														</form>
-														<form action="index.php" action="POST" class="d-flex flex-column green">
+														<form action="index.php" method="POST" class="d-flex flex-column green">
 															<input type="hidden" name="controller" value="patientslist">
 															<input type="hidden" name="action" value="visite">
 															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
