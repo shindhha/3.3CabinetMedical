@@ -1,5 +1,6 @@
+DROP VIEW IF EXISTS listMedic;
 CREATE VIEW listMedic as
-select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR from CIS_BDPM
+select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,designation from CIS_BDPM
 LEFT JOIN CIS_CIP_BDPM
 ON CIS_BDPM.codeCIS = CIS_CIP_BDPM.codeCIS
 LEFT JOIN CIS_VoieAdministration
@@ -17,4 +18,6 @@ ON CIS_BDPM.codeCIS = TauxRemboursement.codeCIS
 LEFT JOIN LibellePresentation
 ON LibellePresentation.idLibellePresentation = CIS_CIP_BDPM.idLibellePresentation
 LEFT JOIN NiveauSMR
-ON NiveauSMR.idNiveauSMR = CIS_HAS_SMR.niveauSMR;
+ON NiveauSMR.idNiveauSMR = CIS_HAS_SMR.niveauSMR
+LEFT JOIN DesignationElemPharma
+ON CIS_BDPM.idDesignation = DesignationElemPharma.idDesignation;
