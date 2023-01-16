@@ -36,5 +36,6 @@ $pdo = new DataSource($hostname,$port,$dbname,$user,$password,$charset);
 $router->route($pdo);
 ?>
 <script src="extensions/sticky-header/bootstrap-table-sticky-header.js"></script>
+
 </body>
 </html>

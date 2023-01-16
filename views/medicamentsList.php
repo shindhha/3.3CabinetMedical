@@ -50,7 +50,7 @@
 							<!-- Barre de recherche -->
 						<form class="d-flex align-items-center" action="index.php" action="POST">
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input name="pPresentation" class="no-border" type="search" placeholder="Mots clef" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
+								<input name="pPresentation" class="no-border" type="search" placeholder="Presentation" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
 								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 							</div>
@@ -172,36 +172,32 @@
 					</div>
 				</nav>
 
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
+				
 				<!-- content -->
-				<div class=" d-flex text-green justify-content-start">
+				<div class="container-fluid">
+					<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
+					<div class=" d-flex text-green justify-content-start">
 					<?php echo count($drugs) ?> resultats
-				</div>
-				<div class="row h-100 ">
-					<!-- Portail de connexion -->
-					<div class="container  ">
-						<div class="row justify-content-center  ">
-
-							<div class="col-md-8 col-xl-11 col-sm-7 col-11  ">
-
-								<div class="table-responsive h-15 border border-success ">
-									<table class="table table-striped lightGreen">
-										<thead class="sticky-top bg-white text-dark  ">
-											<tr>
-												<th>codeCIS</th>
-												<th>Valeur SMR</th>
-												<th>Valeur ASMR</th>
-												<th>Forme Pharmaceutique</th>
-												<th>Voie d'administration</th>
-												<th>Taux Remboursement</th>
-												<th>Prix</th>
-												<th>Presentation </th>
-												<th>Etat Commercialisation </th>
-												<th>Surveillance Renforcé</th>
-												<th></th>
-											</tr>
-										</thead>
-										<?php
+					</div>
+					<div class="table-responsive h-50 border border-success">
+						<table class="table table-striped lightGreen">
+							<thead class="sticky-top bg-white text-dark  ">
+								<tr>
+									<th>codeCIS</th>
+									<th>Valeur SMR</th>
+									<th>Valeur ASMR</th>
+									<th>Forme Pharmaceutique</th>
+									<th>Voie d'administration</th>
+									<th>Taux Remboursement</th>
+									<th>Prix</th>
+									<th>Presentation </th>
+									<th>Etat Commercialisation </th>
+									<th>Surveillance Renforcé</th>
+									<th></th>
+								</tr>
+							</thead>
+								
+								<?php
 										$surveillance = "";
 										$commercialiser = "";
 											foreach ($drugs as $row)  {
@@ -259,16 +255,11 @@
 												echo "</tr>";
 											} 
 										?>
-									</table>
-								</div>
-
-							</div>
-
-
-						</div>
-
+							</thead>	
+						</table>
 					</div>
 				</div>
+				
 			</div>
 
 		</div>

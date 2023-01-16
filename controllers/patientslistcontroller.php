@@ -212,7 +212,8 @@ class PatientsListController
 	{
 		$view = new View("Sae3.3CabinetMedical/views/editVisite");
 		$visite;
-		if ($action == "addVisite") {
+		$nextAction = HttpHelper::getParam("nextAction")?: $action;
+		if ($nextAction == "addVisite") {
 			$visite['motifVisite'] = HttpHelper::getParam("motifVisite");
 			$visite['dateVisite'] = HttpHelper::getParam("dateVisite");
 			$visite['Description'] = HttpHelper::getParam("Description");
@@ -221,7 +222,7 @@ class PatientsListController
 			$visite = $this->usersservices->getVisite($pdo,$_SESSION['patient'],$_SESSION['idVisite']);
 		}
 
-		$nextAction = HttpHelper::getParam("nextAction")?: $action;
+		
 		$view->setVar("visite",$visite);
 		$view->setVar("action",$nextAction);
 

@@ -103,88 +103,74 @@
 					</div>
 				</nav>
 
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
-				<!-- content -->
-				<div class=" d-flex text-green justify-content-start">
-					<?php echo count($patients) ?> resultats
-				</div>
-				<div class="row h-100 align-items-center text-center">
-					<!-- Portail de connexion -->
-					<div class="container ">
-						<div class="row justify-content-center">
-
-							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
-								<div class=" h-50 table-responsive">
-								<table class="table table-striped lightGreen">
-									<thead class="sticky-top bg-white text-dark  ">
-									<tr>
-										<th>Numéro de sécurité sociale</th>
-										<th>Nom</th>
-										<th>Prenom</th>
-										<th>Date de naissance</th>
-										<th>Medecin Traitant</th>
-										<th>Numéro de téléphone</th>
-										
-										<th>Adresse</th>
-										
-										
-										<th></th>
-									</tr>
-								</thead>
-									<?php 
-									foreach ($patients as $row) {
-									echo "<tr>"
-											 ."<td>" . $row['numSecu'] . "</td>"
-											 
-											 ."<td>" . $row['nom'] . "</td>"
-											 ."<td>" . $row['prenom'] . "</td>"
-											 ."<td>" . $row['dateNaissance'] . "</td>"
-											 ."<td>" . ($row['medecinRef'] != 0 ? $row['medecinRef'] : "Non définie"). "</td>"
-											 ."<td> 0" . $row['numTel'] . "</td>"
-											 
-											 ."<td>" . $row['adresse'] . "</td>"
-											 
-											
-									?>
-									<td>
-										
+					<!-- content -->
+				<div class="container-fluid">
+					<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
+					<div class=" d-flex text-green justify-content-start">
+						<?php echo count($patients) ?> résultats
+					</div>
+					<div class="table-responsive h-50 border border-success">
+						<table class="table table-striped lightGreen">
+							<thead class="sticky-top bg-white text-dark  ">
+								<tr>
+									<th>Numéro de sécurité sociale</th>
+									<th>Nom</th>
+									<th>Prenom</th>
+									<th>Date de naissance</th>
+									<th>Medecin Traitant</th>
+									<th>Numéro de téléphone</th>
 									
-									<div class="dropdown  ">
-										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-											more_horiz
-										</span>
-										<div class="p-0 border-2 dropdown-menu green dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
-											<form action="index.php" action="POST" class="d-flex flex-column green">
-												<table class="text-white ">
-													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="goFichePatient">
-														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
-														<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
-													</form>
-													<form action="index.php" action="POST" class="d-flex flex-column green">
-														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
-														<a  href="#exampleModal" class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
-													</form>
-												</table>
-
+									<th>Adresse</th>
+									
+									
+									<th></th>
+								</tr>
+							</thead>
+							<?php 
+								foreach ($patients as $row) {
+								echo "<tr>"
+											."<td>" . $row['numSecu'] . "</td>"
 											
-										</div>
+											."<td>" . $row['nom'] . "</td>"
+											."<td>" . $row['prenom'] . "</td>"
+											."<td>" . $row['dateNaissance'] . "</td>"
+											."<td>" . ($row['medecinRef'] != 0 ? $row['medecinRef'] : "Non définie"). "</td>"
+											."<td> 0" . $row['numTel'] . "</td>"
+											
+											."<td>" . $row['adresse'] . "</td>"
+											
+										
+								?>
+							<td>
+								<div class="dropdown  ">
+									<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+										more_horiz
+									</span>
+									<div class="p-0 border-2 dropdown-menu green dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
+										<form action="index.php" action="POST" class="d-flex flex-column green">
+											<table class="text-white ">
+												<form action="index.php" action="POST" class="d-flex flex-column green">
+													<input type="hidden" name="controller" value="patientslist">
+													<input type="hidden" name="action" value="goFichePatient">
+													<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
+													<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
+												</form>
+												<form action="index.php" action="POST" class="d-flex flex-column green">
+													<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
+													<a  href="#exampleModal" class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
+												</form>
+											</table>
+
+										
 									</div>
+								</div>
 
-									</td>
-									<?php
-											echo "</tr>";
-										}
-									?>
-									
-								</table>
-
-							</div>
-							</div>
-
-						</div>
-
+							</td>
+							<?php
+									echo "</tr>";
+								}
+							?>		
+						</table>
 					</div>
 				</div>
 				<div class="d-flex flex-row justify-content-end">

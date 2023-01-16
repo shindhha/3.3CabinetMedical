@@ -46,7 +46,7 @@
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Visite n° <?php echo $_SESSION['idVisite'] ?></span>
+						<span class="h1 d-md-block d-none"> Visite n°</span>
 						<div class="d-flex align-items-center">	
 
 						</div>				

@@ -117,7 +117,6 @@
 				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
 				<!-- content -->
 				<div class="row align-items-center text-center">
-					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
 							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">

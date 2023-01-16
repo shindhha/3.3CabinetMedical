@@ -68,10 +68,6 @@ class medicamentslistController
         $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pPresentation . "%");
 
 
-        if ($_SESSION['idVisite'] != "") {
-            $view->setVar("ajouter",true);
-        }
-
         $view->setVar("pPresentation",$pPresentation);
         $view->setVar("pValeurASMR",$pValeurASMR);
         $view->setVar("pNiveauSmr",$pNiveauSmr);

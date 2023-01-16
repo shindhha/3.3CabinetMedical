@@ -333,7 +333,7 @@ class UsersServices
             FROM listMedic
             WHERE (formePharma LIKE :formePharma OR formePharma IS NULL)
             AND (labelVoieAdministration LIKE :labelVoieAdministration OR labelVoieAdministration IS NULL)
-            AND (libellePresentation LIKE :libellePresentation OR libellePresentation IS NULL)
+            AND (libellePresentation LIKE :libellePresentation)
             AND (prix >= :prixMin AND prix < :prixMax OR prix IS NULL)
             AND (valeurASMR LIKE :valeurASMR OR valeurASMR IS NULL)
             AND (libelleNiveauSMR LIKE :libelleNiveauSMR OR libelleNiveauSMR IS NULL)
