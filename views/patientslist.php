@@ -57,45 +57,43 @@
 								</div>
 
 								<!-- Filtre -->
-								<div class="dropdown green">
+								<div class="dropdown green z-index-dropdown">
 									<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									Filtres
 									</span>
-									<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									
+									<div class="p-0  dropdown-menu dropdown-menu-end  green text-white no-border" aria-labelledby="dropdownMenuButton1">
+										<div class="d-flex flex-column green p-4">
 										<input type="hidden" name="controller" value="patientslist">
-										<table class="text-white ">
-											<tr>
-												<td>
-													<input type="date" name="dateMin">
-													
-												</td>
-												<td>
-													<input type="date" name="dateMax">
-													
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select name="medecin" class="form-select text-green">
-														<option value="%">MEDECIN</option>
-														<?php
-														while ($row = $medecin->fetch()) {
-															echo "<option value='" . $row['numRPPS'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
-														}
-														?>
-													</select>
-												</td>
-												<td>
-													<select name="pValeurASMR" class="form-select text-green">
-														<option value="%"></option>
-														<?php
-														
-														?>
-													</select>
-												</td>
-											</tr>
-										</table>
+											<table class="text-white ">
+												<tr>
+													<td>
+														<input type="date" class="form-control" name="dateMin">
+													</td>
+													<td>
+														<input type="date" class="form-control" name="dateMax">
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<select name="medecin" class="form-select text-green">
+															<option value="%">MEDECIN</option>
+															<?php
+															while ($row = $medecin->fetch()) {
+																echo "<option value='" . $row['numRPPS'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+															}
+															?>
+														</select>
+													</td>
+													<td>
+														<select name="pValeurASMR" class="form-select text-green">
+															<option value="%"></option>
+															<?php
+															?>
+														</select>
+													</td>
+												</tr>
+											</table>
+										</div>
 									</div>
 								
 								</div>
@@ -115,45 +113,49 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 
-							<div class="overflow-scroll h-50 col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 border-2 p-5">
+								<div class=" h-50 table-responsive">
 								<table class="table table-striped lightGreen">
+									<thead class="sticky-top bg-white text-dark  ">
 									<tr>
-										<th>numSecu</th>
-										<th>Lieu Naissance</th>
-										<th>nom</th>
-										<th>prenom</th>
-										<th>dateNaissance</th>
-										<th>adresse</th>
-										<th>codePostal</th>
-										<th>medecinRef</th>
-										<th>numTel</th>
-										<th>email</th>
+										<th>Numéro de sécurité sociale</th>
+										<th>Nom</th>
+										<th>Prenom</th>
+										<th>Date de naissance</th>
+										<th>Medecin Traitant</th>
+										<th>Numéro de téléphone</th>
+										
+										<th>Adresse</th>
+										
+										
 										<th></th>
 									</tr>
+								</thead>
 									<?php 
 									foreach ($patients as $row) {
 									echo "<tr>"
 											 ."<td>" . $row['numSecu'] . "</td>"
-											 ."<td>" . $row['LieuNaissance'] . "</td>"
+											 
 											 ."<td>" . $row['nom'] . "</td>"
 											 ."<td>" . $row['prenom'] . "</td>"
 											 ."<td>" . $row['dateNaissance'] . "</td>"
+											 ."<td>" . ($row['medecinRef'] != 0 ? $row['medecinRef'] : "Non définie"). "</td>"
+											 ."<td> 0" . $row['numTel'] . "</td>"
+											 
 											 ."<td>" . $row['adresse'] . "</td>"
-											 ."<td>" . $row['codePostal'] . "</td>"
-											 ."<td>" . $row['medecinRef'] . "</td>"
-											 ."<td>" . $row['numTel'] . "</td>"
-											 ."<td>" . $row['email'] ."</td>"
+											 
+											
 									?>
 									<td>
 										
 									
-									<div class="dropdown ">
+									<div class="dropdown  ">
 										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 									
 											more_horiz
 
 										</span>
-										<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
+										<div class="p-0 border-2 dropdown-menu green dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
 											<form action="index.php" action="POST" class="d-flex flex-column green">
 												
 												<table class="text-white ">
@@ -161,11 +163,11 @@
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="goFichePatient">
 														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
-														<tr><input type="submit" value="Afficher"> </tr>
+														<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 													</form>
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
-														<a  href="#exampleModal" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
+														<a  href="#exampleModal" class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
 													</form>
 												</table>
 
@@ -182,7 +184,7 @@
 								</table>
 
 							</div>
-
+							</div>
 
 						</div>
 

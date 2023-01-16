@@ -288,7 +288,7 @@ class PatientsListController
 			$view = $this->goFicheVisite($pdo);
 		} catch (PDOException $e) {
 			$view = $this->goFicheVisite($pdo);
-			$view->setVar("addMedicError","Ce médicament a déjà été ajouter !");
+			$view->setVar("addMedicError","Ce médicament a déjà été ajouté !");
 		}
 
 		

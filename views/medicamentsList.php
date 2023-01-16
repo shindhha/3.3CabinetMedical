@@ -184,7 +184,7 @@
 
 							<div class="col-md-8 col-xl-11 col-sm-7 col-11  ">
 
-								<div class="overflow-scroll h-15 border border-success ">
+								<div class="table-responsive h-15 border border-success ">
 									<table class="table table-striped lightGreen">
 										<thead class="sticky-top bg-white text-dark  ">
 											<tr>
@@ -239,15 +239,15 @@
 															<input type="hidden" name="controller" value="medicamentslist">
 															<input type="hidden" name="action" value="goFicheMedicament">
 															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
-															<tr><input type="submit" value="Afficher"> </tr>
+															<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 														</form>
 														<form action="index.php" action="POST" class="d-flex flex-column green">
 															<input type="hidden" name="controller" value="patientslist">
 															<input type="hidden" name="action" value="visite">
 															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
-															<?php if (isset($ajouter)) {
+															<?php if (isset($_SESSION['idVisite'])) {
 															?>
-																<a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS']  ?>')" role="button">Ajouter</a>
+																<a class="btn btn-primary" class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS']  ?>')" role="button">Ajouter</a>
 															<?php
 															} ?>						
 														</form>

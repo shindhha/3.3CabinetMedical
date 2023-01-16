@@ -43,7 +43,6 @@
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
-						<?php var_dump($_SESSION['patient']) ?>
 						<span class="h1 d-md-block d-none"> Fiche Patient </span>		
 
 					</div>
@@ -123,9 +122,9 @@
 						<div class="row justify-content-center">
 							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
 								<div class="text-dark text-start h2">Liste des visites</div>
-								<div class="overflow-scroll h-50">
+								<div class="table-responsive h-50">
 									<table class="table table-striped lightGreen border-top border-dark">
-										<thead class="sticky-top green">
+										<thead class="sticky-top bg-white text-dark  ">
 											<tr>
 												<th>Motif</th>
 												<th>Date</th>
@@ -146,24 +145,24 @@
 											<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
 												more_horiz
 											</span>
-											<div class="p-0  dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+											<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 												<table class="text-white ">
-													<form action="index.php" action="POST" class="d-flex flex-column green">
+													<form action="index.php" action="POST" >
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="goFicheVisite">
 														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
+														<tr><input class="btn text-white text-decoration-underline text-end" type="submit" name="modif" value="Afficher"> </tr>
 													</form>
-													<form action="index.php" action="POST" class="d-flex flex-column green">
+													<form action="index.php" action="POST" >
 														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<tr><td><a  href="#exampleModal" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </td></tr>
+														<tr><a  href="#exampleModal" data-bs-toggle="modal" class="btn text-white text-decoration-underline text-end" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </tr>
 													</form>
 												</table>			
 											</div>
 										</div>
 										</td>
 										<?php
-												echo "</tr>";
+											echo "</tr>";
 											}
 										?>
 									</table>
