@@ -56,63 +56,10 @@
 								<form>
 									<input type="hidden" name="controller" value="administrateur">
 									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="0">
-									<input type="submit" value="procBDPM">
+									<input type="submit" value="importDesDonnees">
 								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="1">
-									<input type="submit" value="procCIP">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="2">
-									<input type="submit" value="procCOMPO">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="3">
-									<input type="submit" value="procSMR">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="4">
-									<input type="submit" value="procASMR">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="5">
-									<input type="submit" value="procCT">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="6">
-									<input type="submit" value="procGENER">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="7">
-									<input type="submit" value="procCPD">
-								</form>
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="hidden" name="file" value="8">
-									<input type="submit" value="procINFO">
-								</form>
-								
 							</div>
-
-
 						</div>
-
 					</div>
 				</div>
 			</div>

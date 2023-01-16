@@ -151,13 +151,10 @@
 									
 									<div class="dropdown  ">
 										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									
 											more_horiz
-
 										</span>
 										<div class="p-0 border-2 dropdown-menu green dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
 											<form action="index.php" action="POST" class="d-flex flex-column green">
-												
 												<table class="text-white ">
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="patientslist">

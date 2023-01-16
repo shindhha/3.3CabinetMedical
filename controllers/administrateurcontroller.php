@@ -89,24 +89,26 @@ class AdministrateurController
 	public function tryToImport($pdo) {
 
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
-		(int) $file = HttpHelper::getParam('file');
-		$filep = $this->files[$file][0];
-		$function = $this->files[$file][1];
-		$nbParam = $this->files[$file][2];
-		$trimLine = $this->files[$file][3];
-		$iCis = $this->files[$file][4];
-		$bd = $this->files[$file][5];
-		$prefixe = $this->files[$file][6];
-		try {
-			$importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
-			$updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
-			
-			$test = $this->importservice->exportToBD($pdo,$importStmt,$updateStmt,$this->files[$file]);
-			
-		} catch (PDOException $e) {
-			throw new PDOException($e->getMessage(), $e->getCode());
-			
-		}
+        foreach ($this->files as $file) {
+            $filep = $file[0];
+            $function = $file[1];
+            $nbParam = $file[2];
+            $trimLine = $file[3];
+            $iCis = $file[4];
+            $bd = $file[5];
+            $prefixe = $file[6];
+            $this->importservice->download($filep);
+            try {
+                $importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
+                $updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
+                
+                $test = $this->importservice->exportToBD($pdo,$importStmt,$updateStmt,$file);
+                
+            } catch (PDOException $e) {
+                throw new PDOException($e->getMessage(), $e->getCode());
+                
+            }
+        }
 		return $view;
 	}
 

@@ -55,11 +55,11 @@
 						<div>
 							<?php 
 							if ($patient['sexe']) {
-								echo "<span class='material-symbols-outlined font-40' >
+								echo "<span class='material-symbols-outlined display-3 font-40' >
 										man
 									</span>";
 							} else {
-								echo "<span class='material-symbols-outlined font-40'>
+								echo "<span class='material-symbols-outlined display-3 font-40'>
 										woman
 									</span>";
 							}
