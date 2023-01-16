@@ -29,31 +29,14 @@
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">
-				<!-- Bandeau outils -->
-
+				<!-- Bandeau titre -->
 				<div class="row h-15 green">
 					<div class="d-flex justify-content-between align-items-center px-5">
 						<img onclick="manageClass('menu','d-none')" class="d-md-none d-sm-block sizeIcon" src="res/menu.svg">
-						<span class="fs-1 d-md-block d-none"> Liste Patients </span>
-						<div class="d-flex flex-row align-items-center gap-4">
-							<div class="d-flex border-1 bg-white px-2 py-2">
-								<input name="keyWords" type="text" placeholder="Mots clefs" class="border-0 ">
-								<span class="material-symbols-outlined text-dark pointer">search</span>
-
-							</div>
-							<div class="d-flex">
-								<span> Filtres </span>
-								<span  onclick="manageClass('param','d-none')" class="material-symbols-outlined pointer"> expand_more </span>
-								<div id="param" class="bg-white d-none position-absolute bottom-75"> dqsdqsdqs</div>
-							</div>
-							<span class="material-symbols-outlined pointer"> autorenew </span>
-						</div>
-
+						<span class="fs-1 d-md-block d-none"> Connection </span>
 					</div>
-
-
 				</div>
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
+				<span class="fs-1 d-md-none d-sm-block text-green"> Connection </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 
@@ -68,10 +51,6 @@
 									<div class="d-flex gap-3"><img src="res/ipassword.svg" class="sizeIcon"><input name="password" type="password" placeholder="Mot de passe" class="ps-2 border-0 border-1 w-75 pt-2 pb-2"></input></div>
 									<input type="hidden" name="test" value="dqs">
 									<div><button class="border-0 w-50 border-1 text-green fs-3"><u> Valider </u></button></div>
-									<a class="fs-6 text-white"> Mot de passe oublié </a>
-									
-									
-
 								</form>
 							</div>
 

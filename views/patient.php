@@ -43,7 +43,6 @@
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex justify-content-between px-5 container-fluid green">
-						<?php var_dump($_SESSION['patient']) ?>
 						<span class="h1 d-md-block d-none"> Fiche Patient </span>		
 
 					</div>
@@ -56,11 +55,11 @@
 						<div>
 							<?php 
 							if ($patient['sexe']) {
-								echo "<span class='material-symbols-outlined font-40' >
+								echo "<span class='material-symbols-outlined display-3 font-40' >
 										man
 									</span>";
 							} else {
-								echo "<span class='material-symbols-outlined font-40'>
+								echo "<span class='material-symbols-outlined display-3 font-40'>
 										woman
 									</span>";
 							}

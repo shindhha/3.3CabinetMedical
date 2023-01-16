@@ -149,13 +149,10 @@
 									
 									<div class="dropdown ">
 										<span class=" material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									
 											more_horiz
-
 										</span>
 										<div class="p-0  dropdown-menu dropdown-menu-end text-white no-border" aria-labelledby="dropdownMenuButton1">
 											<form action="index.php" action="POST" class="d-flex flex-column green">
-												
 												<table class="text-white ">
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="patientslist">
@@ -165,7 +162,7 @@
 													</form>
 													<form action="index.php" action="POST" class="d-flex flex-column green">
 														<input type="hidden" name="idPatient" value="<?php echo $row['idPatient'] ?>">
-														<a  href="#exampleModal" data-bs-toggle="modal" class="btn green" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
+														<a  href="#exampleModal" data-bs-toggle="modal" class="btn btn-danger" name="modif" onclick="add('<?php echo  $row['nom'] . " " . $row['prenom'] . "','". $row['idPatient']  ?>')">Supprimer</a>
 													</form>
 												</table>
 

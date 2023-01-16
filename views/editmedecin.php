@@ -27,12 +27,12 @@ use yasmf\HttpHelper;
 
             </div>
             <a href="index.php?controller=administrateur" class="green border-1 ratio ratio-1x1">
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
+					<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
 						settings
 					</span>
             </a>
             <a href="index.php?controller=administrateur&action=goListMedecins" class="green border-1 ratio ratio-1x1">
-                    <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+                    <span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
                         groups
                     </span>
             </a>
@@ -88,11 +88,6 @@ use yasmf\HttpHelper;
                                     <input type="text" name="email" value="<?php if(isset($medecin['email'])) echo $medecin['email']; ?>" class="input-grow">
                                 </div>
                             </span>
-                            <form method="post" action="index.php">
-                                <input type="hidden" name="controller" value="administrateur">
-                                <input type="hidden" name="action" value="listMedecins">
-                                <button type="submit">Annuler</button>
-                            </form>
                         </div>
 
                         <div class="d-flex flex-column p-md-5">
@@ -121,15 +116,30 @@ use yasmf\HttpHelper;
                                 <div class="border border-1 border-green enable-flex">
                                     <input type="date" name="dateDebutActivite" max="<?php echo date('Y-m-d'); ?>" value="<?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?>" class="input-grow">
                                 </div>
-                            </span>
-                            <input type="hidden" name="actualLogin" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS'];?>">
-                            <input type="hidden" name="action" value="<?php echo $nextAction ?>">
-                            <input type="hidden" name="controller" value="administrateur">
-
-                            <button type="submit">Valider</button>
+                            </span>  
                         </div>
                     </div>
-                </div>
+                
+                    <div>
+                        <div class="d-flex flex-row justify-content-around">
+                            <div>
+                                <form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="goListMedecins">
+                                    <input type="hidden" name="controller" value="administrateur">
+                                    <button class="btn btn-danger btn-lg" type="submit">Annuler</button>
+                                </form>
+                            </div>
+                            <div>
+                                <form action="index.php" method="post">
+                                    <input type="hidden" name="actualLogin" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS'];?>">
+                                    <input type="hidden" name="action" value="<?php echo $nextAction ?>">
+                                    <input type="hidden" name="controller" value="administrateur">
+                                    <button class="btn btn-success btn-lg" type="submit">Valider</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
             </form>
         </div>
 
