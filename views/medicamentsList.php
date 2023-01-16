@@ -41,151 +41,117 @@
 			<!-- Main page -->
 			<div class="col-md-11 h-100 text-center">
 				<!-- Bandeau outils -->	
-				
-				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 container-fluid green">
-						
+				<nav class="row h-11 navbar navbar-expand-lg navbar-light green">
+					<div class="col-12 d-flex justify-content-center justify-content-md-between px-1 px-md-5 green align-items-center">
+						<span class="material-symbols-outlined d-block d-md-none col-1">menu</span>
 						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
-						
-							<!-- Barre de recherche -->
-						<form class="d-flex align-items-center" action="index.php" method="POST">
-							<div class="d-flex me-2 py-2 px-3 bg-white border-1">
-								<input name="pPresentation" class="no-border" type="search" placeholder="Presentation" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
+						<!-- Barre de recherche -->
+						<form class="d-flex align-items-center justify-content-end" action="index.php" method="POST">
+							<input type="hidden" name="controller" value="medicamentslist">
+							<div class="d-flex me-2 py-2 px-3 bg-white border-1 col-7 col-md-10 justify-content-end">
+								<input name="pPresentation" class="no-border form-control" type="search" placeholder="Presentation" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
 								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 							</div>
-
 							<!-- Filtre -->
-							<div class="dropdown green z-index-dropdown">
-								<span class="p-3 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-									Filtres
-								</span>
-								<div class="p-0  dropdown-menu dropdown-menu-end  green text-white no-border" aria-labelledby="dropdownMenuButton1">
-									<div class="d-flex flex-column green p-4">
-										<input type="hidden" name="controller" value="medicamentslist">
-										<table class="text-white ">
-											<tr>
-												<td>
-													<select name="pEtat" class="form-select text-green">
-														<option value="-1"<?php if ($pEtat == -1) echo "selected='selected'"; ?>>Etat Commercialisation</option>
-														<option value="1" <?php if ($pEtat == 1) echo "selected='selected'"; ?>>Commercialisé</option>
-														<option value="0" <?php if ($pEtat == 0) echo "selected='selected'"; ?>>Non Commercialisé</option>
-													</select>
-													
-												</td>
-												<td>
-													<select name="pSurveillance" class="form-select text-green">
-														<option value="-1"<?php if ($pSurveillance == -1) echo "selected='selected'"; ?>>Surveillance Renforcée</option>
-														<option value="1" <?php if ($pSurveillance == 1) echo "selected='selected'"; ?>>Oui</option>
-														<option value="0" <?php if ($pSurveillance == 0) echo "selected='selected'"; ?>>Non</option>
-													</select>
-													
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select name="pNiveauSmr" class="form-select text-green">
-														<option value="%">Valeur SMR</option>
-														<?php
-														while ($row = $niveauSmr->fetch()) {
-															echo "<option";
-															if ($pNiveauSmr == $row['libelleNiveauSMR']) echo " selected='selected'";
-															echo ">" . $row['libelleNiveauSMR'] . "</option>";
-														}
-														?>
-													</select>
-												</td>
-												<td>
-													<select name="pValeurASMR" class="form-select text-green">
-														<option value="%">Valeur ASMR</option>
-														<?php
-														while ($row = $valeurASMR->fetch()) {
-															echo "<option";
-															if ($pValeurASMR == $row['valeurASMR']) echo " selected='selected'";
-															echo ">" . $row['valeurASMR'] . "</option>";
-														}
-														?>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select name="pformePharma" class="form-select text-green">
-														<option value="%">Forme Pharmacie</option>
-														<?php
-														while ($row = $formePharmas->fetch()) {
-															echo "<option";
-															if ($pformePharma == $row['formePharma']) echo " selected='selected'";
-															echo ">" . $row['formePharma'] . "</option>";
-														}
-														?>
-													</select>
-												</td>
-												<td>
-													<select name="pVoieAdmi" class="form-select text-green">
-														<option value="%">Voie d'administration</option>
-														<?php
-														while ($row = $voieAd->fetch()) {
-															echo "<option";
-															if ($pVoieAdmi == $row['labelVoieAdministration']) echo " selected='selected'";
-															echo ">" . $row['labelVoieAdministration'] . "</option>";
-														}
-														?>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<select name="pTauxRem" class=" form-select text-green ">
-														<option value="">Taux Remboursement</option>
-														<?php
-
-														while ($row = $tauxRemboursements->fetch()) {
-
-															echo "<option";
-															if ($pTauxRem == $row['tauxRemboursement']) echo " selected='selected'";
-															echo ">" . $row['tauxRemboursement'] . "</option>";
-														}
-														?>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="pPrixMin">Prix min :</label>
-													<input type="number" name="pPrixMin" value="<?php echo $pPrixMin; ?>">
-												</td>
-												<td>
-													<label for="pPrixMax">Prix Max :</label>
-													<input type="number" name="pPrixMax" value="<?php echo $pPrixMax; ?>">
-												</td>
-											</tr>
-										</table>
-									</div>
-										
-								</div>
-							</form>
-
-
-						</div>				
-
+							<div class="dropdown-toggle" type="button" id="dropdownMenuClickable" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
+            					Filtres
+            				</div>
+            				<div class="dropdown-menu p-0 z-index-dropdown dropdown-menu-end col-10 col-md-5 "  aria-labelledby="dropdownMenuClickable">
+            					<div class="container-fluid green p-4 z-index-dropdown">
+            						<div class="row gap-1 gap-md-0">
+            							<div class="col-12 col-md-6 d-flex gap-1 flex-column">
+											<select name="pNiveauSmr" class="form-select text-green">
+												<option value="%">Valeur SMR</option>
+												<?php
+												while ($row = $niveauSmr->fetch()) {
+													echo "<option";
+													if ($pNiveauSmr == $row['libelleNiveauSMR']) echo " selected='selected'";
+													echo ">" . $row['libelleNiveauSMR'] . "</option>";
+												}
+												?>
+											</select>
+											<select name="pValeurASMR" class="form-select text-green">
+												<option value="%">Valeur ASMR</option>
+												<?php
+												while ($row = $valeurASMR->fetch()) {
+													echo "<option";
+													if ($pValeurASMR == $row['valeurASMR']) echo " selected='selected'";
+													echo ">" . $row['valeurASMR'] . "</option>";
+												}
+												?>
+											</select>
+											<select name="pVoieAdmi"  class="form-select text-green">
+												<option value="%">Voie d'administration</option>
+												<?php
+												while ($row = $voieAd->fetch()) {
+													echo "<option";
+													if ($pVoieAdmi == $row['labelVoieAdministration']) echo " selected='selected'";
+													echo ">" . $row['labelVoieAdministration'] . "</option>";
+												}
+												?>
+											</select>
+            							</div>
+                						<div class="col-12 col-md-6 d-flex gap-1 flex-column">
+            								<select name="pTauxRem" class=" form-select text-green ">
+												<option value="">Taux Remboursement</option>
+												<?php
+												while ($row = $tauxRemboursements->fetch()) {
+													echo "<option";
+													if ($pTauxRem == $row['tauxRemboursement']) echo " selected='selected'";
+													echo ">" . $row['tauxRemboursement'] . "</option>";
+												}
+												?>
+											</select>
+            								<select name="pformePharma"  class="form-select text-green">
+												<option value="%">Forme Pharmacie</option>
+												<?php
+												while ($row = $formePharmas->fetch()) {
+													echo "<option";
+													if ($pformePharma == $row['formePharma']) echo " selected='selected'";
+													echo ">" . $row['formePharma'] . "</option>";
+												}
+												?>
+											</select>
+											<select name="pSurveillance" class="form-select text-green">
+												<option value="-1"<?php if ($pSurveillance == -1) echo "selected='selected'"; ?>>Surveillance Renforcée</option>
+												<option value="1" <?php if ($pSurveillance == 1) echo "selected='selected'"; ?>>Oui</option>
+												<option value="0" <?php if ($pSurveillance == 0) echo "selected='selected'"; ?>>Non</option>
+											</select>
+											<select name="pEtat" class="form-select text-green">
+												<option value="-1"<?php if ($pEtat == -1) echo "selected='selected'"; ?>>Etat Commercialisation</option>
+												<option value="1" <?php if ($pEtat == 1) echo "selected='selected'"; ?>>Commercialisé</option>
+												<option value="0" <?php if ($pEtat == 0) echo "selected='selected'"; ?>>Non Commercialisé</option>
+											</select>	
+            							</div>
+            							<div class="col-12 d-flex flex-row">
+            								<div class="col-6 text-white">
+												<label for="pPrixMin">Prix min :</label>
+												<input class="form-control" type="number" name="pPrixMin" value="<?php echo $pPrixMin; ?>">
+											</div>
+            								<div class="col-6 text-white">
+												<label for="pPrixMax">Prix Max :</label>
+												<input class="form-control" type="number" name="pPrixMax" value="<?php echo $pPrixMax; ?>">
+											</div>
+            							</div>
+            						</div>
+            					</div>
+            				</div>
+						</form>
 					</div>
 				</nav>
-
-				
 				<!-- content -->
-				<div class="container-fluid">
+				<div class="container-fluid h-100">
 					<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
 					<div class=" d-flex text-green justify-content-start">
 					<?php echo count($drugs) ?> resultats
 					</div>
-					<div class="table-responsive h-50 border border-success">
+					<div class="d-flex h-75 align-items-center">
+						<div class="table-responsive h-75 border border-success align-middle">
 						<table class="table table-striped lightGreen">
-							<thead class="sticky-top bg-white text-dark  ">
+							<thead class=" bg-white text-dark  ">
 								<tr>
 									<th>codeCIS</th>
-									<th>Valeur SMR</th>
-									<th>Valeur ASMR</th>
 									<th>Forme Pharmaceutique</th>
 									<th>Voie d'administration</th>
 									<th>Taux Remboursement</th>
@@ -214,7 +180,6 @@
 												}
 											echo "<tr>"
 												 ."<td>" . $row['codeCIS'] . "</td>"
-                                                 ."<td>" . $row['designation'] . "</td>"
 												 ."<td>" . $row['formePharma'] . "</td>"
 												 ."<td>" . $row['labelVoieAdministration'] . "</td>"
 												 ."<td>" . $row['tauxRemboursement'] . "</td>"
@@ -258,6 +223,8 @@
 							</thead>	
 						</table>
 					</div>
+					</div>
+					
 				</div>
 				
 			</div>

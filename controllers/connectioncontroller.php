@@ -51,7 +51,7 @@ class ConnectionController
     public function index($pdo) {
       $username = HttpHelper::getParam('login');
       $password = HttpHelper::getParam('password');
-      $searchStmt = $this->usersservices->findIfAdminExists($pdo,$username,$password);
+      $searchStmt = $this->usersservices->findIfUserExists($pdo,$username,$password);
       $view = new View("Sae3.3CabinetMedical/views/connection");
 
       if ($searchStmt) {
