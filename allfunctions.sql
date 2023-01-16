@@ -430,6 +430,7 @@ CREATE TABLE ListeVisites (
 CREATE TABLE Cabinet (
 	adresse VARCHAR(25),
 	codePostal INT(5),
+	ville VARCHAR(255),
 	dateOuverture DATE
 );
 CREATE TABLE Ordonnances (
