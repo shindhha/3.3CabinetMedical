@@ -387,6 +387,7 @@ CREATE TABLE Patients (
 	dateNaissance DATE,
 	adresse VARCHAR(50),
 	codePostal INT(5),
+	ville VARCHAR(255),
 	medecinRef INT(11),
 	numTel INT(9),
 	email VARCHAR(50),
