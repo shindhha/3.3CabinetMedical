@@ -76,7 +76,7 @@
 										<input class="form-control" type="number" name="codePostal" min="1001" max="98800" value="<?php if (isset($patient['codePostal'])) echo $patient['codePostal']; ?>">
 									</div>
 									<span class="" >n°Telephone</span>
-									<div><input class="form-control" type="number" name="numTel" min="600000000" max="799999999" value="<?php if (isset($patient['numTel'])) echo $patient['numTel']; ?>">
+									<div><input class="form-control" type="number" name="numTel" min="100000000" max="999999999" value="<?php if (isset($patient['numTel'])) echo $patient['numTel']; ?>">
 									</div>
 									<span class="" >Email</span>
 

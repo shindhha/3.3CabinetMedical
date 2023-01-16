@@ -11,8 +11,16 @@ use Exception;
  */
 class UsersServices
 {
-
-  public function findIfAdminExists($pdo,$username,$password)
+  /**
+   * Cherche à l'interieur de la base de données si le l'utilisateur
+   * '@username' existe et si le '@password' associer est correct .
+   * Cette fonction est utiliser pour se connecter a l'application
+   * @param pdo la connexion a la base de données
+   * @param username l'identifiant de l'utilisateur (numRPPS ou 'admin')
+   * @param password mot de passe de l'utilisateur
+   * @return true si au moin une ligne a été trouver sinon false
+   */
+  public function findIfUserExists($pdo,$username,$password)
   {
     $sql = "SELECT *
          FROM users
@@ -24,6 +32,26 @@ class UsersServices
     return $nbRow >= 1;
   }
 
+
+  /**
+   * Met à jour les données d'un patient dont l'identifiant dans la base de
+   * données correspond a '@patientID'
+   * @param pdo            La connexion a la base de données
+   * @param patientID      Identifiant du patient dans la base de données
+   * @param numSecu        Numéro de sécurité sociale du patient sans sa clé de vérification (13 chiffre)
+   * @param LieuNaissance  Lieu de naissance du patient 
+   * @param nom            Nom du patient
+   * @param prenom         Prenom du patient
+   * @param dateNaissance  Date de naissance du patient 
+   * @param adresse        Adresse du patient 
+   * @param codePostal     Code Postal du patient (entre 01001 et 98800)
+   * @param medecinRef     Le numéro RPPS du Medecin Traitant du patient 
+   * @param numTel         Numéro de téléphone du patient (entre 100000000 et 999999999)
+   * @param email          Email du patient (de la forme %@%.%)
+   * @param sexe           Sexe du patient (0 => Femme ou 1 => Homme)
+   * @param notes          Notes relatives au patient
+   * @throws PDOException Si le numéro de sécurité sociale est invalide (contient des lettres ou contient un nombre de charactère != 13)
+   */
   public function updatePatient($pdo,$patientID,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
     if (!preg_match("#[1-9]{13}#",$numSecu)) {
@@ -60,15 +88,28 @@ class UsersServices
                          'patientID' => $patientID));
 
   }
-
+  /**
+   * Modifie les instruction d'un medicament avec l'identifiant 'codeCIS' 
+   * pour l'ordonnance avec le numéro d'identification 'idVisite'
+   * 
+   * @param pdo         La connexion a la base de données
+   * @param idVisite    Identifiant de la visite dans la base de données
+   *                    (L'identifiant d'une ordonnance est le meme que pour
+   *                     celui de la visite associer) 
+   * @param codeCIS     Identifiant du medicament 
+   * @param instruction Nouvlles intructions du medecin pour se medicament dans cette visite
+   */
   public function editInstruction($pdo,$idVisite,$codeCIS,$instruction)
   {
     $sql = "UPDATE Ordonnances SET instruction = :instruction WHERE idVisite = :idVisite AND codeCIS = :codeCIS";
-
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array('instruction' => $instruction, 'idVisite' => $idVisite, 'codeCIS' => $codeCIS));
   }
 
+  /**
+   * @param pdo La connexion a la base de données
+   * @return La liste des medecins de la base de données
+   */
   public function getMedecins($pdo)
   {
     $sql = "SELECT * 
@@ -76,7 +117,13 @@ class UsersServices
 
     return $pdo->query($sql);
   }
-
+  /**
+   * Supprime le medicament avec l'identifiant 'codeCIS' 
+   * de l'ordonnance avec l'identifiant 'idVisite' 
+   * @param pdo      La connexion a la base de données
+   * @param idVisite L'identifiant de la viste dans la base de données
+   * @param codeCIS  L'identifiant du medicament
+   */
   public function deleteMedicament($pdo,$idVisite,$codeCIS)
   {
     $sql = "DELETE FROM Ordonnances WHERE idVisite = :idVisite AND codeCIS = :codeCIS";
@@ -84,6 +131,13 @@ class UsersServices
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array('idVisite' => $idVisite, 'codeCIS' => $codeCIS));
   }
+  /**
+   * Supprime toute les occurences du patient avec l'identifiant 
+   * 'idPatient' dans la table 'table'
+   * @param pdo   La connexion a la base de données
+   * @param table La table dans laquelle supprimer le patient
+   * @param idPatient L'identifiant du patient a supprimer
+   */
   public function deletePatientFrom($pdo,$table,$idPatient)
   {
     $sql = "DELETE FROM " . $table . " WHERE idPatient = :idPatient";
@@ -91,16 +145,31 @@ class UsersServices
     $stmt->bindParam("idPatient",$idPatient);
     $stmt->execute();
   }
-
+  /**
+   * Insere un nouveau patient dans la base de données
+   * et retourne sont identifiant
+   * @param pdo            La connexion a la base de données
+   * @param numSecu        Numéro de sécurité sociale du patient sans sa clé de vérification (13 chiffre)
+   * @param LieuNaissance  Lieu de naissance du patient 
+   * @param nom            Nom du patient
+   * @param prenom         Prenom du patient
+   * @param dateNaissance  Date de naissance du patient 
+   * @param adresse        Adresse du patient 
+   * @param codePostal     Code Postal du patient (entre 01001 et 98800)
+   * @param medecinRef     Le numéro RPPS du Medecin Traitant du patient (11 chiffre)
+   * @param numTel         Numéro de téléphone du patient (entre 100000000 et 999999999)
+   * @param email          Email du patient (de la forme %@%.%)
+   * @param sexe           Sexe du patient (0 => Femme ou 1 => Homme)
+   * @param notes          Notes relatives au patient
+   * @throws PDOException  Si le numéro de sécurité sociale est invalide (contient des lettres ou contient un nombre de charactère != 13)
+   * @return l'Identifiant Du patient dans la base de données venant d'être crée
+   */
   public function insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
   {
     if (!preg_match("#[1-9]{13}#",$numSecu)) {
       throw new PDOException("Le numéro de sécurité sociale n'est pas valide ! ", 1);
     }
     $sql = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes)";
-    
-
-
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array('numSecu' => $numSecu,
                          'LieuNaissance' => $LieuNaissance,
@@ -118,6 +187,16 @@ class UsersServices
 
   }
 
+  /**
+   * Modifie les informations de la visite avec le numéro d'identification 'idVisite'
+   * 
+   * @param pdo La connexion a la base de données
+   * @param idVisite L'identifiant de la visite dans la base de données
+   * @param motifVisite La raison de la consultation du patient
+   * @param dateVisite  La date a laquelle la visite a été faite
+   * @param Description Description du déroulement de la consultation
+   * @param Conclusion  Le traitement que prescrit le médecin au patient 
+   */
   public function modifVisite($pdo,$idVisite,$motifVisite,$dateVisite,$Description,$Conclusion)
   {
     $sql = "UPDATE Visites 
@@ -134,6 +213,13 @@ class UsersServices
                    'idVisite' => $idVisite));
   }
 
+
+  /**
+   * Supprime toute les occurences de la visite avec l'identifiant 
+   * 'idVisite' dans la table 'table'
+   * @param table     La table dans laquelle supprimer le patient
+   * @param idVisite  L'identifiant de la visite 
+   */
   public function deleteVisiteFrom($pdo,$table,$idVisite)
   {
     $sql = "DELETE FROM " . $table . " WHERE idVisite = :idVisite";
@@ -142,7 +228,17 @@ class UsersServices
     $stmt->bindParam('idVisite',$idVisite);
     $stmt->execute();
   }
-
+  /**
+   * Insere une nouvelle visite pour le patient n° 'idPatient'
+   * dans la base de données et renvoie le numéro de la visite
+   * @param pdo            La connexion a la base de données
+   * @param idVisite       L'identifiant de la visite dans la base de données
+   * @param motifVisite    La raison de la consultation du patient
+   * @param dateVisite     La date a laquelle la visite a été faite
+   * @param Description    Description du déroulement de la consultation
+   * @param Conclusion     Le traitement que prescrit le médecin au patient 
+   * @return L'identifiant de la visite venant d'être insérer
+   */
   public function insertVisite($pdo,$idPatient,$motifVisite,$dateVisite,$Description,$Conclusion)
   {
     $sql1 = "INSERT INTO Visites (motifVisite,dateVisite,Description,Conclusion)
@@ -163,7 +259,14 @@ class UsersServices
     $stmt->execute(array('idPatient' => $idPatient));
     return $lastInsertId;
   }
-
+  /**
+   * @param pdo La connexion à la base de données
+   * @param idVisite Identifiant de l'ordonnance dans la base de données
+   *                 (L'identifiant d'une ordonnance est le meme que pour
+   *                  celui de la visite associer)
+   * @return La designation , la presentation , et les instruction du medecin associer
+   *         precedement ajouter a l'ordonnance.
+   */
   public function getOrdonnances($pdo,$idVisite)
   {
     $sql = "SELECT DISTINCT(Ordonnances.codeCIS),instruction,designation,libellePresentation
@@ -183,7 +286,12 @@ class UsersServices
 
     return $stmt->fetchAll();
   }
-
+  /**
+   * Retourne la liste des visites du patient avec l'identifiant 'idPatient'
+   * @param pdo La connexion à la base de données
+   * @param idPatient Identifiant du patient dans la base de données
+   * @return La liste des visites du patient dans le cabinet
+   */
   public function getVisites($pdo,$idPatient)
   {
     $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
@@ -198,26 +306,49 @@ class UsersServices
 
     return $stmt->fetchAll();
   }
-  public function getVisite($pdo,$idPatient,$idVisite)
+
+  /**
+   * Retourne les informations de la visite avec l'identifiant
+   * 'idVisite'
+   * @param pdo La connexion à la base de données
+   * @param idVisite Identifiant de la visite dans la base de données
+   * @return Le motif de la visite , la date a laquelle elle a été réaliser
+   *         La description du déroulement de la consultation
+   *         Le traitement que prescrit le médecin au patient 
+   */
+  public function getVisite($pdo,$idVisite)
   {
     $sql = "SELECT motifVisite,dateVisite,Description,Conclusion,Visites.idVisite
             FROM Visites
-            JOIN ListeVisites
-            ON ListeVisites.idVisite = Visites.idVisite
-            WHERE idPatient = :idPatient
-            AND Visites.idVisite = :idVisite";
+            WHERE idVisite = :idVisite";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam("idPatient",$idPatient);
     $stmt->bindParam("idVisite",$idVisite);
     $stmt->execute();
 
     return $stmt->fetch();
   }
-
+  /**
+   * Retourne les information du patient avec l'identifiant 'idPatient'
+   * @param pdo La connexion à la base de données
+   * @param idPatient Identifiant du patient dans la base de données
+   * @return Numéro de sécurité sociale du patient sans sa clé de vérification (13 chiffre)
+   *         Lieu de naissance du patient 
+   *         Nom du patient
+   *         Prenom du patient
+   *         Date de naissance du patient 
+   *         Adresse du patient 
+   *         Code Postal du patient (entre 01001 et 98800)
+   *         Le numéro RPPS du Medecin Traitant du patient (11 chiffre)
+   *         Numéro de téléphone du patient (entre 100000000 et 999999999)
+   *         Email du patient (de la forme %@%.%)
+   *         Sexe du patient (0 => Femme ou 1 => Homme)
+   *         Notes relatives au patient
+   * 
+   */
   public function getPatient($pdo,$idPatient)
   {
-    $sql = "SELECT idPatient, Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
+    $sql = "SELECT Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
             FROM Patients
             WHERE Patients.idPatient LIKE :idPatient";
 
@@ -306,6 +437,32 @@ class UsersServices
       return $stmt->fetch();
   }
 
+  /**
+   * Recherche dans la base de données les patients répondant au différents
+   * critère si dessous.
+   * On tire ces informations du formulaire n°
+   * La recherche autorise en réalité l'inversion des nom/prenom
+   * lors de la recherche.
+   *                   Nom    Prenom
+   * Ex :   Le patient Dupont Moretti est stocker dans la base de données
+   * Si les information fournit : prenom = Dupont et nom = Moretti
+   * Alors le patient sera tout de même retourner 
+   * Cela permet d'eviter certaine potentielles erreur de saisi
+   * @param pdo             La connexion a la base de données
+   * @param nom             Le nom du patient rechercher
+   * @param prenom          Le prenom du patient rechercher
+   * @param medecinTraitant Le medecin traitant du patient rechercher
+   *                        Le medecin doit faire partie du cabinet
+   * 
+   * @return L'identifiant des patients             
+   *         Leurs numéro de sécurités sociales
+   *         Leurs lieu de naissances
+   *         Leurs nom , prenom                    qui répondent aux critères
+   *         Leurs date de Naissance
+   *         Leurs medecin traitant
+   *         Leurs numéro de téléphone
+   *         Leurs adresse 
+   */        
   public function getListPatients($pdo,$medecinTraitant,$nom,$prenom)
   {
     $sql = "SELECT idPatient, Patients.numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes
