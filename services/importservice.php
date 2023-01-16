@@ -109,7 +109,11 @@ class ImportService
 		foreach ($lines as $line) {
 			$args = $this->FormatLine($line,$trimLine);
 			$calledFunction = "";
-			$d = $this->idExists($pdo,$table,$idName,$args[$iCis]);
+            if ($table == "CIS_HAS_SMR" || $table == "CIS_HAS_ASR") {
+                $d = $this->idExists($pdo, $table, "codeHAS", $args[1]) && $this->idExists($pdo, $table, "codeCIS", $args[0]);
+            } else {
+                $d = $this->idExists($pdo, $table, $idName, $args[$iCis]);
+            }
 			try {
 				$pdo->beginTransaction();
 
