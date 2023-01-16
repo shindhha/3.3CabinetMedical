@@ -132,12 +132,6 @@ class ImportService
 			} catch (PDOException $e) {
 				$pdo->rollback();
 				$this->insertError($pdo,$calledFunction . " Code cis n° :  " . $args[$iCis]  ,$e->getCode(),$e->getMessage());
-				
-				
-				
-
-
-				
 			}
 			
 		}
