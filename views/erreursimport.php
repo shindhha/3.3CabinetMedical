@@ -77,10 +77,10 @@ use yasmf\HttpHelper;
                                 <input type="submit" class="btn btn-danger" value="Deconnexion">
                         </form>
                         <form>
-                                <input type="hidden" name="controller" value="administrateur">
-                                <input type="hidden" name="action" value="importAll">
-                                <input type="submit" class="material-symbols-outlined" value="download">
-                            </form>
+                            <input type="hidden" name="controller" value="administrateur">
+                            <input type="hidden" name="action" value="importAll">
+                            <input type="submit" class="material-symbols-outlined" value="download">
+                        </form>
                     </div>
                 </nav>
 

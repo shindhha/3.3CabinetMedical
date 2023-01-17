@@ -170,11 +170,11 @@
 						<table class="table table-striped lightGreen">
 							<thead class="sticky-top bg-white text-dark  ">
 								<tr>
-									<th>codeCIS</th>
 									<th>Forme Pharmaceutique</th>
 									<th>Voie d'administration</th>
 									<th>Taux Remboursement</th>
 									<th>Prix</th>
+                                    <th>Designation</th>
 									<th>Presentation </th>
 									<th>Etat Commercialisation </th>
 									<th>Surveillance Renforcé</th>
@@ -198,11 +198,11 @@
 													$surveillance = "NON";
 												}
 											echo "<tr>"
-												 ."<td>" . $row['codeCIS'] . "</td>"
 												 ."<td>" . $row['formePharma'] . "</td>"
 												 ."<td>" . $row['labelVoieAdministration'] . "</td>"
 												 ."<td>" . $row['tauxRemboursement'] . "</td>"
 												 ."<td>" . $row['prix'] . "</td>"
+                                                 ."<td>" . $row['designation'] . "</td>"
 												 ."<td>" . $row['libellePresentation'] . "</td>"
 												 ."<td>" . $commercialiser . "</td>"
 												 ."<td>" . $surveillance . "</td>"

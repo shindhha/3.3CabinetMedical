@@ -89,7 +89,7 @@ class AdministrateurController
 
 	public function importAll($pdo) {
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
-
+        $this->importservice->prepareImport($pdo);
         foreach ($this->files as $file) {
             $filep = $file[0];
             $function = $file[1];
@@ -97,17 +97,13 @@ class AdministrateurController
             $trimLine = $file[3];
             $iCis = $file[4];
             $bd = $file[5];
-            $prefixe = $file[6];
             $this->importservice->download($filep);
             try {
                 $importStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,true);
                 $updateStmt = $this->importservice->constructSQL($pdo,$nbParam,$function,false);
-                
                 $test = $this->importservice->exportToBD($pdo,$importStmt,$updateStmt,$file);
-                
             } catch (PDOException $e) {
-                throw new PDOException($e->getMessage(), $e->getCode());
-                
+                echo $e->getMessage() . " " . $e->getCode() . " " . $e->getLine() . "<br><br>";
             }
         }
 		return $view;
