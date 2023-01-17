@@ -11,7 +11,7 @@
 <div style="width: 100%;" class="border-bottom">
     <div align="left" style="width: 50%;float: left;">
         <p>
-            Dr. <?php $medecin['nom'] . " " . $medecin['prenom'] ?>e<br>
+            Dr. <?php echo $medecin['nom'] . " " . $medecin['prenom'] ?><br>
             <?php echo $medecin['activite'] ?><br>
             <?php echo wordwrap("0".$medecin['numTel'], 2, '.', true) ?>
         </p>
@@ -19,8 +19,8 @@
 
     <div align="left" style="width: 50%;float: left;">
         <br>
-        Addr1<br>
-        Addr2zzz<br>
+        <?php echo $cabinet['adresse'] ?><br>
+        <?php echo $cabinet['codePostal'] . " " . $cabinet['ville']?> <br>
     </div>
 </div>
 
@@ -33,17 +33,15 @@
         <?php echo wordwrap("0".$patient['numTel'], 2, '.', true)?>
     </div>
 
-    <?php // nom,prenom,adresse,codePostal,ville,numTel ?>
-
     <div align="left" style="width: 50%;float: left;">
         <br>
         <br>
         <br>
-        A $cabinet['ville'], le <?php echo date("d/m/Y") ?>
+        A <?php echo $cabinet['ville'] ?>, le <?php echo date("d/m/Y") ?>
     </div>
 </div>
 
-<div class="mt-5 pt-5">
+<div style="width: 100%" class="mt-5 pt-5">
     <?php
     foreach ($medicaments as $medicament) {
         echo "<div class='pb-4'>";

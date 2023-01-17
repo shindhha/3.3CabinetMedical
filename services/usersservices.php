@@ -619,11 +619,13 @@ class UsersServices
       $stmt_medecin->execute(array("idMedecin" => 1)); // TODO : changer pour prendre le bon medecin
       $medecin = $stmt_medecin->fetch();
 
+
       $sql_patient = "SELECT nom,prenom,adresse,codePostal,ville,numTel
                     FROM Patients
                     WHERE idPatient = :idPatient";
       $stmt_patient = $pdo->prepare($sql_patient);
       $stmt_patient->execute(array("idPatient" => $patient));
+
       $patient = $stmt_patient->fetch();
 
       $sql_medicaments = "SELECT instruction, designation FROM Ordonnances
@@ -634,7 +636,14 @@ class UsersServices
         $stmt_medicaments->execute(array("idVisite" => $visite));
         $medicaments = $stmt_medicaments->fetchAll();
 
+        $sql_cabinet = "SELECT adresse,codePostal,ville
+                        FROM Cabinet";
+        $stmt_cabinet = $pdo->prepare($sql_cabinet);
+        $stmt_cabinet->execute();
+        $cabinet = $stmt_cabinet->fetch();
+
     $mpdf = new \Mpdf\Mpdf();
+    $mpdf->debug = true;
 
     // Start buffering HTML code
     ob_start();
@@ -644,8 +653,6 @@ class UsersServices
     $html = ob_get_contents();
     // Stop buffering
     ob_end_clean();
-
-
 
     $mpdf->WriteHTML($html);
     //$mpdf->Output();
