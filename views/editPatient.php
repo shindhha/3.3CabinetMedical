@@ -90,7 +90,7 @@
                                         <span class="" >Ville</span>
                                         <div>
                                             <?php if (isset($villeError)) echo $villeError; ?>
-                                            <input class="form-control" type="text" name="codePostal" min="1001" max="98800" value="<?php if (isset($patient['ville'])) echo $patient['ville']; ?>">
+                                            <input class="form-control" type="text" name="ville" min="1001" max="98800" value="<?php if (isset($patient['ville'])) echo $patient['ville']; ?>">
                                         </div>
 										<span class="" >n°Telephone</span>
 										<div><input class="form-control" type="number" name="numTel" max="999999999" value="<?php if (isset($patient['numTel'])) echo $patient['numTel']; ?>">

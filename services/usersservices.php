@@ -541,7 +541,7 @@ class UsersServices
   }
   public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1,$valeurASMR = "%",$libelleNiveauSMR = "%", $libellePresentation = "%")
   {
-    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,codeCIP7
+    $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,codeCIP7,designation
             FROM listMedic
             WHERE (formePharma LIKE :formePharma OR formePharma IS NULL)
             AND (labelVoieAdministration LIKE :labelVoieAdministration OR labelVoieAdministration IS NULL)
@@ -572,7 +572,7 @@ class UsersServices
       $sql = $sql . " AND surveillanceRenforcee = :surveillanceRenforcee";
       $param['surveillanceRenforcee'] = $surveillanceRenforcee;
     }
-    $sql .= " LIMIT 50";
+    $sql .= " LIMIT 1000";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($param);
 
