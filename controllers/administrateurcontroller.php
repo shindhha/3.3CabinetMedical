@@ -65,11 +65,26 @@ class AdministrateurController
 	public function index($pdo) {      
 
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
+
+        
+
+        
+
         if (!isset($_SESSION['admin'])) {
             $view = new View("Sae3.3CabinetMedical/views/connection");
         }
 		return $view;
 	}
+
+    public function insertCabinet($pdo)
+    {
+        $adresse = HttpHelper::getParam("adresse");
+        $codePostal = HttpHelper::getParam("codePostal");
+        $ville = HttpHelper::getParam("ville");
+        $dateOuverture = HttpHelper::getParam("dateOuverture");
+        $this->adminservice->insertInformationCabinet($pdo,$adresse,$codePostal,$ville,$dateOuverture);
+        return $this->index($pdo);
+    }
 
 
 	public function importAll($pdo) {

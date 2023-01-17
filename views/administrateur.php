@@ -87,15 +87,16 @@
 					<!-- Portail de connexion -->
 					<div class="container">
 						<div class="row justify-content-center">
-
-							<div class="col-md-10 col-xl-6 col-sm-7 col-12 green border-2 p-5">
-								<form>
-									<input type="hidden" name="controller" value="administrateur">
-									<input type="hidden" name="action" value="tryToImport">
-									<input type="submit" value="importDesDonnees">
-								</form>
-							</div>
-                            <a href="index.php?controller=administrateur&action=goErreursImport">Voir les erreurs d'importations</a>
+							<form>
+								<input class="form-control" type="date" max="<?php echo date('Y-m-d'); ?>" name="dateOuverture" value="<?php if (isset($patient['dateNaissance'])) echo $patient['dateNaissance']; ?>">
+								<input class="form-control" type="text" name="ville" min="1001" max="98800" value="<?php if (isset($patient['ville'])) echo $patient['ville']; ?>">
+								<input class="form-control" type="text" name="adresse" value="<?php if (isset($patient['adresse'])) echo $patient['adresse']; ?>">
+								<input class="form-control" type="number" name="codePostal" min="1001" max="98800" value="<?php if (isset($patient['codePostal'])) echo $patient['codePostal']; ?>">
+								<input type="hidden" name="controller" value="administrateur">
+								<input type="hidden" name="action" value="insertCabinet">
+								<input type="submit" value="Inserer">
+							</form>
+                          
 						</div>
 					</div>
 				</div>

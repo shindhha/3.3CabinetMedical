@@ -75,7 +75,7 @@
 				<div class="row d-flex flex-column gap-3 mx-auto col-8">
 					<div class="d-flex flex-row justify-content-between text-dark px-5">				
 						<span>Motif : <?php echo $visite['motifVisite'] ; ?></span>
-						<span>Date :  <?php echo date("d/m/Y", strtotime($visite['dateVisite']))?></span>
+						<span>Date :  <?php echo $visite['dateVisite']?></span>				
 					</div>
 					<div class="d-flex flex-column text-start text-dark d-flex flex-column gap-3">
 						Description
@@ -146,6 +146,13 @@
 									</table>
 								</div>
 								<div class="d-flex flex-row justify-content-end ">
+									<div class="d-flex me-2 py-2 px-3 border-1 green">
+										<form>
+											<input type="hidden" name="controller" value="patientslist">
+											<input type="hidden" name="action" value="generatePdf">
+											<input type="submit" class="green no-border text-white"  value="Télécharger l'ordonnance">
+										</form>
+									</div>
 									<div class="d-flex me-2 py-2 px-3 border-1 green">
 										<form>
 											<input type="hidden" name="idVisite" value="<?php echo $visite['idVisite'] ?>">
