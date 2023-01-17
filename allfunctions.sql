@@ -436,9 +436,9 @@ CREATE TABLE Cabinet (
 );
 CREATE TABLE Ordonnances (
 	idVisite INT,
-	codeCIS INT,
+	codeCIP7 INT,
 	instruction TEXT,
-	PRIMARY KEY (idVisite,codeCIS)
+	PRIMARY KEY (idVisite,codeCIP7)
 );
 CREATE TABLE users (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -447,7 +447,6 @@ CREATE TABLE users (
 
 );
 ALTER TABLE Medecins ADD CONSTRAINT FK_Medecins_Users FOREIGN KEY (idUser) REFERENCES users(id);
-ALTER TABLE Ordonnances ADD CONSTRAINT FK_Ordonnances_Medicaments FOREIGN KEY (codeCIS) REFERENCES CIS_BDPM(codeCIS);
 ALTER TABLE Patients ADD CONSTRAINT CK_Email_Patients CHECK (email LIKE '%@%.%');
 ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Medecins FOREIGN KEY (idMedecin) REFERENCES Medecins(idMedecin);
 ALTER TABLE ListeVisites ADD CONSTRAINT FK_ListeVisites_Visites FOREIGN KEY (idVisite) REFERENCES Visites(idVisite);

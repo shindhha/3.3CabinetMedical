@@ -1,6 +1,6 @@
 DROP VIEW IF EXISTS listMedic;
 CREATE VIEW listMedic as
-select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,designation from CIS_BDPM
+select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,designation,codeCIP7 from CIS_BDPM
 LEFT JOIN CIS_CIP_BDPM
 ON CIS_BDPM.codeCIS = CIS_CIP_BDPM.codeCIS
 LEFT JOIN CIS_VoieAdministration
