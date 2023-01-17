@@ -322,4 +322,13 @@ class PatientsListController
 		return $this->goFicheVisite($pdo);
 	}
 
+    public function generatePdf($pdo) {
+        $visite = $_SESSION['idVisite'];
+        $patient = $_SESSION['idPatient'];
+        $pdf = $this->usersservices->generatePdf($pdo,$visite,$patient);
+
+        $view = $this->goFichePatient($pdo);
+        //return $view;
+    }
+
 }

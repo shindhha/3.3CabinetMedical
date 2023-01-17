@@ -27,7 +27,6 @@ class AdminService
         $stmt->bindParam("idMedecin",$idMedecin);
         $stmt->execute();
     }
-
     public function updateUser($pdo,$idUser,$login,$password)
     {
         $sql = "UPDATE users 
@@ -153,6 +152,13 @@ class AdminService
         $stmt->bindParam('dateDebutActivites', $dateDebutActivites);
         $stmt->execute();
         return $pdo->lastInsertId();
+    }
+
+    public function getErreursImportShort($pdo) {
+        $sql = "SELECT messageErreur, COUNT(messageErreur) as nbreErreurs FROM ErreursImportation GROUP BY messageErreur ORDER BY nbreErreurs DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     private static $defaultAdminService ;
