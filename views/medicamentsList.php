@@ -149,7 +149,7 @@
 					<div class="d-flex h-75 align-items-center">
 						<div class="table-responsive h-75 border border-success align-middle">
 						<table class="table table-striped lightGreen">
-							<thead class=" bg-white text-dark  ">
+							<thead class="sticky-top bg-white text-dark  ">
 								<tr>
 									<th>codeCIS</th>
 									<th>Forme Pharmaceutique</th>
@@ -219,8 +219,7 @@
 										<?php 
 												echo "</tr>";
 											} 
-										?>
-							</thead>	
+										?>	
 						</table>
 					</div>
 					</div>
