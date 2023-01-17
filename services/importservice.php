@@ -97,6 +97,13 @@ class ImportService
 		return $args;
 	}
 
+    public function prepareImport($pdo) {
+        $sql = "CALL PREPARE_IMPORT()";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+    }
+
 	public function exportToBD($pdo,$importStmt,$updateStmt,$param) {
 		$trimLine = $param[3];
 		$iCis = $param[4];
@@ -109,6 +116,7 @@ class ImportService
 		$file = fopen(ImportService::$path.$fileName, "r");
 		$content = fread($file, filesize(ImportService::$path.$fileName));
 		$lines = explode("\n", $content);
+
 		foreach ($lines as $line) {
 			$args = $this->FormatLine($line,$trimLine);
 			$calledFunction = "";
