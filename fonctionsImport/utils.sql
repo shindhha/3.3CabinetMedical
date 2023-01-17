@@ -3,6 +3,8 @@ DROP FUNCTION IF EXISTS NB_OCCURENCES//
 DROP FUNCTION IF EXISTS SPLIT_EXPLODE//
 DROP FUNCTION IF EXISTS INSERT_CODE_SUBSTANCE//
 DROP FUNCTION IF EXISTS NB_OCCURENCES//
+DROP PROCEDURE IF EXISTS PREPARE_IMPORT//
+
 
 /* Fonction qui permet d'obtenir le nombre d'occurences d'un caractère dnas une chaine de caractères*/
 CREATE FUNCTION NB_OCCURENCES(chaine TEXT, caractere TEXT) RETURNS INTEGER DETERMINISTIC
@@ -53,4 +55,19 @@ BEGIN
     INSERT INTO CodeSubstance (idSubstance, varianceNom, codeSubstance) VALUES (N_idSubstance, currentVariance, N_libelle);
 
     RETURN currentVariance;
+end //
+
+CREATE PROCEDURE PREPARE_IMPORT()
+BEGIN
+
+    SET FOREIGN_KEY_CHECKS = 0;
+    DROP TABLE ErreursImportation;
+    DROP TABLE CIS_HAS_SMR;
+    DROP TABLE CIS_HAS_ASMR;
+    DROP TABLE MotifEval;
+    DROP TABLE NiveauSMR;
+    DROP TABLE LibelleAsmr;
+    DROP TABLE LibelleSmr;
+    SET FOREIGN_KEY_CHECKS = 1;
+
 end //

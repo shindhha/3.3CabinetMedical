@@ -459,7 +459,7 @@ ALTER TABLE Medecins ADD CONSTRAINT CK_Email_Medecins CHECK (email LIKE '%@%.%')
 DROP VIEW IF EXISTS listMedic;
 
 CREATE VIEW listMedic as
-select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,designation from CIS_BDPM
+select CIS_BDPM.codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,designation,codeCIP7 from CIS_BDPM
 LEFT JOIN CIS_CIP_BDPM
 ON CIS_BDPM.codeCIS = CIS_CIP_BDPM.codeCIS
 LEFT JOIN CIS_VoieAdministration
@@ -601,6 +601,22 @@ BEGIN
 return RETURN_CODE;
 
 END//
+
+DROP PROCEDURE IF EXISTS PREPARE_IMPORT//
+CREATE PROCEDURE PREPARE_IMPORT()
+BEGIN
+
+    SET FOREIGN_KEY_CHECKS = 0;
+    TRUNCATE ErreursImportation;
+    TRUNCATE CIS_HAS_SMR;
+    TRUNCATE CIS_HAS_ASMR;
+    TRUNCATE MotifEval;
+    TRUNCATE NiveauSMR;
+    TRUNCATE LibelleAsmr;
+    TRUNCATE LibelleSmr;
+    SET FOREIGN_KEY_CHECKS = 1;
+
+END //
 
 DROP FUNCTION IF EXISTS updateCT//
 CREATE FUNCTION updateCT(
@@ -1608,3 +1624,7 @@ BEGIN
 return RETURN_CODE;
 
 END//
+
+DELIMITER ;
+
+INSERT INTO users (id, login, password) VALUES (1, 'admin', MD5('admin'));
