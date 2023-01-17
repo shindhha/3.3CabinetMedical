@@ -62,7 +62,6 @@ CREATE TABLE Cabinet (
 	adresse VARCHAR(25),
 	codePostal INT,
 	ville VARCHAR(255),
-	dateOuverture DATE
 );
 CREATE TABLE Ordonnances (
 	idVisite INT,

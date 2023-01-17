@@ -431,8 +431,7 @@ CREATE TABLE ListeVisites (
 CREATE TABLE Cabinet (
 	adresse VARCHAR(255),
 	codePostal INT,
-	ville VARCHAR(255),
-	dateOuverture DATE
+	ville VARCHAR(255)
 );
 CREATE TABLE Ordonnances (
 	idVisite INT,
@@ -1628,3 +1627,4 @@ END//
 DELIMITER ;
 
 INSERT INTO users (id, login, password) VALUES (1, 'admin', MD5('admin'));
+INSERT INTO Cabinet (adresse, codePostal, ville) VALUE ('1 rue de la paix', '75000', 'Paris');
