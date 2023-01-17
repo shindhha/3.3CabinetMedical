@@ -78,7 +78,7 @@ use yasmf\HttpHelper;
                             </span>
                             <span> Téléphone
                                 <div class="border border-1 border-green enable-flex">
-                                    <input type="number" name="numTel" min="600000000" max="799999999" value="<?php if(isset($medecin['numTel'])) echo $medecin['numTel'];?>" class="input-grow">
+                                    <input type="number" name="numTel" min="100000000" max="799999999" value="<?php if(isset($medecin['numTel'])) echo $medecin['numTel'];?>" class="input-grow">
                                 </div>
                             </span>
                             <span>

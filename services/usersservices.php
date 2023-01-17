@@ -164,12 +164,12 @@ class UsersServices
    * @throws PDOException  Si le numéro de sécurité sociale est invalide (contient des lettres ou contient un nombre de charactère != 13)
    * @return l'Identifiant Du patient dans la base de données venant d'être crée
    */
-  public function insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes)
+  public function insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$ville,$medecinRef,$numTel,$email,$sexe,$notes)
   {
     if (!preg_match("#[1-9]{13}#",$numSecu)) {
       throw new PDOException("Le numéro de sécurité sociale n'est pas valide ! ", 1);
     }
-    $sql = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes)";
+    $sql = "INSERT INTO Patients (numSecu,LieuNaissance,nom,prenom,dateNaissance,adresse,codePostal,medecinRef,numTel,email,sexe,notes,ville) VALUES (:numSecu,:LieuNaissance,:nom,:prenom,:dateNaissance,:adresse,:codePostal,:medecinRef,:numTel,:email,:sexe,:notes, :ville)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array('numSecu' => $numSecu,
                          'LieuNaissance' => $LieuNaissance,
@@ -182,7 +182,9 @@ class UsersServices
                          'numTel' => $numTel,
                          'email' => $email,
                          'sexe' => $sexe,
-                         'notes' => $notes));
+                         'notes' => $notes,
+                         'ville' => $ville)
+    );
     return $pdo->lastInsertId();
 
   }

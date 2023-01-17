@@ -99,10 +99,11 @@ class PatientsListController
 		$LieuNaissance = HttpHelper::getParam("LieuNaissance");
 		$notes = HttpHelper::getParam("notes");
 		$codePostal = HttpHelper::getParam("codePostal");
+        $ville = HttpHelper::getParam("ville");
 		$sexe = (int) HttpHelper::getParam("sexe");
 
 		try {
-			$_SESSION['idPatient'] = $this->usersservices->insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$medecinRef,$numTel,$email,$sexe,$notes);
+			$_SESSION['idPatient'] = $this->usersservices->insertPatient($pdo,$numSecu,$LieuNaissance,$nom,$prenom,$dateNaissance,$adresse,$codePostal,$ville,$medecinRef,$numTel,$email,$sexe,$notes);
 
 			$view = $this->goFichePatient($pdo);
 
@@ -182,7 +183,7 @@ class PatientsListController
 	public function goEditPatient($pdo,$action = "")
 	{
 		$view = new View("Sae3.3CabinetMedical/views/editPatient");
-		$patient;
+
 		$nextAction = HttpHelper::getParam("nextAction")?: $action;
 		if ($nextAction == "addPatient") {
 			$patient['numSecu'] = HttpHelper::getParam("numSecu");
@@ -192,6 +193,7 @@ class PatientsListController
 			$patient['dateNaissance'] = HttpHelper::getParam("dateNaissance");
 			$patient['adresse'] = HttpHelper::getParam("adresse");
 			$patient['codePostal'] = HttpHelper::getParam("codePostal");
+            $patient['ville'] = HttpHelper::getParam("ville");
 			$patient['medecinRef'] = HttpHelper::getParam("medecinRef");
 			$patient['numTel'] = HttpHelper::getParam("numTel");
 			$patient['email'] = HttpHelper::getParam("email");
@@ -327,7 +329,7 @@ class PatientsListController
         $pdf = $this->usersservices->generatePdf($pdo,$visite,$patient);
 
         $view = $this->goFichePatient($pdo);
-        //return $view;
+        return $view;
     }
 
 }
