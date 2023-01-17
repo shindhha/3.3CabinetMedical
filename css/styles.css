@@ -35,8 +35,10 @@ body, html {
 	height: 89%;
 }
 
+
+
 .z-index-dropdown {
-	z-index: 9999;
+	z-index: 1050 !important;
 }
 
 .border-1 {

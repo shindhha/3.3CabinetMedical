@@ -21,31 +21,68 @@ use yasmf\HttpHelper;
 <div class="container-fluid h-100  text-white">
     <div class="row h-100">
         <!-- Menu -->
-        <div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
-            <span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
-            <div class=" green border-1 ratio ratio-1x1">
+        <div id="menu" class="pt-3 menu z-index-dropdown col-md-1 col-4 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
+                <span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-block d-md-none text-end w-100">arrow_back</span>
+                <div class=" green border-1 ratio ratio-1x1">
 
-            </div>
-            <a href="index.php?controller=administrateur" class="green border-1 ratio ratio-1x1">
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
-						settings
-					</span>
-            </a>
-            <a href="index.php?controller=administrateur&action=goListMedecins" class="green border-1 ratio ratio-1x1">
-                    <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+                </div>
+                <a href="index.php?controller=administrateur" class="d-md-none">
+                    <div class="text-white green border-1 ratio ratio-1x1">
+                        <span class="d-flex display-3 text-white align-items-center justify-content-center material-symbols-outlined">
+                            article
+                        </span>
+                    </div>
+                </a>
+                <a href="index.php?controller=administrateur&action=goListMedecins" class="d-md-none">
+                    <div  class=" text-white green border-1 ratio ratio-1x1">
+                        <span class="d-flex display-3 text-white justify-content-center align-items-center material-symbols-outlined">
+                            groups
+                        </span>
+                    </div>
+                </a>
+                <a href="index.php?controller=administrateur" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        article
+                    </span>
+                </a>
+                <a href="index.php?controller=administrateur&action=goListMedecins" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
                         groups
                     </span>
-            </a>
-        </div>
+                </a>
+                <a href="index.php?controller=administrateur&action=goErreursImport" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        settings
+                    </span>
+                </a>
+                <a href="index.php?controller=administrateur&action=goErreursImport" class="d-md-none">
+                    <div  class=" text-white green border-1 ratio ratio-1x1">
+                        <span class="d-flex display-3 text-white justify-content-center align-items-center material-symbols-outlined">
+                            groups
+                        </span>
+                    </div>
+                </a>
+            </div>
         <!-- Main page -->
         <div class="col-md-11 h-100 text-center">
             <!-- Bandeau outils -->
 
             <nav class="  row h-11 navbar navbar-expand-lg navbar-light green">
-                <div class="d-flex justify-content-between px-5 container-fluid green">
-                    <span class="h1 d-md-block d-none"> Erreurs d'importations </span>
-                </div>
-            </nav>
+                    <div class="d-flex px-md-5 container-fluid green">
+                        <span class="material-symbols-outlined text-start d-block d-md-none" onclick="manageClass('menu','d-none')">menu</span>
+                        <span class="h1"> Erreurs importations </span>
+                        <form>
+                                <input type="hidden" name="action" value="deconnexion">
+                                <input type="submit" class="btn btn-danger" value="Deconnexion">
+                        </form>
+                        <form>
+                                <input type="hidden" name="controller" value="administrateur">
+                                <input type="hidden" name="action" value="importAll">
+                                <input type="submit" class="material-symbols-outlined" value="download">
+                            </form>
+                    </div>
+                </nav>
 
             <span class="fs-1 d-md-none d-sm-block text-green"> Erreurs d'importations </span>
             <!-- content -->

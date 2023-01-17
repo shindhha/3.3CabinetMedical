@@ -45,6 +45,9 @@ class PatientsListController
 		$medecin = $this->usersservices->getMedecins($pdo);
 		$view->setVar("medecin",$medecin);
 		$view->setVar("patients",$patients);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -82,6 +85,9 @@ class PatientsListController
 		$patient = $this->usersservices->getPatient($pdo,$_SESSION['idPatient']);
 		$view->setVar("visites",$visites);
 		$view->setVar("patient",$patient);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -208,6 +214,9 @@ class PatientsListController
 		
 		$view->setVar("medecins",$medecins);      
 		$view->setVar("action",$nextAction);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -223,6 +232,9 @@ class PatientsListController
 		$view->setVar("visite",$visite);
 		$view->setVar("drugsVisite",$drugsVisite);
 		$view->setVar("patient",$patient);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -243,7 +255,9 @@ class PatientsListController
 		
 		$view->setVar("visite",$visite);
 		$view->setVar("action",$nextAction);
-
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 

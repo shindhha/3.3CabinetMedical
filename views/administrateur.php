@@ -18,21 +18,48 @@
 	<div class="container-fluid h-100  text-white">
 		<div class="row h-100">
 			<!-- Menu -->
-			<div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
-				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
+			<div id="menu" class="pt-3 menu z-index-dropdown col-md-1 col-4 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
+				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-block d-md-none text-end w-100">arrow_back</span>
 				<div class=" green border-1 ratio ratio-1x1">
 
 				</div>
-                <a href="index.php?controller=administrateur" class="green border-1 ratio ratio-1x1">
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
-						settings
-					</span>
+				<a href="index.php?controller=administrateur" class="d-md-none">
+					<div class="text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 text-white align-items-center justify-content-center material-symbols-outlined">
+							article
+						</span>
+					</div>
+				</a>
+				<a href="index.php?controller=administrateur&action=goListMedecins" class="d-md-none">
+					<div  class=" text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 text-white justify-content-center align-items-center material-symbols-outlined">
+							groups
+						</span>
+					</div>
+				</a>
+				<a href="index.php?controller=administrateur" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        article
+                    </span>
                 </a>
-                <a href="index.php?controller=administrateur&action=goListMedecins" class="green border-1 ratio ratio-1x1">
-                    <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
+                <a href="index.php?controller=administrateur&action=goListMedecins" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
                         groups
                     </span>
                 </a>
+                <a href="index.php?controller=administrateur&action=goErreursImport" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        settings
+                    </span>
+                </a>
+                <a href="index.php?controller=administrateur&action=goErreursImport" class="d-md-none">
+					<div  class=" text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 text-white justify-content-center align-items-center material-symbols-outlined">
+							settings
+						</span>
+					</div>
+				</a>
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">
@@ -44,15 +71,17 @@
                         <form action="index.php" method="POST">
                             <input type="hidden" id="controller" value="administrateur">
                             <input type="hidden" id="action" value="importAll">
-                            <button type="submit">
-                                <span class="material-symbols-outlined">download</span>
-                            </button>
-
+							<span class="material-symbols-outlined text-start d-block d-md-none" onclick="manageClass('menu','d-none')">menu</span>
+							<form>
+								<input type="hidden" name="action" value="deconnexion">
+								<input type="submit" class="btn btn-danger" value="Deconnexion">
+							</form>
+							
                         </form>
                     </div>
 				</nav>
 				
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Medicaments </span>
+				<span class="fs-1 d-md-none d-sm-block text-green"> Administrateur </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->

@@ -9,7 +9,7 @@ require_once __DIR__ . '/vendor/autoload.php';
  * Sample without database connexion
  */
  $hostname = "localhost";
- $dbname = "sae";
+ $dbname = "sae_tests";
  $user = "root";
  $password = "root";
  $port = 3306;
