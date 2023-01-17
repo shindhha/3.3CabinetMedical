@@ -218,15 +218,14 @@
 														<form action="index.php" method="POST" class="d-flex flex-column green">
 															<input type="hidden" name="controller" value="medicamentslist">
 															<input type="hidden" name="action" value="goFicheMedicament">
-															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+															<input type="hidden" name="codeCIP7" value="<?php echo $row['codeCIP7'] ?>">
 															<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 														</form>
 														<form action="index.php" method="POST" class="d-flex flex-column green">
-															<input type="hidden" name="controller" value="patientslist">
-															<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+															
 															<?php if (isset($_SESSION['idVisite'])) {
 															?>
-																<a class="btn btn-primary" class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS']  ?>')" role="button">Ajouter</a>
+																<a class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIP7']  ?>')" role="button">Ajouter</a>
 															<?php
 															} ?>						
 														</form>
@@ -265,7 +264,7 @@
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
 		    				<input type="hidden" name="action" value = "addMedicament">
-		    				<input type="hidden" name="codeCIS" value="" id ="code">
+		    				<input type="hidden" name="codeCIP7" value="" id ="code">
 		    			
 		    		</div>
 		    		</form>

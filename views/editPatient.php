@@ -87,14 +87,15 @@
 											<?php if (isset($codePostalError)) echo $codePostalError; ?>
 											<input class="form-control" type="number" name="codePostal" min="1001" max="98800" value="<?php if (isset($patient['codePostal'])) echo $patient['codePostal']; ?>">
 										</div>
+                                        <span class="" >Ville</span>
+                                        <div>
+                                            <?php if (isset($villeError)) echo $villeError; ?>
+                                            <input class="form-control" type="text" name="codePostal" min="1001" max="98800" value="<?php if (isset($patient['ville'])) echo $patient['ville']; ?>">
+                                        </div>
 										<span class="" >n°Telephone</span>
-										<div><input class="form-control" type="number" name="numTel" min="100000000" max="999999999" value="<?php if (isset($patient['numTel'])) echo $patient['numTel']; ?>">
+										<div><input class="form-control" type="number" name="numTel" max="999999999" value="<?php if (isset($patient['numTel'])) echo $patient['numTel']; ?>">
 										</div>
-										<span class="" >Email</span>
-										<div>
-											<?php if (isset($emailError)) echo $emailError; ?>
-											<input class="form-control" type="text" name="email" value="<?php if (isset($patient['email'])) echo $patient['email']; ?>">
-										</div>
+
 								</div>
 								<div class="d-flex flex-column text-start">
 									<span >Medecin Traitant</span>
@@ -126,7 +127,12 @@
 										</div>
 										<span >Lieu Naissance</span>
 										<div><input class="form-control" type="text" name="LieuNaissance" value="<?php if (isset($patient['LieuNaissance'])) echo $patient['LieuNaissance']; ?>">
-										</div>	
+										</div>
+                                        <span>Email</span>
+                                        <div>
+                                            <?php if (isset($emailError)) echo $emailError; ?>
+                                            <input class="form-control" type="text" name="email" value="<?php if (isset($patient['email'])) echo $patient['email']; ?>">
+                                        </div>
 								</div>
 							</div>
 						</div>

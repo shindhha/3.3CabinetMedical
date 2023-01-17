@@ -96,12 +96,11 @@ class medicamentslistController
     {
         $view = new View("Sae3.3CabinetMedical/views/medicament");
 
-        $codeCIS = HttpHelper::getParam("codeCIS");
-        $medicament = $this->usersservices->getMedicament($pdo,$codeCIS);
-        $lteSmr = $this->usersservices->getAllSMR($pdo,$codeCIS);
-        $lteASMR = $this->usersservices->getAllASMR($pdo,$codeCIS);
+        $codeCIP = HttpHelper::getParam("codeCIP7");
+        $medicament = $this->usersservices->getMedicament($pdo,$codeCIP);
+        $lteSmr = $this->usersservices->getAllSMR($pdo,$codeCIP);
+        $lteASMR = $this->usersservices->getAllASMR($pdo,$codeCIP);
 
-        $view->setVar("codeCIS",$codeCIS);
         $view->setVar("medicament",$medicament);
         $view->setVar("lteSmr",$lteSmr);
         $view->setVar("lteASMR",$lteASMR);

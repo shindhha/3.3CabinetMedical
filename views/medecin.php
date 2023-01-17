@@ -97,8 +97,7 @@ use yasmf\HttpHelper;
                         <div class="row d-flex flex-column gap-5 gap-md-0 flex-md-row ">
                             <div class="col-12 col-md-6 d-flex flex-column ">
                                 <h1>Informations personnelles</h1>
-                                <span> Adresse
-                                    <?php var_dump($medecin) ?>
+                                <span> AdresseFAddm
                                     <div class="border border-1 border-green d-flex">
                                         <span> <?php if(isset($medecin['adresse'])) echo $medecin['adresse']; ?>
                                         </span>
