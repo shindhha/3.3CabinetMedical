@@ -86,17 +86,21 @@
 				<div class="row h-100 align-items-center text-center">
 					<!-- Portail de connexion -->
 					<div class="container">
-						<div class="row justify-content-center">
-							<form>
-								<input class="form-control" type="date" max="<?php echo date('Y-m-d'); ?>" name="dateOuverture" value="<?php if (isset($patient['dateNaissance'])) echo $patient['dateNaissance']; ?>">
-								<input class="form-control" type="text" name="ville" min="1001" max="98800" value="<?php if (isset($patient['ville'])) echo $patient['ville']; ?>">
-								<input class="form-control" type="text" name="adresse" value="<?php if (isset($patient['adresse'])) echo $patient['adresse']; ?>">
-								<input class="form-control" type="number" name="codePostal" min="1001" max="98800" value="<?php if (isset($patient['codePostal'])) echo $patient['codePostal']; ?>">
+						<div class="row justify-content-center text-start">
+                            <span class="h1 text-dark">Informations du cabinet</span>
+							<form class="form-control">
+                                <label for="adresse">Adresse : </label>
+                                <input class="form-control" type="text" name="adresse" value="<?php if (isset($cabinet['adresse'])) echo $cabinet['adresse']; ?>">
+                                <label for="codePostal">Code postal : </label>
+                                <input class="form-control" type="number" name="codePostal" min="1001" max="98800" value="<?php if (isset($cabinet['codePostal'])) echo $cabinet['codePostal']; ?>">
+                                <label for="ville">Ville : </label>
+                                <input class="form-control" type="text" name="ville" value="<?php if (isset($cabinet['ville'])) echo $cabinet['ville']; ?>">
 								<input type="hidden" name="controller" value="administrateur">
 								<input type="hidden" name="action" value="insertCabinet">
-								<input type="submit" value="Inserer">
+                                <div class="text-center mt-2">
+                                    <input type="submit" value="Inserer">
+                                </div>
 							</form>
-                          
 						</div>
 					</div>
 				</div>

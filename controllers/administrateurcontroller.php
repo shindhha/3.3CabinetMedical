@@ -65,11 +65,9 @@ class AdministrateurController
 	public function index($pdo) {      
 
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
-
+        $cabinet = $this->adminservice->getInformationCabinet($pdo);
+        $view->setVar("cabinet",$cabinet);
         
-
-        
-
         if (!isset($_SESSION['admin'])) {
             $view = new View("Sae3.3CabinetMedical/views/connection");
         }
@@ -81,8 +79,7 @@ class AdministrateurController
         $adresse = HttpHelper::getParam("adresse");
         $codePostal = HttpHelper::getParam("codePostal");
         $ville = HttpHelper::getParam("ville");
-        $dateOuverture = HttpHelper::getParam("dateOuverture");
-        $this->adminservice->insertInformationCabinet($pdo,$adresse,$codePostal,$ville,$dateOuverture);
+        $this->adminservice->insertInformationCabinet($pdo,$adresse,$codePostal,$ville);
         return $this->index($pdo);
     }
 

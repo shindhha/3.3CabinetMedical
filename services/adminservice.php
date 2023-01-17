@@ -10,11 +10,23 @@ use PDOException;
  */
 class AdminService
 {
-    public function insertInformationCabinet($pdo,$adresse,$codePostal,$ville,$dateOuverture)
+    public function insertInformationCabinet($pdo,$adresse,$codePostal,$ville)
     {
-        $sql = "INSERT INTO cabinet (adresse,codePostal,ville,dateOuverture) VALUES (:adresse,:codePostal,:ville,:dateOuverture)";
+        // Supression des anciennes informations
+        $sql = "DELETE FROM cabinet";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute(["adresse" => $adresse,"codePostal" => $codePostal,"ville" => $ville,"dateOuverture" => $dateOuverture]);
+        $stmt->execute();
+
+        $sql = "INSERT INTO cabinet (adresse,codePostal,ville) VALUES (:adresse,:codePostal,:ville)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(["adresse" => $adresse,"codePostal" => $codePostal,"ville" => $ville]);
+    }
+
+    public function getInformationCabinet($pdo) {
+        $sql = "SELECT * FROM cabinet";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
     public function deleteUser($pdo,$userID)
