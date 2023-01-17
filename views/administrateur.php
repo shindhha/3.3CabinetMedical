@@ -98,7 +98,7 @@
 								<input type="hidden" name="controller" value="administrateur">
 								<input type="hidden" name="action" value="insertCabinet">
                                 <div class="text-center mt-2">
-                                    <input type="submit" value="Inserer">
+                                    <input type="submit" value="Mettre à jour">
                                 </div>
 							</form>
 						</div>
