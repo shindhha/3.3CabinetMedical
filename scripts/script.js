@@ -45,3 +45,10 @@ function add(str, code , instruction = "") {
 	document.getElementById("code").value = code;
 	document.getElementById("instruction").value = instruction;
 }
+
+
+function goTo(action,controller) {
+	document.getElementById("action").value = action;
+	document.getElementById("controller").value = controller;
+
+}

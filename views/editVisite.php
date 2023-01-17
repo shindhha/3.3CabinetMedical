@@ -44,19 +44,15 @@
 				<!-- Bandeau outils -->	
 				
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 container-fluid green">
+					<div class="d-flex justify-content-center justify-content-md-start px-5 container-fluid green">
 						
-						<span class="h1 d-md-block d-none"> Visite n°</span>
-						<div class="d-flex align-items-center">	
-
-						</div>				
-
+						<span class="h1 "> Visite n°</span>
 					</div>
 				</nav>
 				<div class="container-fluid d-flex justify-content-center">
-				<form class=" d-flex flex-column col-8">
-				<div class="flex-row  text-dark  justify-content-center">
-					<div class="d-flex flex-column ">
+				<form class=" d-flex flex-column col-12 col-md-9">
+				<div class="flex-row  text-dark  justify-content-center mb-3">
+					<div class="d-flex flex-column gap-5">
 						<div class="d-flex flex-row justify-content-between ">
 							<div class="d-flex flex-row align-items-center"> 
 							<span>Motif: </span> <input class="form-control" type="text" name="motifVisite" value="<?php if (isset($visite['motifVisite'])) echo $visite['motifVisite']; ?>"> 
@@ -72,11 +68,11 @@
 						</div>
 						<div class="d-flex flex-column text-start">
 							<span>Description</span>
-							<textarea name="Description"><?php if (isset($visite['Description'])) echo $visite['Description']; ?></textarea>
+							<textarea rows="5" name="Description"><?php if (isset($visite['Description'])) echo $visite['Description']; ?></textarea>
 						</div>						
 						<div class="d-flex flex-column text-start	">
 							<span>Conclusion</span>
-							<textarea name="Conclusion"><?php if (isset($visite['Conclusion'])) echo $visite['Conclusion']; ?></textarea>			
+							<textarea rows="5" name="Conclusion"><?php if (isset($visite['Conclusion'])) echo $visite['Conclusion']; ?></textarea>			
 						</div>
 					</div>					
 				</div>
@@ -87,13 +83,13 @@
 					<div class="container ">
 						<div class="row justify-content-center">
 							<div class="d-flex flex-row justify-content-between">
-								<div class="d-flex me-2 py-2 px-3 border-1 green">
-								<input type="submit" class="green no-border text-white" value="Annuler">
+								<div class="d-flex me-2 py-2 px-3 border-1 bg-danger">
+								<input type="submit" class="bg-danger no-border text-white" value="Annuler" onclick="goTo('goFicheVisite','patientslist')">
 								</div>
 								<div class="d-flex me-2 py-2 px-3 border-1 green">
-									<input type="hidden" name="action" value="<?php echo $action ?>">
-									<input type="hidden" name="controller" value="patientslist">
-									<input type="submit" class="green no-border text-white" value="Valider">	
+									<input type="hidden" id="action" name="action" value="<?php echo $action ?>">
+									<input type="hidden" id="controller" name="controller" value="patientslist">
+									<input type="submit" class="green no-border text-white" value="Valider">
 								</div>
 							</div>
 						</div>

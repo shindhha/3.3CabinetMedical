@@ -40,8 +40,8 @@
 			<div class="col-md-11 h-75 text-center  ">
 				<!-- Bandeau outils -->	
 				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 container-fluid green">
-						<span class="h1 d-md-block d-none"> Visite n° </span>		
+					<div class="d-flex justify-content-center justify-content-md-start px-5 container-fluid green">
+						<span class="h1 "> Visite n° </span>		
 					</div>
 				</nav>
 				<!-- Bandeau Patient -->
@@ -52,8 +52,8 @@
 						<div></div>
 					</div>
 				</div>
-				<div class="row d-flex flex-column gap-3 mx-auto col-8">
-					<div class="d-flex flex-row justify-content-between text-dark px-5">				
+				<div class="row d-flex flex-column gap-3 mx-auto col-10 ">
+					<div class="d-flex flex-row justify-content-between text-dark ">				
 						<span>Motif : <?php echo $visite['motifVisite'] ; ?></span>
 						<span>Date :  <?php echo $visite['dateVisite']?></span>				
 					</div>
@@ -73,10 +73,10 @@
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2">
+							<div class=" col-md-11 col-12 success border-2">
 								<div class="text-danger text-start"><?php if(isset($addMedicError)) echo $addMedicError; ?></div>
-								<div class=" text-dark text-start h2"> Liste des medicaments prescrit </div>
-								<div class="table-responsive h-50 ">
+								<div class=" text-dark text-center text-md-start h2"> Liste des medicaments prescrit </div>
+								<div class="table-responsive h-50 mb-2">
 									<table class="table table-striped lightGreen border border-dark">
 										<thead class="sticky-top bg-white text-dark  ">
 											<tr>
@@ -125,7 +125,7 @@
 										?>
 									</table>
 								</div>
-								<div class="d-flex flex-row justify-content-end ">
+								<div class="d-flex flex-row justify-content-center justify-content-md-end ">
 									<div class="d-flex me-2 py-2 px-3 border-1 green">
 										<form>
 											<input type="hidden" name="idVisite" value="<?php echo $visite['idVisite'] ?>">
@@ -162,12 +162,10 @@
 		    			<textarea id="instruction" name="instruction"></textarea>
 		    		</div>
 		    		<div class = "d-flex justify-content-end p-3">
-		    			
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
 		    				<input type="hidden" name="action" value = "editInstruction">
 		    				<input type="hidden" name="codeCIS" value="" id ="code">
-		    			
 		    		</div>
 		    		</form>
 		    	</div>

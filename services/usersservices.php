@@ -456,7 +456,6 @@ class UsersServices
       return $stmt->fetch();
   }
 
-      
   public function getAllSMR($pdo, $codeCIS)
   {
     $sql = "
@@ -577,6 +576,16 @@ class UsersServices
 
     return $stmt->fetchAll();
   }
+  /**
+   * Ajoute le medicament avec l'identifiant 'codeCIS' avec
+   * les 'instruction' ajouter par le medecin à la visite avec 
+   * l'identifiant 'idVisite'
+   * @param pdo         La connexion a la base de données
+   * @param idVisite    L'identifiant de la visite
+   * @param codeCIS     L'identifiant du medicament
+   * @param instruction Les instructions d'utilisation du medicament
+   *                    ajouter par le médecin
+   */
   public function addMedic($pdo,$idVisite,$codeCIS,$instruction)
   {
     $sql = "INSERT INTO Ordonnances (idVisite,codeCIS,instruction) VALUES (:idVisite,:codeCIS,:instruction)";
@@ -585,6 +594,16 @@ class UsersServices
     $stmt->execute(array("idVisite" => $idVisite, "codeCIS" => $codeCIS, "instruction" => $instruction));
   }
 
+
+  /**
+   * Fonctions utiliser principalement pour remplir des 
+   * listes déroulante pour les différents filtres
+   * @param pdo    La connexion a la base de données
+   * @param param  La colonne cibler dans la table
+   * @param table  La table cibler dans la base de données
+   * @return Une occurences de chaque valeur différentes
+   *         Dans la colonne 'param' dans la table 'table'
+   */
   public function getparams($pdo,$param,$table)
   {
     $sql = "SELECT DISTINCT(" . $param .")"

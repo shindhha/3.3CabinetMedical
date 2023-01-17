@@ -43,9 +43,9 @@ use yasmf\HttpHelper;
             <!-- Bandeau outils -->
 
             <nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-                <div class="d-flex justify-content-between px-5 container-fluid green">
+                <div class="d-flex justify-content-center justify-content-md-between px-5 container-fluid green">
 
-                    <span class="h1 d-md-block d-none"> Fiche médecin </span>
+                    <span class="h1"> Fiche médecin </span>
 
                 </div>
             </nav>
@@ -63,70 +63,73 @@ use yasmf\HttpHelper;
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="d-flex flex-row justify-content-between text-green">
 
-                        <div class="d-flex flex-column p-md-5">
-                            <h1>Informations personnelles</h1>
-                            <span> Adresse
-                                <div class="border border-1 border-green d-flex">
-                                    <span> <?php if(isset($medecin['adresse'])) echo $medecin['adresse']; ?>
-                                    </span>
-                                </div>
-                            </span>
-                            <span> Code postal / Ville
-                                <div class="border border-1 border-green d-flex">
-                                    <span><?php if(isset($medecin['codePostal'])) echo $medecin['codePostal']; ?></span> / <span> <?php if(isset($medecin['ville'])) echo $medecin['ville']; ?></span>
-                                </div>
-                            </span>
-                            <span> Téléphone
-                                <div class="border border-1 border-green d-flex">
-                                    <span> <?php if(isset($medecin['numTel'])) echo $medecin['numTel']; ?></span>
-                                </div>
-                            </span>
-                            <span>Email
-                                <div class="border border-1 border-green d-flex">
-                                    <span> <?php if(isset($medecin['email'])) echo $medecin['email']; ?></span>
-                                </div>
-                            </span>
-
-                        </div>
-
-                        <div class="d-flex flex-column p-md-5">
-                            <h1>Informations professionnelles</h1>
-                            <span> Numéro RPPS
-                                <div class="border border-1 border-green d-flex">
-                                    <span> <?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS']; ?></span>
-                                </div>
-                            </span>
-                            <span> Secteur d'activité
-                                <div class="border border-1 border-green d-flex">
-                                    <span> <?php if(isset($medecin['activite'])) echo $medecin['activite']; ?></span>
-                                </div>
-                            </span>
-                            <span> Date d'enregistrement
-                                <div class="border border-1 border-green text-black">
-                                    <span><?php if(isset($medecin['dateInscription'])) echo $medecin['dateInscription']; ?></span>
-                                </div>
-                            </span>
-                            <span>
-                                Date du début d'activité
-                                <div class="border border-1 border-green text-black">
-                                    
-                                    <span><?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?></span>
-                                </div>
-                            </span>
-                            <span> 
-                                <div class="border border-1 border-green d-flex text-green">
-                                    
-                                </div>
-                            </span>
+                    <div class="container-fluid text-green mt-5">
+                        <div class="row d-flex flex-column gap-5 gap-md-0 flex-md-row ">
+                            <div class="col-12 col-md-6 d-flex flex-column ">
+                                <h1>Informations personnelles</h1>
+                                <span> Adresse
+                                    <?php var_dump($medecin) ?>
+                                    <div class="border border-1 border-green d-flex">
+                                        <span> <?php if(isset($medecin['adresse'])) echo $medecin['adresse']; ?>
+                                        </span>
+                                    </div>
+                                </span>
+                                <span> Code postal / Ville
+                                    <div class="border border-1 border-green d-flex">
+                                        <span><?php if(isset($medecin['codePostal'])) echo $medecin['codePostal']; ?></span> / <span> <?php if(isset($medecin['ville'])) echo $medecin['ville']; ?></span>
+                                    </div>
+                                </span>
+                                <span> Téléphone
+                                    <div class="border border-1 border-green d-flex">
+                                        <span> <?php if(isset($medecin['numTel'])) echo $medecin['numTel']; ?></span>
+                                    </div>
+                                </span>
+                                <span>Email
+                                    <div class="border border-1 border-green d-flex">
+                                        <span> <?php if(isset($medecin['email'])) echo $medecin['email']; ?></span>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="col-12 col-md-6 d-flex flex-column ">
+                                <h1>Informations professionnelles</h1>
+                                <span> Numéro RPPS
+                                    <div class="border border-1 border-green d-flex">
+                                        <span> <?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS']; ?></span>
+                                    </div>
+                                </span>
+                                <span> Secteur d'activité
+                                    <div class="border border-1 border-green d-flex">
+                                        <span> <?php if(isset($medecin['activite'])) echo $medecin['activite']; ?></span>
+                                    </div>
+                                </span>
+                                <span> Date d'enregistrement
+                                    <div class="border border-1 border-green text-black">
+                                        <span><?php if(isset($medecin['dateInscription'])) echo $medecin['dateInscription']; ?></span>
+                                    </div>
+                                </span>
+                                <span>
+                                    Date du début d'activité
+                                    <div class="border border-1 border-green text-black">
+                                        <span><?php if(isset($medecin['dateDebutActivites'])) echo $medecin['dateDebutActivites']; ?></span>
+                                    </div>
+                                </span>
+                                
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                    <div class="col-md-12 text-center text-md-end px-4 pt-3">
+                        <form>
+                            <input type="hidden" name="controller" value="administrateur">
+                            <input type="hidden" name="action" value="goEditMedecin">
+                            <input type="hidden" name="nextAction" value="updateMedecin">
+                            <input type="submit" class="green no-border text-white me-2 py-2 px-3 border-1" value="Modifier le medecin">
+                        </form>
+                        
+                    </div>
+                </form>
+            </div>
         </div>
-
     </div>
 
     <script type="text/javascript" src="scripts/script.js"></script>

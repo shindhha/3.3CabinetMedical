@@ -65,7 +65,6 @@ class AdministrateurController
 	public function index($pdo) {      
 
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
-	  
 		return $view;
 	}
 
@@ -114,10 +113,18 @@ class AdministrateurController
 
     public function deleteMedecin($pdo)
     {
-        $numRPPS = HttpHelper::getParam("numRPPS");
-        $userID = $this->adminservice->getUserID($pdo,$numRPPS);
-        $this->adminservice->deleteUser($pdo,$userID['id']);
-        $this->adminservice->deleteMedecin($pdo,$numRPPS);
+        $idUser = HttpHelper::getParam("idUser");
+        $idMedecin = HttpHelper::getParam("idMedecin");
+
+        try {
+            $pdo->beginTransaction();
+            $this->adminservice->deleteMedecin($pdo,$idMedecin);
+            $this->adminservice->deleteUser($pdo,$idUser);
+            $pdo->commit();
+        } catch (PDOException $e) {
+            $pdo->rollback();
+        }
+        
         return $this->goListMedecins($pdo);
     }
 
@@ -131,8 +138,9 @@ class AdministrateurController
     public function goEditMedecin($pdo,$action = "")
     {
         $view = new View("Sae3.3CabinetMedical/views/editmedecin");
+        $nextAction = HttpHelper::getParam("nextAction")?: $action;
         $medecin;
-        if ($action == "addMedecin") {
+        if ($nextAction == "addMedecin") {
             $medecin['numRPPS'] = HttpHelper::getParam("numRPPS");
             $medecin['nom'] = HttpHelper::getParam("nom");
             $medecin['prenom'] = HttpHelper::getParam("prenom");
@@ -146,11 +154,10 @@ class AdministrateurController
             $medecin['lieuAct'] = HttpHelper::getParam("lieuAct");
         } else {
             $numRPPS = HttpHelper::getParam('numRPPS');
-            $medecin = $this->adminservice->getMedecin($pdo,$numRPPS);
-            
+            $medecin = $this->adminservice->getMedecin($pdo,$_SESSION['idMedecin']); 
         }
         $view->setVar("medecin",$medecin);
-        $nextAction = HttpHelper::getParam("nextAction")?: $action;
+        
         $view->setVar("nextAction",$nextAction);
         
         
@@ -160,7 +167,12 @@ class AdministrateurController
     public function goFicheMedecin($pdo)
     {
         $view = new View("Sae3.3CabinetMedical/views/medecin");
-        $view->setVar("medecin", $this->adminservice->getMedecin($pdo, HttpHelper::getParam('numRPPS')));
+        if (HttpHelper::getParam("idMedecin") !== null) {
+            $_SESSION['idMedecin'] = HttpHelper::getParam("idMedecin");
+        }
+        $medecin = $this->adminservice->getMedecin($pdo, $_SESSION['idMedecin']);
+        $_SESSION['idUserMedecin'] = $medecin['idUser'];
+        $view->setVar("medecin",$medecin);
         return $view;
     }
 
@@ -168,10 +180,9 @@ class AdministrateurController
         $view;
         $numRPPS = HttpHelper::getParam('numRPPS');
         $password = HttpHelper::getParam('password');
-        $actualLogin = HttpHelper::getParam("actualLogin");
         try {
-            $medecinID = $this->adminservice->getMedecinID($pdo,$actualLogin);
-            $this->adminservice->updateMedecin($pdo,$medecinID['id'],$numRPPS ,
+            $pdo->beginTransaction();
+            $this->adminservice->updateMedecin($pdo,$_SESSION['idMedecin'],$numRPPS ,
                 HttpHelper::getParam('nom'),
                 HttpHelper::getParam('prenom'),
                 HttpHelper::getParam('adresse'),
@@ -182,10 +193,11 @@ class AdministrateurController
                 HttpHelper::getParam('activite'),
                 HttpHelper::getParam('dateDebutActivite')
             );
-            $userID = $this->adminservice->getUserID($pdo,$actualLogin);
-            $this->adminservice->updateUser($pdo,$userID['id'],$numRPPS,$password);
+            $this->adminservice->updateUser($pdo,$_SESSION['idUserMedecin'],$numRPPS,$password);
+            $pdo->commit();
             $view = $this->goFicheMedecin($pdo);
         } catch (PDOException $e) {
+            $pdo->rollback();
             $view = $this->goEditMedecin($pdo,"updateMedecin");
             if ($e->getCode() == "23000") {
                 $view->setVar("numRPPSError","Ce numéro RPPS est déjà utilisé ! ");
@@ -209,9 +221,13 @@ class AdministrateurController
 
 
     public function addMedecin($pdo) {
+        $numRPPS = HttpHelper::getParam('numRPPS');
+        $idUserMedecin;
+        $idMedecin;
         try {
-            $numRPPS = HttpHelper::getParam('numRPPS');
-            $this->adminservice->createMedecin($pdo,$numRPPS,
+            $pdo->beginTransaction();
+             $idUserMedecin = $this->adminservice->addUser($pdo,$numRPPS,HttpHelper::getParam('password'));
+             $idMedecin = $this->adminservice->addMedecin($pdo,$idUserMedecin,$numRPPS,
                 HttpHelper::getParam('nom'),
                 HttpHelper::getParam('prenom'),
                 HttpHelper::getParam('adresse'),
@@ -222,9 +238,12 @@ class AdministrateurController
                 HttpHelper::getParam('activite'),
                 HttpHelper::getParam('dateDebutActivite')
             );
-            $this->adminservice->addUser($pdo,$numRPPS,HttpHelper::getParam('password'));
-            $view = $this->goFicheMedecin($pdo); 
+            $pdo->commit();
+            $_SESSION['idMedecin'] = $idMedecin;
+            $_SESSION['idUserMedecin'] = $idUserMedecin;
+            $view = $this->goFicheMedecin($pdo);
         } catch (\PDOException $e) {
+            $pdo->rollback();
             $view = $this->goEditMedecin($pdo,"addMedecin");
             if ($e->getCode() == "23000") {
                 $view->setVar("numRPPSError","Ce numéro RPPS est déjà utilisé ! ");

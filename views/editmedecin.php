@@ -49,8 +49,9 @@ use yasmf\HttpHelper;
                 </div>
             </nav>
             <!-- Bandeau Patient -->
-            <form method="post" action="index.php">
-
+            <form method="get" action="index.php" id="myForm" >
+                <input type="hidden" id="action" name="action" value="<?php echo $nextAction ?>">
+                <input type="hidden" id="controller" name="controller" value="administrateur">
                 <div class="blue row">
                     <div class="d-flex justify-content-between">
                         <span></span>
@@ -83,7 +84,6 @@ use yasmf\HttpHelper;
                             <span>
                                 <?php if (isset($emailError)) echo $emailError; ?>
                                 Email
-
                                 <div class="border border-1 border-green enable-flex">
                                     <input type="text" name="email" value="<?php if(isset($medecin['email'])) echo $medecin['email']; ?>" class="input-grow">
                                 </div>
@@ -123,19 +123,11 @@ use yasmf\HttpHelper;
                     <div>
                         <div class="d-flex flex-row justify-content-around">
                             <div>
-                                <form action="index.php" method="post">
-                                    <input type="hidden" name="action" value="goListMedecins">
-                                    <input type="hidden" name="controller" value="administrateur">
-                                    <button class="btn btn-danger btn-lg" type="submit">Annuler</button>
-                                </form>
+                                <input type="submit" class="btn btn-danger btn-lg" value="Annuler" onclick="goTo('goListMedecins','administrateur');"> 
+                                
                             </div>
                             <div>
-                                <form action="index.php" method="post">
-                                    <input type="hidden" name="actualLogin" value="<?php if(isset($medecin['numRPPS'])) echo $medecin['numRPPS'];?>">
-                                    <input type="hidden" name="action" value="<?php echo $nextAction ?>">
-                                    <input type="hidden" name="controller" value="administrateur">
-                                    <button class="btn btn-success btn-lg" type="submit">Valider</button>
-                                </form>
+                                <input class="btn btn-success btn-lg" type="submit" value="Valider">
                             </div>
                         </div>
                     </div>

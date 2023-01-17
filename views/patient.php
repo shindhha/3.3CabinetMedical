@@ -38,16 +38,14 @@
 				</a>
 			</div>
 			<!-- Main page -->
-			<div class="col-md-11 h-75 text-center">
+			<div class="col-md-11 h-100 text-center ">
 				<!-- Bandeau outils -->	
 				
-				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-between px-5 container-fluid green">
-						<span class="h1 d-md-block d-none"> Fiche Patient </span>		
-
+				<nav class="  row h-11 navbar navbar-expand-lg navbar-light green">
+					<div class="d-flex justify-content-center justify-content-md-start px-5 container-fluid green">
+						<span class="h1"> Fiche Patient </span>		
 					</div>
 				</nav>
-				<!-- Bandeau Patient -->
 				<div class="blue row">
 					<div class="d-flex justify-content-between">
 						<span></span>
@@ -68,10 +66,10 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="row">
-					<div class="d-flex  flex-row px-5 justify-content-between text-dark">
-						<div class="d-flex flex-column col-xl-5 text-start">
+				<!-- Bandeau Patient -->
+				<div class="container-fluid h-100 overflow-scroll overflow-md-none">
+					<div class="col-12 d-flex flex-column flex-md-row px-1 px-md-5 justify-content-between text-dark">
+						<div class="d-flex flex-column col-12 col-xl-5 text-start">
 							
 							<div class="h2"> Informations </div>
 							<div class="border-top border-dark pt-3	">
@@ -112,85 +110,83 @@
 							
 						</div>
 					</div>
-				</div>
+					
 
-				<span class="fs-1 d-md-none d-sm-block text-green"> Liste Patients </span>
-				<!-- content -->
-				<div class="row align-items-center text-center">
-					<div class="container ">
-						<div class="row justify-content-center">
-							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2 p-5">
-								<div class="text-dark text-start h2">Liste des visites</div>
-								<div class="table-responsive h-50">
-									<table class="table table-striped lightGreen border-top border-dark">
-										<thead class="sticky-top bg-white text-dark  ">
-											<tr>
-												<th>Motif</th>
-												<th>Date</th>
-												<th>Description</th>
-												<th></th>
-											</tr>
-										</thead>
-										
-										<?php
-										foreach ($visites as $row) {
-										echo "<tr>"
-												 ."<td>" . $row['motifVisite'] . "</td>"
-												 ."<td>" . $row['dateVisite'] . "</td>"
-												 ."<td>" . $row['Description'] . "</td>"
-										?>
-										<td>
-										<div class="dropdown">
-											<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
-												more_horiz
-											</span>
-											<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
-												<table class="text-white ">
-													<form action="index.php" action="POST" >
-														<input type="hidden" name="controller" value="patientslist">
-														<input type="hidden" name="action" value="goFicheVisite">
-														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<tr><input class="btn text-white text-decoration-underline text-end" type="submit" name="modif" value="Afficher"> </tr>
-													</form>
-													<form action="index.php" action="POST" >
-														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<tr><a  href="#exampleModal" data-bs-toggle="modal" class="btn text-white text-decoration-underline text-end" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </tr>
-													</form>
-												</table>			
-											</div>
+					<!-- content -->
+				
+					<div class="col-md-12 h-50 justify-content-center">
+						<div class="text-dark text-start h2">Liste des visites</div>
+						<div class="table-responsive h-75 mb-2 w-100">
+							<table class="table table-striped lightGreen border-top border-dark">
+								<thead class="sticky-top bg-white text-dark  ">
+									<tr>
+										<th>Motif</th>
+										<th>Date</th>
+										<th>Description</th>
+										<th></th>
+									</tr>
+								</thead>
+								<?php
+								foreach ($visites as $row) {
+								echo "<tr>"
+										 ."<td>" . $row['motifVisite'] . "</td>"
+										 ."<td>" . $row['dateVisite'] . "</td>"
+										 ."<td>" . $row['Description'] . "</td>"
+								?>
+								<td>
+									<div class="dropdown">
+										<span class="material-symbols-outlined" type="button" id="dropdownMenuButton1" data-bs-auto-close="false" data-bs-toggle="dropdown" aria-expanded="false">
+											more_horiz
+										</span>
+										<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
+											<table class="text-white ">
+												<form action="index.php" action="POST" >
+													<input type="hidden" name="controller" value="patientslist">
+													<input type="hidden" name="action" value="goFicheVisite">
+													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+													<tr><input class="btn text-white text-decoration-underline text-end" type="submit" name="modif" value="Afficher"> </tr>
+												</form>
+												<form action="index.php" action="POST" >
+													<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
+													<tr><a  href="#exampleModal" data-bs-toggle="modal" class="btn text-white text-decoration-underline text-end" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </tr>
+												</form>
+											</table>			
 										</div>
-										</td>
-										<?php
-											echo "</tr>";
-											}
-										?>
-									</table>
-								</div>
-								<div class="d-flex flex-row justify-content-end">
-									<div class="d-flex me-2 py-2 px-3 border-1 green">
-										<form>
-											<input type="hidden" name="nextAction" value="addVisite">
-											<input type="hidden" name="action" value="goEditVisite">
-											<input type="hidden" name="controller" value="patientslist">
-											<input type="submit" class="green no-border text-white" value="Ajouter une visite">
-										</form>
 									</div>
-									<div class="d-flex me-2 py-2 px-3 border-1 green">
-										<form>
-											<input type="hidden" name="nextAction" value="updatePatient">
-											<input type="hidden" name="action" value="goEditPatient">
-											<input type="hidden" name="controller" value="patientslist">
-											<input type="submit" class="green no-border text-white" value="Modifier le patient">
-										</form>
-									</div>
-								</div>
+								</td>
+								<?php
+									echo "</tr>";
+									}
+								?>
+							</table>
+						</div>
+					</div>
+					<div class="h-25">
+						<div class="d-flex flex-row justify-content-center justify-content-md-end">
+							<div class="d-flex me-2 py-2 px-3 border-1 green">
+								<form>
+									<input type="hidden" name="nextAction" value="addVisite">
+									<input type="hidden" name="action" value="goEditVisite">
+									<input type="hidden" name="controller" value="patientslist">
+									<input type="submit" class="green no-border text-white" value="Ajouter une visite">
+								</form>
+							</div>
+							<div class="d-flex me-2 py-2 px-3 border-1 green">
+								<form>
+									<input type="hidden" name="nextAction" value="updatePatient">
+									<input type="hidden" name="action" value="goEditPatient">
+									<input type="hidden" name="controller" value="patientslist">
+									<input type="submit" class="green no-border text-white" value="Modifier le patient">
+								</form>
 							</div>
 						</div>
 					</div>
+					
 				</div>
-				
 			</div>
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		</div>			
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		 		<div class="modal-dialog modal-md modal-dialog-centered">
 
 		    		<div class="modal-content ">
@@ -217,8 +213,6 @@
 		    		</div>
 				</div>
 			</div>
-
-		</div>
 		<script type="text/javascript" src="scripts/script.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 	</div>

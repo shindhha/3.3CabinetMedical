@@ -31,7 +31,7 @@ use yasmf\HttpHelper;
 						settings
 					</span>
             </a>
-            <a href="index.php?controller=administrateur&action=listMedecins" class="green border-1 ratio ratio-1x1">
+            <a href="index.php?controller=administrateur&action=goListMedecins" class="green border-1 ratio ratio-1x1">
                     <span class="d-flex justify-content-center align-items-center material-symbols-outlined">
                         groups
                     </span>
@@ -83,20 +83,15 @@ use yasmf\HttpHelper;
                                                     <form action="index.php" action="POST" class="d-flex flex-column green">
                                                         <input type="hidden" name="controller" value="administrateur">
                                                         <input type="hidden" name="action" value="goFicheMedecin">
-                                                        <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
+                                                        <input type="hidden" name="idMedecin" value="<?php echo $row['idMedecin'] ?>">
                                                         <tr><td><input type="submit" name="modif" value="Afficher"> </td></tr>
                                                     </form>
                                                     <form action="index.php" action="POST" class="d-flex flex-column green">
                                                         <input type="hidden" name="controller" value="administrateur">
-                                                        <input type="hidden" name="action" value="goEditMedecin">
-                                                        <input type="hidden" name="nextAction" value="updateMedecin">
-                                                        <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
-                                                        <tr><td><input type="submit" value="Modifier"> </td></tr>
-                                                    </form>
-                                                    <form action="index.php" action="POST" class="d-flex flex-column green">
-                                                        <input type="hidden" name="controller" value="administrateur">
                                                         <input type="hidden" name="action" value="deleteMedecin">
-                                                        <input type="hidden" name="numRPPS" value="<?php echo $row['numRPPS'] ?>">
+                                                        <input type="hidden" name="idMedecin" value="<?php echo $row['idMedecin'] ?>">
+                                                        <input type="hidden" name="idUser" value="<?php echo $row['idUser'] ?>">
+
                                                         <tr><td><input type="submit"  value="Supprimer"> </td></tr>
                                                     </form>
                                                 </table>            
