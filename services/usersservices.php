@@ -539,22 +539,22 @@ class UsersServices
     return $stmt->fetchAll();
 
   }
-  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1,$valeurASMR = "%",$libelleNiveauSMR = "%", $libellePresentation = "%")
+  public function getListMedic($pdo,$formePharma = "%",$labelVoieAdministration = "%",$etatCommercialisation = -1,$tauxRemboursement = "",$prixMin = 0,$prixMax = 100000,$surveillanceRenforcee = -1,$valeurASMR = "%",$libelleNiveauSMR = "%", $designation = "%")
   {
     $sql = "SELECT codeCIS,formePharma,labelVoieAdministration,etatCommercialisation,tauxRemboursement,prix,libellePresentation,surveillanceRenforcee,valeurASMR,libelleNiveauSMR,codeCIP7,designation
             FROM listMedic
-            WHERE (formePharma LIKE :formePharma OR formePharma IS NULL)
-            AND (labelVoieAdministration LIKE :labelVoieAdministration OR labelVoieAdministration IS NULL)
-            AND (libellePresentation LIKE :libellePresentation)
-            AND (prix >= :prixMin AND prix < :prixMax OR prix IS NULL)
-            AND (valeurASMR LIKE :valeurASMR OR valeurASMR IS NULL)
-            AND (libelleNiveauSMR LIKE :libelleNiveauSMR OR libelleNiveauSMR IS NULL)
+            WHERE formePharma LIKE :formePharma 
+            AND labelVoieAdministration LIKE :labelVoieAdministration
+            AND designation LIKE :designation
+            AND prix >= :prixMin AND prix < :prixMax 
+            AND valeurASMR LIKE :valeurASMR 
+            AND libelleNiveauSMR LIKE :libelleNiveauSMR 
             ";
     $param = array('formePharma' => $formePharma,
                    'labelVoieAdministration' => $labelVoieAdministration,
                    'prixMin' => $prixMin,
                    'prixMax' => $prixMax,
-                   'libellePresentation' => $libellePresentation,
+                   'designation' => $designation,
                    'valeurASMR' => $valeurASMR,
                    'libelleNiveauSMR' => $libelleNiveauSMR);
 

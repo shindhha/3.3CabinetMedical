@@ -57,13 +57,15 @@
 				<!-- Bandeau outils -->	
 				<nav class="row h-11 navbar navbar-expand-lg navbar-light green">
 					<div class="col-12 d-flex justify-content-center justify-content-md-between px-1 px-md-5 green align-items-center">
+
 						<span class="material-symbols-outlined  d-block d-md-none col-1" onclick="manageClass('menu','d-none')">menu</span>
 						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
 						<!-- Barre de recherche -->
-						<form class="d-flex align-items-center justify-content-end" action="index.php" method="POST">
+						<div class="d-flex flex-row align-items-center">
+						<form class=" d-flex align-items-center justify-content-end" action="index.php" method="POST">
 							<input type="hidden" name="controller" value="medicamentslist">
 							<div class="d-flex me-2 py-2 px-3 bg-white border-1 col-7 col-md-10 justify-content-end">
-								<input name="pPresentation" class="no-border form-control" type="search" placeholder="Presentation" value="<?php echo $pPresentation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
+								<input name="pDesignation" class="no-border form-control" type="search" placeholder="Designation" value="<?php echo $pDesignation; ?>" onkeyup="showHint(this.value)" aria-label="Search">
 								<input type="submit" class="no-border bg-white material-symbols-outlined text-black" value="search">  
 
 							</div>
@@ -148,14 +150,19 @@
 												<input class="form-control" type="number" name="pPrixMax" value="<?php echo $pPrixMax; ?>">
 											</div>
             							</div>
+
             						</div>
+
             					</div>
+
             				</div>
+            				
 						</form>
 						<form class="ms-2">
-								<input type="hidden" name="action" value="deconnexion">
-								<input type="submit" class="btn btn-danger" value="Deconnexion">
+							<input type="hidden" name="action" value="deconnexion">
+							<input type="submit" class="btn btn-danger" value="Deconnexion">
 						</form>
+					</div>
 					</div>
 
 				</nav>

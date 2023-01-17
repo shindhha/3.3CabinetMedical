@@ -59,16 +59,16 @@ class medicamentslistController
         $pSurveillance = HttpHelper::getParam("pSurveillance") !== null ? (int) HttpHelper::getParam("pSurveillance") : -1;
         $pNiveauSmr = HttpHelper::getParam("pNiveauSmr") !== null ?  HttpHelper::getParam("pNiveauSmr") : "%";
         $pValeurASMR = HttpHelper::getParam("pValeurASMR") !== null ?  HttpHelper::getParam("pValeurASMR") : "%";
-        $pPresentation = HttpHelper::getParam("pPresentation");
+        $pDesignation = HttpHelper::getParam("pDesignation");
         $valeurASMR = $this->usersservices->getparams($pdo,"valeurASMR","cis_has_asmr");
         $formePharmas = $this->usersservices->getparams($pdo,"formePharma","FormePharma");
         $voieAdministration = $this->usersservices->getparams($pdo,"labelVoieAdministration","ID_Label_VoieAdministration");
         $niveauSmr = $this->usersservices->getparams($pdo,"libelleNiveauSMR","niveauSmr");
         $tauxRemboursements = $this->usersservices->getparams($pdo,"tauxRemboursement","TauxRemboursement");
-        $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pPresentation . "%");
+        $drugs = $this->usersservices->getListMedic($pdo,$pformePharma,$pVoieAdmi,$pEtat,$pTauxRem,$pPrixMin,$pPrixMax,$pSurveillance,$pValeurASMR,$pNiveauSmr,"%" . $pDesignation . "%");
 
 
-        $view->setVar("pPresentation",$pPresentation);
+        $view->setVar("pDesignation",$pDesignation);
         $view->setVar("pValeurASMR",$pValeurASMR);
         $view->setVar("pNiveauSmr",$pNiveauSmr);
         $view->setVar("niveauSmr",$niveauSmr);
