@@ -100,13 +100,13 @@
 											</span>
 											<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 												<table class="text-white ">
-													<form action="index.php" action="POST"  class="d-flex flex-column green text-end">
+													<form action="index.php" method="POST"  class="d-flex flex-column green text-end">
 														<input type="hidden" name="controller" value="medicamentslist">
 														<input type="hidden" name="action" value="goFicheMedicament">
 														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
 														<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 													</form>
-													<form action="index.php" action="POST" class="d-flex flex-column  green">
+													<form action="index.php" method="POST" class="d-flex flex-column  green">
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="deleteMedicament">
 														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
@@ -141,6 +141,13 @@
 											<input type="submit" class="green no-border text-white" value="Modifier la visite">
 										</form>
 									</div>
+                                    <div class="d-flex me-2 py-2 px-3 border-1 green">
+                                        <form>
+                                            <input type="hidden" name="action" value="generatePdf">
+                                            <input type="hidden" name="controller" value="patientslist">
+                                            <input type="submit" class="green no-border text-white" value="Imprimer l'ordonnance">
+                                        </form>
+                                    </div>
 								</div>
 							</div>
 						</div>

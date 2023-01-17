@@ -211,7 +211,6 @@ class PatientsListController
 	public function goEditVisite($pdo,$action = "")
 	{
 		$view = new View("Sae3.3CabinetMedical/views/editVisite");
-		$visite;
 		if ($action == "addVisite") {
 			$visite['motifVisite'] = HttpHelper::getParam("motifVisite");
 			$visite['dateVisite'] = HttpHelper::getParam("dateVisite");
@@ -302,5 +301,14 @@ class PatientsListController
 		$this->usersservices->editInstruction($pdo,$_SESSION['idVisite'],$codeCIS,$instruction);
 		return $this->goFicheVisite($pdo);
 	}
+
+    public function generatePdf($pdo) {
+        $visite = $_SESSION['idVisite'];
+        $patient = $_SESSION['patient'];
+        $pdf = $this->usersservices->generatePdf($pdo,$visite,$patient);
+
+        $view = $this->goFichePatient($pdo);
+        //return $view;
+    }
 
 }

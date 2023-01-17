@@ -87,7 +87,6 @@ class AdministrateurController
 	}
 
 	public function tryToImport($pdo) {
-
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
         foreach ($this->files as $file) {
             $filep = $file[0];
@@ -161,6 +160,14 @@ class AdministrateurController
     {
         $view = new View("Sae3.3CabinetMedical/views/medecin");
         $view->setVar("medecin", $this->adminservice->getMedecin($pdo, HttpHelper::getParam('numRPPS')));
+        return $view;
+    }
+
+    public function goErreursImport($pdo)
+    {
+        $erreursImport = $this->adminservice->getErreursImportShort($pdo);
+        $view = new View("Sae3.3CabinetMedical/views/erreursimport");
+        $view->setVar("erreursImport",$erreursImport);
         return $view;
     }
 

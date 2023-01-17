@@ -603,4 +603,52 @@ class UsersServices
       }
       return UsersServices::$defaultUsersService;
   }
+
+    /**
+     * Génère le fichier pdf représentant l'ordonnance du patient.
+     * @param $pdo
+     * @param $visite La visite dont on veut l'ordonnance
+     * @param $patient Le patient dont on veut l'ordonnance
+     * @return void
+     */
+  public static function generatePdf($pdo,$visite,$patient) {
+      $sql_medecin = "SELECT nom,prenom,adresse,codePostal,ville,numTel,activite
+                    FROM Medecins
+                    WHERE idMedecin = :idMedecin";
+      $stmt_medecin = $pdo->prepare($sql_medecin);
+      $stmt_medecin->execute(array("idMedecin" => 1)); // TODO : changer pour prendre le bon medecin
+      $medecin = $stmt_medecin->fetch();
+
+      $sql_patient = "SELECT nom,prenom,adresse,codePostal,ville,numTel
+                    FROM Patients
+                    WHERE idPatient = :idPatient";
+      $stmt_patient = $pdo->prepare($sql_patient);
+      $stmt_patient->execute(array("idPatient" => $patient));
+      $patient = $stmt_patient->fetch();
+
+      $sql_medicaments = "SELECT instruction, designation FROM Ordonnances
+                            JOIN CIS_BDPM CB ON Ordonnances.codeCIS = CB.codeCIS
+                            JOIN DesignationElemPharma ON CB.idDesignation = DesignationElemPharma.idDesignation
+                            WHERE idVisite = :idVisite";
+        $stmt_medicaments = $pdo->prepare($sql_medicaments);
+        $stmt_medicaments->execute(array("idVisite" => $visite));
+        $medicaments = $stmt_medicaments->fetchAll();
+
+    $mpdf = new \Mpdf\Mpdf();
+
+    // Start buffering HTML code
+    ob_start();
+    // Include the HTML code:
+    include 'res/ordonnancetemplate.php';
+    // Collect the output buffer into a variable
+    $html = ob_get_contents();
+    // Stop buffering
+    ob_end_clean();
+
+
+
+    $mpdf->WriteHTML($html);
+    //$mpdf->Output();
+    $mpdf->Output("Ordonnance.pdf", \Mpdf\Output\Destination::DOWNLOAD);
+  }
 }

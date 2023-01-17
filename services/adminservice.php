@@ -35,6 +35,7 @@ class AdminService
         $stmt->bindParam("numRPPS",$numRPPS);
         $stmt->execute();
     }
+
     public function getUserID($pdo,$login)
     {
         $sql = "SELECT id FROM users where login = :login";
@@ -55,6 +56,7 @@ class AdminService
         $stmt->bindParam("password",$password);
         $stmt->execute();
     }
+
     public function addUser($pdo,$login,$password)
     {
         $sql = "INSERT INTO users (login,`password`) VALUES (:login,MD5(:password))";
@@ -137,6 +139,13 @@ class AdminService
         $stmt->bindParam('secteurActivite', $secteurActivite);
         $stmt->bindParam('dateDebutActivites', $dateDebutActivites);
         $stmt->execute();
+    }
+
+    public function getErreursImportShort($pdo) {
+        $sql = "SELECT messageErreur, COUNT(messageErreur) as nbreErreurs FROM ErreursImportation GROUP BY messageErreur ORDER BY nbreErreurs DESC";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     private static $defaultAdminService ;

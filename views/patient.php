@@ -147,15 +147,15 @@
 											</span>
 											<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 												<table class="text-white ">
-													<form action="index.php" action="POST" >
+													<form action="index.php" method="POST" >
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="goFicheVisite">
 														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
 														<tr><input class="btn text-white text-decoration-underline text-end" type="submit" name="modif" value="Afficher"> </tr>
 													</form>
-													<form action="index.php" action="POST" >
+													<form action="index.php" method="POST">
 														<input type="hidden" name="idVisite" value="<?php echo $row['idVisite'] ?>">
-														<tr><a  href="#exampleModal" data-bs-toggle="modal" class="btn text-white text-decoration-underline text-end" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </tr>
+														<tr><a href="#exampleModal" data-bs-toggle="modal" class="btn text-white text-decoration-underline text-end" name="modif" onclick="add('<?php echo "Visite : " .$row['motifVisite']. " de " . $patient['nom'] . " " . $patient['prenom'] . "','". $row['idVisite']  ?>')">Supprimer</a> </tr>
 													</form>
 												</table>			
 											</div>
