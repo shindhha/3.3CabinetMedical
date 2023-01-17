@@ -33,10 +33,10 @@
 				<div class="row h-15 green">
 					<div class="d-flex justify-content-between align-items-center px-5">
 						<img onclick="manageClass('menu','d-none')" class="d-md-none d-sm-block sizeIcon" src="res/menu.svg">
-						<span class="fs-1 d-md-block d-none"> Connection </span>
+						<span class="fs-1 d-md-block d-none"> Connexion </span>
 					</div>
 				</div>
-				<span class="fs-1 d-md-none d-sm-block text-green"> Connection </span>
+				<span class="fs-1 d-md-none d-sm-block text-green"> Connexion </span>
 				<!-- content -->
 				<div class="row h-100 align-items-center text-center">
 
@@ -45,7 +45,7 @@
 							<div class="col-md-8 col-xl-6 col-sm-7 col-12 green border-2 p-5">
 
 								<form action="index.php" method="POST" class="d-flex flex-column gap-3">
-									<span class="fs-1"> Connexion a <u>MEDILOG</u> </span>
+									<span class="fs-1"> Connexion à <u>MEDISOFT</u> </span>
 									<div class="d-flex gap-3"><img src="res/iaccount.svg" class="sizeIcon"><input name="login" type="text" placeholder="Identifiant" class="border-0 border-1 w-75 ps-2 pt-2 pb-2"></div>
 
 									<div class="d-flex gap-3"><img src="res/ipassword.svg" class="sizeIcon"><input name="password" type="password" placeholder="Mot de passe" class="ps-2 border-0 border-1 w-75 pt-2 pb-2"></input></div>
