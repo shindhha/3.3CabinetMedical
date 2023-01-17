@@ -635,9 +635,10 @@ class UsersServices
   public static function generatePdf($pdo,$visite,$patient) {
       $sql_medecin = "SELECT nom,prenom,adresse,codePostal,ville,numTel,activite
                     FROM Medecins
-                    WHERE numRPPS = :rppsMedecin";
+                    WHERE numRPPS = :numRPPS";
       $stmt_medecin = $pdo->prepare($sql_medecin);
-      $stmt_medecin->execute(array("rppsMedecin" => $_SESSION['currentMedecin']));
+      $stmt_medecin->execute(array("numRPPS" => $_SESSION['currentMedecin'])); 
+
       $medecin = $stmt_medecin->fetch();
 
 

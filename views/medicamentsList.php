@@ -18,32 +18,46 @@
 	spl_autoload_register();
 	use yasmf\HttpHelper;
 	?>
-	<div class="container-fluid h-100  text-white">
+	<div class="container-fluid h-100  text-white ">
 		<div class="row h-100">
 			<!-- Menu -->
-			<div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
-				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
+			<div id="menu" class="pt-3 menu z-index-dropdown col-md-1 col-4 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
+				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-block d-md-none text-end w-100">arrow_back</span>
 				<div class=" green border-1 ratio ratio-1x1">
 
 				</div>
-				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
+				<a href="index.php?controller=medicamentslist" class="d-md-none">
+					<div class="text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+							medication
+						</span>
+					</div>
+				</a>
+				<a href="index.php?controller=patientslist" class="d-md-none">
+					<div  class=" text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
+							groups
+						</span>
+					</div>
+				</a>
+				<a href="index.php?controller=medicamentslist" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
 
-					<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
-						medication
-					</span>
-				</a>
-				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
-						groups
-					</span>
-				</a>
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        medication
+                    </span>
+                </a>
+                <a href="index.php?controller=patientslist" class=" text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
+                        groups
+                    </span>
+                </a>
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-100 text-center">
 				<!-- Bandeau outils -->	
 				<nav class="row h-11 navbar navbar-expand-lg navbar-light green">
 					<div class="col-12 d-flex justify-content-center justify-content-md-between px-1 px-md-5 green align-items-center">
-						<span class="material-symbols-outlined d-block d-md-none col-1">menu</span>
+						<span class="material-symbols-outlined  d-block d-md-none col-1" onclick="manageClass('menu','d-none')">menu</span>
 						<span class="h1 d-md-block d-none"> Liste Médicaments </span>
 						<!-- Barre de recherche -->
 						<form class="d-flex align-items-center justify-content-end" action="index.php" method="POST">
@@ -138,7 +152,12 @@
             					</div>
             				</div>
 						</form>
+						<form class="ms-2">
+								<input type="hidden" name="action" value="deconnexion">
+								<input type="submit" class="btn btn-danger" value="Deconnexion">
+						</form>
 					</div>
+
 				</nav>
 				<!-- content -->
 				<div class="container-fluid h-100">
@@ -203,7 +222,7 @@
 															<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 														</form>
 														<form action="index.php" method="POST" class="d-flex flex-column green">
-															<input type="hidden" name="codeCIP13" value="<?php echo $row['codeCIP7'] ?>">
+															
 															<?php if (isset($_SESSION['idVisite'])) {
 															?>
 																<a class="btn text-white text-decoration-underline text-end" data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIP7']  ?>')" role="button">Ajouter</a>
@@ -245,7 +264,7 @@
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
 		    				<input type="hidden" name="action" value = "addMedicament">
-		    				<input type="hidden" name="codeCIP" value="" id ="code">
+		    				<input type="hidden" name="codeCIP7" value="" id ="code">
 		    			
 		    		</div>
 		    		</form>

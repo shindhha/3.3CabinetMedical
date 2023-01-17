@@ -20,28 +20,48 @@
 	<div class="container-fluid h-100  text-white">
 		<div class="row h-100">
 			<!-- Menu -->
-			<div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
-				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
+			<div id="menu" class="pt-3 menu z-index-dropdown col-md-1 col-4 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
+				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-block d-md-none text-end w-100">arrow_back</span>
 				<div class=" green border-1 ratio ratio-1x1">
-				</div>
-				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
-						medication
-					</span>
-				</a>
-				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
-						groups
-					</span>
-				</a>
-			</div>
 
+				</div>
+				<a href="index.php?controller=medicamentslist" class="d-md-none">
+					<div class="text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+							medication
+						</span>
+					</div>
+				</a>
+				<a href="index.php?controller=patientslist" class="d-md-none">
+					<div  class=" text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
+							groups
+						</span>
+					</div>
+				</a>
+				<a href="index.php?controller=medicamentslist" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        medication
+                    </span>
+                </a>
+                <a href="index.php?controller=patientslist" class=" text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
+                        groups
+                    </span>
+                </a>
+			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center  ">
 				<!-- Bandeau outils -->	
-				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-center justify-content-md-start px-5 container-fluid green">
-						<span class="h1 "> Visite n° </span>		
+				<nav class="  row h-11 navbar navbar-expand-lg navbar-light green">
+					<div class="d-flex px-md-5 container-fluid green">
+						<span class="material-symbols-outlined text-start d-block d-md-none" onclick="manageClass('menu','d-none')">menu</span>
+						<span class="h1"> Visite n° </span>
+						<form>
+								<input type="hidden" name="action" value="deconnexion">
+								<input type="submit" class="btn btn-danger" value="Deconnexion">
+							</form>
 					</div>
 				</nav>
 				<!-- Bandeau Patient -->
@@ -52,8 +72,8 @@
 						<div></div>
 					</div>
 				</div>
-				<div class="row d-flex flex-column gap-3 mx-auto col-10 ">
-					<div class="d-flex flex-row justify-content-between text-dark ">				
+				<div class="row d-flex flex-column gap-3 mx-auto col-8">
+					<div class="d-flex flex-row justify-content-between text-dark px-5">				
 						<span>Motif : <?php echo $visite['motifVisite'] ; ?></span>
 						<span>Date :  <?php echo date("d/m/Y", strtotime($visite['dateVisite']))?></span>
 					</div>
@@ -73,10 +93,10 @@
 					<!-- Portail de connexion -->
 					<div class="container ">
 						<div class="row justify-content-center">
-							<div class=" col-md-11 col-12 success border-2">
+							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2">
 								<div class="text-danger text-start"><?php if(isset($addMedicError)) echo $addMedicError; ?></div>
-								<div class=" text-dark text-center text-md-start h2"> Liste des medicaments prescrit </div>
-								<div class="table-responsive h-50 mb-2">
+								<div class=" text-dark text-start h2"> Liste des medicaments prescrit </div>
+								<div class="table-responsive h-50 ">
 									<table class="table table-striped lightGreen border border-dark">
 										<thead class="sticky-top bg-white text-dark  ">
 											<tr>
@@ -100,13 +120,13 @@
 											</span>
 											<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 												<table class="text-white ">
-													<form action="index.php" method="POST"  class="d-flex flex-column green text-end">
+													<form action="index.php" action="POST"  class="d-flex flex-column green text-end">
 														<input type="hidden" name="controller" value="medicamentslist">
 														<input type="hidden" name="action" value="goFicheMedicament">
 														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
 														<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 													</form>
-													<form action="index.php" method="POST" class="d-flex flex-column  green">
+													<form action="index.php" action="POST" class="d-flex flex-column  green">
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="deleteMedicament">
 														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
@@ -125,7 +145,7 @@
 										?>
 									</table>
 								</div>
-								<div class="d-flex flex-row justify-content-center justify-content-md-end ">
+								<div class="d-flex flex-row justify-content-end ">
 									<div class="d-flex me-2 py-2 px-3 border-1 green">
 										<form>
 											<input type="hidden" name="idVisite" value="<?php echo $visite['idVisite'] ?>">
@@ -141,13 +161,6 @@
 											<input type="submit" class="green no-border text-white" value="Modifier la visite">
 										</form>
 									</div>
-                                    <div class="d-flex me-2 py-2 px-3 border-1 green">
-                                        <form>
-                                            <input type="hidden" name="action" value="generatePdf">
-                                            <input type="hidden" name="controller" value="patientslist">
-                                            <input type="submit" class="green no-border text-white" value="Imprimer l'ordonnance">
-                                        </form>
-                                    </div>
 								</div>
 							</div>
 						</div>
@@ -169,10 +182,12 @@
 		    			<textarea id="instruction" name="instruction"></textarea>
 		    		</div>
 		    		<div class = "d-flex justify-content-end p-3">
+		    			
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
 		    				<input type="hidden" name="action" value = "editInstruction">
 		    				<input type="hidden" name="codeCIS" value="" id ="code">
+		    			
 		    		</div>
 		    		</form>
 		    	</div>

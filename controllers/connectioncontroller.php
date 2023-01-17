@@ -67,5 +67,10 @@ class ConnectionController
 
         return $view;
     }
+    public function deconnexion($pdo)
+    {
+      session_destroy();
+      return $this->index($pdo);
+    }
 
 }

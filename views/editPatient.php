@@ -21,33 +21,49 @@
 	<div class="container-fluid h-100  text-white">
 		<div class="row h-100">
 			<!-- Menu -->
-			<div id="menu" class="pt-3 menu col-md-1 col-3 col-sm-2 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
-				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-md-none d-sm-block text-end w-100">arrow_back</span>
+			<div id="menu" class="pt-3 menu z-index-dropdown col-md-1 col-4 d-md-flex d-none flex-column gap-3 blue h-100 align-items-center">
+				<span onclick="manageClass('menu','d-none')"class="material-symbols-outlined d-block d-md-none text-end w-100">arrow_back</span>
 				<div class=" green border-1 ratio ratio-1x1">
 
 				</div>
-				<a href="index.php?controller=medicamentslist" class=" green border-1 ratio ratio-1x1">
-
-					<span class="d-flex display-1 align-items-center justify-content-center material-symbols-outlined">
-						medication
-					</span>
-
+				<a href="index.php?controller=medicamentslist" class="d-md-none">
+					<div class="text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+							medication
+						</span>
+					</div>
 				</a>
-				<a href="index.php?controller=patientslist" class=" green border-1 ratio ratio-1x1">
-					<span class="d-flex justify-content-center align-items-center material-symbols-outlined">
-						groups
-					</span>
+				<a href="index.php?controller=patientslist" class="d-md-none">
+					<div  class=" text-white green border-1 ratio ratio-1x1">
+						<span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
+							groups
+						</span>
+					</div>
 				</a>
+				<a href="index.php?controller=medicamentslist" class="text-white d-none d-md-block green border-1 ratio ratio-1x1">
+
+                    <span class="d-flex display-3 align-items-center justify-content-center material-symbols-outlined">
+                        medication
+                    </span>
+                </a>
+                <a href="index.php?controller=patientslist" class=" text-white d-none d-md-block green border-1 ratio ratio-1x1">
+                    <span class="d-flex display-3 justify-content-center align-items-center material-symbols-outlined">
+                        groups
+                    </span>
+                </a>
 			</div>
 			<!-- Main page -->
 			<div class="col-md-11 h-75 text-center">
 				<!-- Bandeau outils -->	
 				
-				<nav class="  row h-15 navbar navbar-expand-lg navbar-light green">
-					<div class="d-flex justify-content-center justify-content-md-start px-5 container-fluid green">
-						
-						<span class="h1"> Fiche Patient </span>			
-
+				<nav class="  row h-11 navbar navbar-expand-lg navbar-light green">
+					<div class="d-flex px-md-5 container-fluid green">
+						<span class="material-symbols-outlined text-start d-block d-md-none" onclick="manageClass('menu','d-none')">menu</span>
+						<span class="h1"> Fiche Patient </span>
+						<form>
+								<input type="hidden" name="action" value="deconnexion">
+								<input type="submit" class="btn btn-danger" value="Deconnexion">
+							</form>
 					</div>
 				</nav>
 				<!-- Bandeau Patient -->

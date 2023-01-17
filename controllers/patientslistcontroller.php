@@ -45,6 +45,9 @@ class PatientsListController
 		$medecin = $this->usersservices->getMedecins($pdo);
 		$view->setVar("medecin",$medecin);
 		$view->setVar("patients",$patients);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -82,6 +85,9 @@ class PatientsListController
 		$patient = $this->usersservices->getPatient($pdo,$_SESSION['idPatient']);
 		$view->setVar("visites",$visites);
 		$view->setVar("patient",$patient);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -210,6 +216,9 @@ class PatientsListController
 		
 		$view->setVar("medecins",$medecins);      
 		$view->setVar("action",$nextAction);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -225,6 +234,9 @@ class PatientsListController
 		$view->setVar("visite",$visite);
 		$view->setVar("drugsVisite",$drugsVisite);
 		$view->setVar("patient",$patient);
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -245,7 +257,9 @@ class PatientsListController
 		
 		$view->setVar("visite",$visite);
 		$view->setVar("action",$nextAction);
-
+		if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -300,11 +314,11 @@ class PatientsListController
 
 	public function addMedicament($pdo)
 	{	
-		$codeCIP = HttpHelper::getParam("codeCIP");
+		$codeCIP7 = HttpHelper::getParam("codeCIP7");
 		$instruction = HttpHelper::getParam("instruction");
 
 		try {
-			$this->usersservices->addMedic($pdo,$_SESSION['idVisite'],(int) $codeCIP,$instruction);
+			$this->usersservices->addMedic($pdo,$_SESSION['idVisite'],(int) $codeCIP7,$instruction);
 			$view = $this->goFicheVisite($pdo);
 		} catch (PDOException $e) {
 			$view = $this->goFicheVisite($pdo);

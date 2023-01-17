@@ -84,7 +84,9 @@ class medicamentslistController
         $view->setVar("voieAd",$voieAdministration);
 		$view->setVar("formePharmas",$formePharmas);
 		$view->setVar("drugs",$drugs);
-
+        if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 
 
@@ -102,6 +104,9 @@ class medicamentslistController
         $view->setVar("medicament",$medicament);
         $view->setVar("lteSmr",$lteSmr);
         $view->setVar("lteASMR",$lteASMR);
+        if (!isset($_SESSION['currentMedecin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
         return $view;
     }
 

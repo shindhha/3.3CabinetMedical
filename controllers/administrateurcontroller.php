@@ -65,6 +65,9 @@ class AdministrateurController
 	public function index($pdo) {      
 
 		$view = new View("Sae3.3CabinetMedical/views/administrateur");
+        if (!isset($_SESSION['admin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
 		return $view;
 	}
 
@@ -128,9 +131,12 @@ class AdministrateurController
     }
 
     public function goListMedecins($pdo) {
-
+        
         $view = new View("Sae3.3CabinetMedical/views/medecinslist");
         $view->setVar("medecinsList", $this->adminservice->getMedecinsList($pdo));
+        if (!isset($_SESSION['admin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
         return $view;
     }
 
@@ -159,7 +165,9 @@ class AdministrateurController
         
         $view->setVar("nextAction",$nextAction);
         
-        
+        if (!isset($_SESSION['admin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
         return $view;
     }
 
@@ -172,6 +180,9 @@ class AdministrateurController
         $medecin = $this->adminservice->getMedecin($pdo, $_SESSION['idMedecin']);
         $_SESSION['idUserMedecin'] = $medecin['idUser'];
         $view->setVar("medecin",$medecin);
+        if (!isset($_SESSION['admin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
         return $view;
     }
 
@@ -180,6 +191,9 @@ class AdministrateurController
         $erreursImport = $this->adminservice->getErreursImportShort($pdo);
         $view = new View("Sae3.3CabinetMedical/views/erreursimport");
         $view->setVar("erreursImport",$erreursImport);
+        if (!isset($_SESSION['admin'])) {
+            $view = new View("Sae3.3CabinetMedical/views/connection");
+        }
         return $view;
     }
 
