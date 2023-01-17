@@ -298,12 +298,11 @@ class PatientsListController
 
 	public function addMedicament($pdo)
 	{	
-		$codeCIS = HttpHelper::getParam("codeCIS");
+		$codeCIP = HttpHelper::getParam("codeCIP");
 		$instruction = HttpHelper::getParam("instruction");
 
-		$view;
 		try {
-			$this->usersservices->addMedic($pdo,$_SESSION['idVisite'],(int) $codeCIS,$instruction);
+			$this->usersservices->addMedic($pdo,$_SESSION['idVisite'],(int) $codeCIP,$instruction);
 			$view = $this->goFicheVisite($pdo);
 		} catch (PDOException $e) {
 			$view = $this->goFicheVisite($pdo);

@@ -55,7 +55,7 @@
 				<div class="row d-flex flex-column gap-3 mx-auto col-10 ">
 					<div class="d-flex flex-row justify-content-between text-dark ">				
 						<span>Motif : <?php echo $visite['motifVisite'] ; ?></span>
-						<span>Date :  <?php echo $visite['dateVisite']?></span>				
+						<span>Date :  <?php echo date("d/m/Y", strtotime($visite['dateVisite']))?></span>
 					</div>
 					<div class="d-flex flex-column text-start text-dark d-flex flex-column gap-3">
 						Description
