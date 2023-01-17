@@ -99,11 +99,11 @@ class UsersServices
    * @param codeCIS     Identifiant du medicament 
    * @param instruction Nouvlles intructions du medecin pour se medicament dans cette visite
    */
-  public function editInstruction($pdo,$idVisite,$codeCIS,$instruction)
+  public function editInstruction($pdo,$idVisite,$codeCIP,$instruction)
   {
-    $sql = "UPDATE Ordonnances SET instruction = :instruction WHERE idVisite = :idVisite AND codeCIS = :codeCIS";
+    $sql = "UPDATE Ordonnances SET instruction = :instruction WHERE idVisite = :idVisite AND codeCIP7 = :codeCIP";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(array('instruction' => $instruction, 'idVisite' => $idVisite, 'codeCIS' => $codeCIS));
+    $stmt->execute(array('instruction' => $instruction, 'idVisite' => $idVisite, 'codeCIP' => $codeCIP));
   }
 
   /**
@@ -124,12 +124,12 @@ class UsersServices
    * @param idVisite L'identifiant de la viste dans la base de données
    * @param codeCIS  L'identifiant du medicament
    */
-  public function deleteMedicament($pdo,$idVisite,$codeCIS)
+  public function deleteMedicament($pdo,$idVisite,$codeCIP)
   {
-    $sql = "DELETE FROM Ordonnances WHERE idVisite = :idVisite AND codeCIS = :codeCIS";
+    $sql = "DELETE FROM Ordonnances WHERE idVisite = :idVisite AND codeCIP7 = :codeCIP";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(array('idVisite' => $idVisite, 'codeCIS' => $codeCIS));
+    $stmt->execute(array('idVisite' => $idVisite, 'codeCIP' => $codeCIP));
   }
   /**
    * Supprime toute les occurences du patient avec l'identifiant 

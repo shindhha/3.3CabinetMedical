@@ -265,8 +265,8 @@ class PatientsListController
 
 	public function deleteMedicament($pdo)
 	{
-		$codeCIS = HttpHelper::getParam("codeCIS");
-		$this->usersservices->deleteMedicament($pdo,$_SESSION['idVisite'],$codeCIS);
+		$codeCIP = HttpHelper::getParam("codeCIP7");
+		$this->usersservices->deleteMedicament($pdo,$_SESSION['idVisite'],$codeCIP);
 		return $this->goFicheVisite($pdo);
 	}
 
@@ -331,9 +331,9 @@ class PatientsListController
 
 	public function editInstruction($pdo)
 	{
-		$codeCIS = HttpHelper::getParam("codeCIS");
+		$codeCIP = HttpHelper::getParam("codeCIP7");
 		$instruction = HttpHelper::getParam("instruction");
-		$this->usersservices->editInstruction($pdo,$_SESSION['idVisite'],$codeCIS,$instruction);
+		$this->usersservices->editInstruction($pdo,$_SESSION['idVisite'],$codeCIP,$instruction);
 		return $this->goFicheVisite($pdo);
 	}
 

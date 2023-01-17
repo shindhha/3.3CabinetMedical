@@ -57,7 +57,7 @@
 				<nav class="  row h-11 navbar navbar-expand-lg navbar-light green">
 					<div class="d-flex px-md-5 container-fluid green">
 						<span class="material-symbols-outlined text-start d-block d-md-none" onclick="manageClass('menu','d-none')">menu</span>
-						<span class="h1"> Visite n° </span>
+						<span class="h1">Visite</span>
 						<form>
 								<input type="hidden" name="action" value="deconnexion">
 								<input type="submit" class="btn btn-danger" value="Deconnexion">
@@ -91,13 +91,13 @@
 				<!-- content -->
 				<div class="row align-items-center text-center">
 					<!-- Portail de connexion -->
-					<div class="container ">
-						<div class="row justify-content-center">
+					<div class="container h-100 ">
+						<div class="row justify-content-center h-75">
 							<div class=" col-md-10 col-xl-12 col-sm-7 col-12 success border-2">
 								<div class="text-danger text-start"><?php if(isset($addMedicError)) echo $addMedicError; ?></div>
 								<div class=" text-dark text-start h2"> Liste des medicaments prescrit </div>
-								<div class="table-responsive h-50 ">
-									<table class="table table-striped lightGreen border border-dark">
+								<div class="table-responsive">
+									<table class="table table-striped lightGreen border border-dark h-50 overflow-scroll">
 										<thead class="sticky-top bg-white text-dark  ">
 											<tr>
 												<th>Designation</th>
@@ -120,20 +120,20 @@
 											</span>
 											<div class="p-0 text-end dropdown-menu dropdown-menu-end green text-white no-border" aria-labelledby="dropdownMenuButton1">
 												<table class="text-white ">
-													<form action="index.php" action="POST"  class="d-flex flex-column green text-end">
+													<form action="index.php" method="POST"  class="d-flex flex-column green text-end">
 														<input type="hidden" name="controller" value="medicamentslist">
 														<input type="hidden" name="action" value="goFicheMedicament">
-														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+														<input type="hidden" name="codeCIP7" value="<?php echo $row['codeCIP7'] ?>">
 														<tr><input type="submit" class="btn text-white text-decoration-underline text-end" value="Afficher"> </tr>
 													</form>
-													<form action="index.php" action="POST" class="d-flex flex-column  green">
+													<form action="index.php" method="POST" class="d-flex flex-column green">
 														<input type="hidden" name="controller" value="patientslist">
 														<input type="hidden" name="action" value="deleteMedicament">
-														<input type="hidden" name="codeCIS" value="<?php echo $row['codeCIS'] ?>">
+														<input type="hidden" name="codeCIP7" value="<?php echo $row['codeCIP7'] ?>">
 														<tr><input class="btn text-white text-decoration-underline text-end" type="submit" value="Supprimer"></tr>
 													</form>
 													
-														<a class="btn text-white text-decoration-underline text-end " data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIS'] . "','" . $row['instruction'] ?>')"  >Editer</a>
+														<a class="btn text-white text-decoration-underline text-end " data-bs-toggle="modal" href="#exampleModal" onclick="add('<?php echo $row['libellePresentation']."','". $row['codeCIP7'] . "','" . $row['instruction'] ?>')"  >Editer</a>
 													
 												</table>			
 											</div>
@@ -193,7 +193,7 @@
 		    				<input type="submit" value="confirmer">
 		    				<input type="hidden" name="controller" value = "patientslist">
 		    				<input type="hidden" name="action" value = "editInstruction">
-		    				<input type="hidden" name="codeCIS" value="" id ="code">
+		    				<input type="hidden" name="codeCIP7" value="" id ="code">
 		    			
 		    		</div>
 		    		</form>
