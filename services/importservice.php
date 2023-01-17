@@ -49,7 +49,7 @@ class ImportService
 		return $text;
 	}
 
-	public function download ($name) {
+	public function download($name) {
 		$destination = ImportService::$path.$name;
 		$source = "https://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=".$name;
 		$ch = curl_init($source);
@@ -97,70 +97,50 @@ class ImportService
 		return $args;
 	}
 
-	public function exportToBD ($pdo,$importStmt,$updateStmt,$param) {
+	public function exportToBD($pdo,$importStmt,$updateStmt,$param) {
 		$trimLine = $param[3];
 		$iCis = $param[4];
 		$table = $param[5];
-		$prefixe = $param[6];
 		$fileName = $param[0];
-		$compteur = 0;
-		$table = $prefixe . $table;
+		$idName = isset($param[6]) ? $param[6] : "codeCIS";
+
+        $this->download($fileName);
+
 		$file = fopen(ImportService::$path.$fileName, "r");
 		$content = fread($file, filesize(ImportService::$path.$fileName));
 		$lines = explode("\n", $content);
 		foreach ($lines as $line) {
 			$args = $this->FormatLine($line,$trimLine);
 			$calledFunction = "";
-			if ($fileName == "HAS_LiensPageCT_bdpm.txt"){
-				$d = $this->CTExists($pdo,$args[$iCis],$table);
-			}else{
-				$d = $this->CISExists($pdo,$args[$iCis],$table);
-			}
+            $d = false;
+            if (!in_array($table, ["CIS_HAS_SMR", "CIS_HAS_ASMR"])) { // On ne déclanche pas d'update pour SMR & ASMR TODO penser a truncate ces tables
+                $d = $this->idExists($pdo, $table, $idName, $args[$iCis]);
+            }
 			try {
 				$pdo->beginTransaction();
-
-				
 
 				if ($d) {
 					$calledFunction = "update" . $fileName;
 					$updateStmt->execute($args);
-					
-					
 				} else {
 					$calledFunction = "import" . $fileName;
 					$importStmt->execute($args);
-					
 				}
 
 				$pdo->commit();
-				$compteur++;
 				
 			} catch (PDOException $e) {
 				$pdo->rollback();
-				$this->insertError($pdo,$calledFunction . " Line " . $args[$iCis]  ,$e->getCode(),$e->getMessage());
-				
-				
-				
-
-
-				
+				$this->insertError($pdo,$calledFunction . " Code cis n° :  " . $args[$iCis]  ,$e->getCode(),$e->getMessage());
 			}
 			
 		}
 	}
 
-	public function CISExists($pdo,$numCIS,$table)
+	public function idExists($pdo,$table,$idName,$valueID)
 	{
-		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE codeCis = :codeCIS");
-		$stmt->bindParam("codeCIS",$numCIS);
-		$stmt->execute();
-		return $stmt->rowcount() > 0;
-	}
-
-	public function CTExists($pdo,$numCT,$table)
-	{
-		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE codeHAS = :codeHAS");
-		$stmt->bindParam("codeHAS",$numCT);
+		$stmt = $pdo->prepare("SELECT * FROM " . $table . " WHERE ". $idName ." = :valueID");
+		$stmt->bindParam("valueID",$valueID);
 		$stmt->execute();
 		return $stmt->rowcount() > 0;
 	}
