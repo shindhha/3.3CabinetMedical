@@ -46,6 +46,7 @@
     foreach ($medicaments as $medicament) {
         echo "<div class='pb-4'>";
             echo "<span class='text-decoration-underline'>" . $medicament['designation'] . "</span><br>";
+            echo " (" . $medicament['libellePresentation'] . ")" . '<br>';
             echo " - " . $medicament['instruction'] . "<br>";
         echo "</div>";
         }

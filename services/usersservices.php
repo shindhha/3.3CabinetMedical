@@ -649,10 +649,11 @@ class UsersServices
 
       $patient = $stmt_patient->fetch();
 
-      $sql_medicaments = "SELECT instruction, designation 
+      $sql_medicaments = "SELECT instruction, designation, libellePresentation
                             FROM Ordonnances
                             JOIN CIS_CIP_BDPM ON CIS_CIP_BDPM.codeCIP7 = Ordonnances.codeCIP7
                             JOIN CIS_BDPM CB ON CIS_CIP_BDPM.codeCIS = CB.codeCIS
+                                JOIN LibellePresentation LP on CIS_CIP_BDPM.idLibellePresentation = LP.idLibellePresentation
                             JOIN DesignationElemPharma ON CB.idDesignation = DesignationElemPharma.idDesignation
                             WHERE idVisite = :idVisite";
         $stmt_medicaments = $pdo->prepare($sql_medicaments);
