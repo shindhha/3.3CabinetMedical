@@ -387,6 +387,7 @@ CREATE TABLE Patients (
 	dateNaissance DATE,
 	adresse VARCHAR(50),
 	codePostal INT,
+	ville VARCHAR(255),
 	medecinRef CHAR(11),
 	numTel INT(9),
 	email VARCHAR(50),
@@ -400,14 +401,14 @@ CREATE TABLE Medecins (
 	numRPPS CHAR(11) UNIQUE,
 	nom VARCHAR(25),
 	prenom VARCHAR(25),
-	adresse VARCHAR(25),
+	adresse VARCHAR(255),
 	numTel INT,
 	email VARCHAR(100),
 	dateInscription DATE,
 	dateDebutActivites DATE,
 	activite VARCHAR(100),
 	codePostal INT,
-	ville VARCHAR(100),
+	ville VARCHAR(255),
 	lieuAct VARCHAR(100),
 	PRIMARY KEY (idMedecin)
 );
@@ -428,8 +429,9 @@ CREATE TABLE ListeVisites (
 );
 
 CREATE TABLE Cabinet (
-	adresse VARCHAR(25),
+	adresse VARCHAR(255),
 	codePostal INT,
+	ville VARCHAR(255),
 	dateOuverture DATE
 );
 CREATE TABLE Ordonnances (
