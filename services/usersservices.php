@@ -643,7 +643,6 @@ class UsersServices
         $cabinet = $stmt_cabinet->fetch();
 
     $mpdf = new \Mpdf\Mpdf();
-    $mpdf->debug = true;
 
     // Start buffering HTML code
     ob_start();
